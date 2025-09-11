@@ -1,0 +1,150 @@
+/* https://www.color-hex.com/color/151b54 */
+/* https://stackoverflow.com/questions/68552638/should-you-use-preconnect-with-stylesheets */
+/* https://www.w3schools.com/css/css3_mediaqueries.asp */
+/* https://www.w3schools.com/css/css3_shadows.asp */
+/* https://www.w3schools.com/css/css3_flexbox_container.asp */
+
+/*
+    I'm not sure if we will keep any of this or even use html + css but here are some resources I used to freshen up.
+    Others can be found in the html pages.
+*/
+
+
+/* styles and font import */
+:root {
+    --bg-color: #1a1a1a;
+    --text-color: #e0e0e0;
+    --primary-color: #0041C2;
+    --accent-color: #4169E1;
+    --secondary-color: #ffc107;
+    --border-radius: 12px;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: #121212 linear-gradient(135deg, #121212 0%, #1a1a1a 100%) fixed;
+    color: var(--text-color);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header and navigation styling */
+.main-header {
+    background-color: #242424;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.nav-link {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+    background-color: var(--primary-color);
+    color: #fff;
+    outline: none;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(21, 87, 84, 0.5);
+}
+
+/* Main content container */
+.content-container {
+    flex-grow: 1;
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 3rem;
+    background-color: rgba(36, 36, 36, 0.85);
+    border-radius: var(--border-radius);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+h1 {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 15px rgba(21, 87, 84, 0.8);
+}
+
+h2 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 15px rgba(21, 87, 84, 0.8);
+}
+
+h4 {
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* List styling */
+.list-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.list-section {
+    flex: 1;
+    margin: 1.5rem 1rem;
+    padding: 2rem;
+    background-color: rgba(26, 26, 26, 0.7);
+    border: 1px solid #333;
+    border-radius: var(--border-radius);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+ul, ol {
+    list-style-position: inside;
+    padding: 0;
+}
+
+li {
+    margin: 0.75rem 0;
+    padding: 0.5rem 0;
+    font-size: 1.1rem;
+    border-bottom: 1px solid #444;
+    transition: color 0.3s ease;
+}
+
+li:hover {
+    color: var(--secondary-color);
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (min-width: 768px) {
+    .content-container {
+        padding: 4rem 5rem;
+    }
+
+    .list-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
