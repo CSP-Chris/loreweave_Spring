@@ -5,8 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class LoreweaveApplication {
-
-    static void main() {
+    // Spring will not run the new main method I'll look into a way around this
+    static void main(String[] ignoredArgs) {
         SpringApplication.run(LoreweaveApplication.class);
     }
 }

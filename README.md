@@ -43,9 +43,9 @@ Then, open your browser and navigate to `http://localhost:8080`.
 3.  **Start a new story** or **join an existing one.**
 4.  **Take turns** with other users to write the story.
 
-## Contributing
+## Contributors
 
-Contributions are welcome! Please feel free to submit a pull request.
+Jamie Coker, Wyatt Bechtle & Chris Ennis
 
 ## License
 
