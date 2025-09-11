@@ -1,14 +1,15 @@
 package com.loreweave.loreweave;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+//import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class HomePageController {
 
     @GetMapping("/")
-    public String welcome() {
-        return "Welcome to Loreweave";
+    public String redirectToStaticPage() {
+        return "redirect:welcome.html";
     }
 
 }
