@@ -45,7 +45,7 @@ Then, open your browser and navigate to `http://localhost:8080`.
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a pull request.
+Jamie Coker, Wyatt Bechtle & Chris Ennis
 
 ## License
 
