@@ -11,6 +11,5 @@ public class HomePageController {
     public String redirectToStaticPage() {
         return "redirect:welcome.html";
     }
-
 }
 
