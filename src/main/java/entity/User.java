@@ -1,10 +1,10 @@
 package entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import lombok.Getter;
+
+// https://spring.io/guides/gs/accessing-data-jpa
 
 @Getter
 @Entity
@@ -17,6 +17,11 @@ public class User {
     private String lastName;
     private String email;
     private String password;
+
+
+    @OneToOne(mappedBy = "user") // One character per player
+    @JsonManagedReference
+    public Character character;
 
     protected User() {}
 

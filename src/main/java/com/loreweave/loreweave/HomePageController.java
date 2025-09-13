@@ -1,4 +1,4 @@
-package controllers;
+package com.loreweave.loreweave;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
