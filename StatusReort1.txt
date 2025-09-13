@@ -1,0 +1,24 @@
+Group Members:
+    Jamie Coker, Wyatt Bechtle & Chris Ennis (Milestone 1 PM)
+
+Project idea:
+    Loreweave - It's a community based story weaver where users create characters and stories. Stories are added to piece-by-piece by different players.
+
+How it meets the requirements:
+    User Authentication: Players login in and create character profiles
+    User Profile: Each player has a profile showing their created character, active stories, story contributions, and earned "lore points." (Voting system for rating stories) Profiles will be editable by the player.
+    Messaging: The addition of story turns and voting communication via lore points.
+    Transactions: The transaction is the submission of a "story turn." Players take turns adding to the narrative, and these submissions are tracked. Lore point could also be seen as transactions.
+    Database: Would require tables for Users, Characters, Stories, Story_Turns, Lore_Points_Ledger, and potentially other quests or achievements tied to lore points.
+
+What tools are you using?
+    Java Spring Boot - Maven - H2 Database - Oauth2(?)
+
+What will be accomplished by the next meeting:
+    Repo + DB design + Entities, JWT security config, Frontend scaffold + login UI
+
+Show off what you have so far:
+    https://github.com/CSP-Chris/loreweave_Spring
+
+Also, each group member should be prepared to discuss what they worked on and what they are focusing on next:
+    Repo + DB design + Entities, JWT security config, Frontend scaffold + login UI
