@@ -24,7 +24,7 @@ public class Character {
 
 
     @OneToOne
-    //@JoinColumn(name = "user_id") // foreign key needs table
+    @JoinColumn(name = "user_id") // foreign key needs table
     @JsonBackReference
     private User user;
 
