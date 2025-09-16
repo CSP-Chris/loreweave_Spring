@@ -1,0 +1,63 @@
+<!--
+    File Name: register.html
+    Created By: Wyatt Bechtle
+    Created On: 9/15/2025
+    Purpose: To provide registration capabilities to the Loreweave application
+
+    Updated By: <name> on <date>
+-->
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>register</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+          crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center">
+      <form class="mb-3" action="/register" method="post" novalidate>
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input type="text"
+                 class="form-control"
+                 id="username"
+                 name="username"
+                 placeholder="Username"
+                 required>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email"
+                 class="form-control"
+                 id="email"
+                 name="email"
+                 placeholder="name@example.com"
+                 required>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password"
+                 class="form-control"
+                 id="password"
+                 name="password"
+                 placeholder="Password"
+                 required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create account</button>
+
+        <p class="text-center mt-3 mb-0 text-secondary">
+          Already have an account? <a class="link-light" href="/loginBSF">Sign in</a>
+        </p>
+      </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+            crossorigin="anonymous">
+    </script>
+  </body>
+</html>
