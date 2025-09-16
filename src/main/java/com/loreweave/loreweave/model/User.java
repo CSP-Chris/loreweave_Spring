@@ -9,29 +9,36 @@
 package com.loreweave.loreweave.model;
 
 import jakarta.persistence.*;
-import lombok.*;
 
 @Entity
-@Table(name = "user")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@Table(name = "users")
 public class User {
-
     @Id
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(nullable = false)
-    private String firstName;
+    @Column(nullable = false, unique = true)
+    private String username;
 
-    @Column(nullable = false)
-    private String lastName;
-
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
     private String password;
 
-    private String username;
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
 
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
+
+    // === Getters ===
+    public Long getId() { return id; }
+    public String getUsername() { return username; }
+    public String getEmail() { return email; }
+    public String getPassword() { return password; }
+    public String getFirstName() { return firstName; }
+    public String getLastName() { return lastName; }
+
+    // Setters if you need them...
 }
-
