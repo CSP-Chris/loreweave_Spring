@@ -2,7 +2,7 @@ CREATE SEQUENCE character_seq START WITH 1 INCREMENT BY 50;
 
 CREATE SEQUENCE player_seq START WITH 1 INCREMENT BY 50;
 
-CREATE TABLE player
+CREATE TABLE if not exists player
 (
     id         BIGINT NOT NULL,
     first_name VARCHAR(255),
@@ -12,7 +12,7 @@ CREATE TABLE player
     CONSTRAINT pk_player PRIMARY KEY (id)
 );
 
-CREATE TABLE character
+CREATE TABLE if not exists character
 (
     id          BIGINT NOT NULL,
     name        VARCHAR(255),
