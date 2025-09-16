@@ -1,7 +1,7 @@
-// File Name: login.html
+// File Name: ContentController.java
 // Created By: Wyatt Bechtle
 // Created On: 9/15/2025
-// Purpose: To provide login capabilities to the loreweave application
+// Purpose: Handles HTTP requests.
 
 
 // Updated By: <name> on <date>
