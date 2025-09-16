@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan("com.loreweave.entity")
 public class LoreweaveApplication {
     // Spring will not run the new main method I'll look into a way around this
-    public static void main(String[] args) {
+    static void main(String[] ignoredArgs) {
         SpringApplication.run(LoreweaveApplication.class);
     }
 }
