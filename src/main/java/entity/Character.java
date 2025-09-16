@@ -24,17 +24,17 @@ public class Character {
 
 
     @OneToOne
-    @JoinColumn(name = "user_id") // foreign key needs table
+    @JoinColumn(name = "player_id") // foreign key needs table
     @JsonBackReference
-    private User user;
+    public Player player;
 
     protected Character() {}
 
-    public Character(String name, String description, int lorePoints, User user) {
+    public Character(String name, String description, int lorePoints, Player player) {
         this.name = name;
         this.description = description;
         this.lorePoints = lorePoints;
-        this.user = user;
+        this.player = player;
     }
 
     @Override

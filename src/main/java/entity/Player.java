@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Getter
 @Entity
-public class User {
+public class Player {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -19,13 +19,13 @@ public class User {
     private String password;
 
 
-    @OneToOne(mappedBy = "user") // One character per player
+    @OneToOne(mappedBy = "player") // One character per player
     @JsonManagedReference
     public Character character;
 
-    protected User() {}
+    protected Player() {}
 
-    public User(String firstName, String lastName, String email, String password) {
+    public Player(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -35,7 +35,7 @@ public class User {
     @Override
     public String toString() {
         return String.format(
-                "User[id=%d, firstName='%s', lastName='%s', email='%s']",
+                "Player[id=%d, firstName='%s', lastName='%s', email='%s']",
                 id, firstName, lastName, email);
     }
 
