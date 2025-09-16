@@ -1,4 +1,4 @@
-package entity;
+package com.loreweave.loreweave.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
@@ -21,8 +21,8 @@ public class LoreVote {
     private StoryPart storyPart;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "player_id", nullable = false)
-    private Player voter;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User voter;
 
     @Enumerated(EnumType.STRING)
     private VoteType voteType;
@@ -31,7 +31,7 @@ public class LoreVote {
 
     protected LoreVote() {}
 
-//    public LoreVote(StoryPart storyPart, Player voter, VoteType voteType) {
+//    public LoreVote(StoryPart storyPart, User voter, VoteType voteType) {
 //        this.storyPart = storyPart;
 //        this.voter = voter;
 //        this.voteType = voteType;

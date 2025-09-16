@@ -1,4 +1,4 @@
-package entity;
+package com.loreweave.loreweave.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
@@ -24,17 +24,17 @@ public class Character {
 
 
     @OneToOne
-    @JoinColumn(name = "player_id") // foreign key needs table
+    @JoinColumn(name = "user_id") // foreign key needs table
     @JsonBackReference
-    public Player player;
+    public User user;
 
     protected Character() {}
 
-    public Character(String name, String description, int lorePoints, Player player) {
+    public Character(String name, String description, int lorePoints, User user) {
         this.name = name;
         this.description = description;
         this.lorePoints = lorePoints;
-        this.player = player;
+        this.user = user;
     }
 
     @Override

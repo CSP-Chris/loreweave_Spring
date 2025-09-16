@@ -1,4 +1,4 @@
-package entity;
+package com.loreweave.loreweave.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
