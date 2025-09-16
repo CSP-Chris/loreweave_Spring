@@ -1,1 +1,34 @@
 Milestone 1 Contributions:
+Week 1: Updated pom.xml to target Java 17 and ensured compatibility with Spring Boot 3.
+
+        Implemented JWT Security setup:
+
+        Added SecurityConfig.java with stateless session handling and JWT filter.
+
+        Created JwtAuthenticationFilter to validate tokens on requests.
+
+        Built JwtService for token generation, validation, and username extraction.
+
+        Added CustomUserDetailsService to load user credentials from the database.
+
+        Configured BCryptPasswordEncoder for secure password hashing.
+
+        Developed AuthController with /api/auth/login endpoint to authenticate users and return JWT tokens.
+
+        Verified and updated User entity & UserRepository so authentication works with the DB.
+
+        Configured application.properties:
+
+        Set up H2 in-memory database for testing.
+
+        Enabled Hibernate ddl-auto=create-drop for clean schema on each restart.
+
+        Enabled /h2-console for debugging database content.
+
+        Resolved merge conflicts in:
+
+        application.properties (kept JWT + H2 config).
+
+        pom.xml (merged in spring-security-test, Thymeleaf, and Actuator).
+
+        Ensured the application now builds successfully and can run with JWT authentication enabled.

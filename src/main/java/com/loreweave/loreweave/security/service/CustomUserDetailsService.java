@@ -3,8 +3,10 @@
 /// Created By:   Jamie Coker
 /// Created On:   2025-09-15
 /// Purpose:      Loads user details from the database for authentication
-/// Updated By:
-/// Updated By:
+/// Updated By:   Jamie Coker
+/// Updated On:   2025-09-16
+/// Update Note:  Added Spring Security UserDetails builder with
+///               authorities to resolve “cannot find symbol” compile errors.
 /// ==========================================
 package com.loreweave.loreweave.security.service;
 
@@ -32,11 +34,13 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(() ->
                         new UsernameNotFoundException("User not found: " + username));
 
-        // ✅ Wrap your entity into a Spring Security UserDetails
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
                 .password(user.getPassword())
-                .authorities("ROLE_USER")   // or map roles from your User entity
+                .authorities("ROLE_USER")
                 .build();
+
+
+
     }
 }
