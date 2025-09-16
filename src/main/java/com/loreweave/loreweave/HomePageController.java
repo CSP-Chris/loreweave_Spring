@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomePageController {
 
-    @GetMapping("/")
-    public String redirectToStaticPage() {
-        return "redirect:welcome.html";
-    }
+    //@GetMapping("/")
+    //public String redirectToStaticPage() {
+    //    return "redirect:welcome.html";
+    //}
 }
 
