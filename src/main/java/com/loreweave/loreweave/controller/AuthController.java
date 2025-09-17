@@ -12,13 +12,14 @@ import com.loreweave.loreweave.security.jwt.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+//import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private final AuthenticationManager authManager;
+    private AuthenticationManager authManager;
     private final JwtService jwtService;
 
     public AuthController(AuthenticationManager authManager, JwtService jwtService) {
@@ -51,3 +52,4 @@ public class AuthController {
         public void setPassword(String password) { this.password = password; }
     }
 }
+

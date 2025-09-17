@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ContentController {
-    
+
     @GetMapping("/loginBSF")
     public String login() {
         return "loginBSF";
@@ -25,6 +25,7 @@ public class ContentController {
     public String register() {
         return "register";
     }
+
 
     @GetMapping("/")
     public String welcome() {
