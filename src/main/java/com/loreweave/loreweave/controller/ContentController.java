@@ -5,16 +5,26 @@
 
 
 // Updated By: <name> on <date>
-package com.loreweave.loreweave;
+package com.loreweave.loreweave.controller;
 
+import com.loreweave.loreweave.model.User;
+import com.loreweave.loreweave.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 //import org.springframework.web.bind.annotation.RequestParam;
 //import org.springframework.web.bind.annotation.RestController;
 
 
 @Controller
 public class ContentController {
+
+    private final UserRepository userRepository;
+
+    public ContentController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @GetMapping("/loginBSF")
     public String login() {
@@ -24,6 +34,12 @@ public class ContentController {
     @GetMapping("/register")
     public String register() {
         return "register";
+    }
+
+    @PostMapping("/register")
+    public String register(User user) {
+        userRepository.save(user);
+        return "redirect:/loginBSF";
     }
 
 

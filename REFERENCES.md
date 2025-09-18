@@ -10,4 +10,5 @@ This is a references page.
 6. General Spring Boot Tutorial:https://www.youtube.com/watch?v=QuvS_VLbGko&t=3661s
 7. JPA Tutorial:https://www.youtube.com/watch?v=GkkcZXF-mD8&t=137s
 8. JPA and H2 setup Tutorial:https://www.youtube.com/watch?v=YD_ga0r87wU
+9. CRUD in Spring Boot: https://youtu.be/MUhDe_yZ5WQ?si=P2gh36o0rVu6vk-B
 * **
