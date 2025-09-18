@@ -21,4 +21,6 @@ Show off what you have so far:
     https://github.com/CSP-Chris/loreweave_Spring
 
 Also, each group member should be prepared to discuss what they worked on and what they are focusing on next:
-    Repo + DB design + Entities, JWT security config, Frontend scaffold + login UI
+   Chris: Repo + DB design + Entities
+   Jamie: JWT security config
+   Wyatt: Frontend scaffold + login UI
