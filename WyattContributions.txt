@@ -1,1 +1,25 @@
-Milestone 1 Contributions:
+For the first Milestone, I focused on the Frontend:
+
+I started off researching frontend frameworks that work well with Spring Boot. After considering a 
+few different options, I chose Thymeleaf. I spent a few days learning more about how to use Thymeleaf’s. 
+Java template engine. Then I researched how to style the html, i.e., CSS files within a static resource 
+or Bootstrap. I had yet to utilize Bootstrap, so I chose Bootstrap and began learning more about it. 
+Once I knew how to do the basics, I completed the following tasks:
+
+1) Integrated Thymeleaf into the Maven pom.xml
+      a) Added two dependencies to allow for the use of Thymeleaf
+2) Created the ContentController to handle HTTP requests
+      a) Mapped login, register, and welcome pages
+      b) Moved mapping from HomePageController to ContentController
+3) Updated main method in LoreWeaveApplication 
+      a) Change the Header to standard form
+4) Created associated directories for Thymeleaf
+      a) directories for html and static resources
+      b) directory for Controller for HTTP request handling
+5) Created a login page
+      a) Utilized HTML and Bootstrap to make the login page with actionless forms (Next on To-Do)
+      b) Linked the webpage to a registration page
+6) Created a register page
+      a) Utilized HTML and Bootstrap to make the registration page with actionless forms (Next on To-Do)
+      b) Linked the webpage to a login page
+7) Hosted Zoom Meeting for team 
