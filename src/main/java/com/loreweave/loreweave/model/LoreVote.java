@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class LoreVote {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -21,7 +21,7 @@ public class LoreVote {
     private StoryPart storyPart;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "voter_id", nullable = false)
     private User voter;
 
     @Enumerated(EnumType.STRING)
@@ -31,12 +31,12 @@ public class LoreVote {
 
     protected LoreVote() {}
 
-//    public LoreVote(StoryPart storyPart, User voter, VoteType voteType) {
-//        this.storyPart = storyPart;
-//        this.voter = voter;
-//        this.voteType = voteType;
-//        this.createdAt = LocalDateTime.now();
-//    }
+    public LoreVote(StoryPart storyPart, User voter, VoteType voteType) {
+        this.storyPart = storyPart;
+        this.voter = voter;
+        this.voteType = voteType;
+        this.createdAt = LocalDateTime.now();
+    }
 
     public enum VoteType {
         POSITIVE, NEGATIVE

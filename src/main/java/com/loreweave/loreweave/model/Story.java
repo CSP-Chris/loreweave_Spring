@@ -13,7 +13,7 @@ import java.util.List;
 public class Story {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
@@ -31,15 +31,15 @@ public class Story {
 
     protected Story() {}
 
-//    public Story(String title, Character creator) {
-//        this.title = title;
-//        this.creator = creator;
-//        this.createdAt = LocalDateTime.now();
-//        this.lastUpdatedAt = LocalDateTime.now();
-//    }
-//
-//    public void addStoryPart(StoryPart storyPart) {
-//        storyParts.add(storyPart);
-//        storyPart.setStory(this);
-//    }
+    public Story(String title, Character creator) {
+        this.title = title;
+        this.creator = creator;
+        this.createdAt = LocalDateTime.now();
+        this.lastUpdatedAt = LocalDateTime.now();
+    }
+
+    public void addStoryPart(StoryPart storyPart) {
+        storyParts.add(storyPart);
+        storyPart.setStory(this);
+    }
 }

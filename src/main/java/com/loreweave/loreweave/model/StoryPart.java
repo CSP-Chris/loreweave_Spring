@@ -14,7 +14,7 @@ import java.util.List;
 public class StoryPart {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -39,16 +39,16 @@ public class StoryPart {
 
     protected StoryPart() {}
 
-//    public StoryPart(Story story, Character contributor, String content, int partOrder) {
-//        this.story = story;
-//        this.contributor = contributor;
-//        this.content = content;
-//        this.partOrder = partOrder;
-//        this.createdAt = LocalDateTime.now();
-//    }
-//
-//    public void addLoreVote(LoreVote loreVote) {
-//        loreVotes.add(loreVote);
-//        loreVote.setStoryPart(this);
-//    }
+    public StoryPart(Story story, Character contributor, String content, int partOrder) {
+        this.story = story;
+        this.contributor = contributor;
+        this.content = content;
+        this.partOrder = partOrder;
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public void addLoreVote(LoreVote loreVote) {
+        loreVotes.add(loreVote);
+        loreVote.setStoryPart(this);
+    }
 }
