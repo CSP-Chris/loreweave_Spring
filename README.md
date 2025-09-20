@@ -14,7 +14,7 @@ Loreweave is a unique collaborative storytelling platform designed as a turn-bas
 
 ### Prerequisites
 
-*   Java `25`
+*   Java `21`
 *   Maven
 
 ### Installation

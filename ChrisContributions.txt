@@ -1,1 +1,40 @@
-Milestone 1 Contributions:
+Initial Project Setup and Frontend Foundation:
+    - Created the initial project structure and set up the GitHub repository.
+    - Authored the foundational frontend files, including welcome.html, contributors.html, and the corresponding styles.css to establish a consistent look and feel for the project.
+
+Database Architecture and Implementation:
+    - Architected and managed all database-related tasks.
+    - Initially configured the project with an embedded H2 database for rapid prototyping and development.
+    - Led the transition from the H2 database to a more robust, remote MySQL database hosted on ifastnet.com, which involved updating connection properties and ensuring data integrity.
+    - Designed and implemented all JPA (Java Persistence API) entities, creating the object-relational mapping for all database tables. This includes the `User`, `Story`, `StoryPart`, `Character`, and `LoreVote` entities.
+
+Domain and Deployment:
+    - Purchased the domain loreweave.app for the project.
+    - Began the process of learning and implementing the necessary steps to connect the Spring Boot application to the purchased domain, paving the way for a publicly accessible application.
+
+Tools & Repository
+• Tech Stack: Java 21, Spring Boot 3, Maven, H2 Database (development), MySQL Database.
+• Source Control: https://github.com/CSP-Chris/loreweave_Spring
+• IDE and External Sites: IntelliJ IDEA Ultimate, ifastnet.com, porkbun.com, Slack and Zoom
+
+Learning Experience:
+I learned a lot about Spring Boot specifically how to use databases and control the framework with maven and various settings found within applications.properties and the pom.xml file.
+
+Contributions Since the Last Meeting:
+I intend to learn more about how the backend connects to the frontend.Methods on how to move the project onto the web. Perhaps more about using docker for deplyment.Based on these learnings I can work deployment efforts.
+
+Timeline & Milestones:
+• Milestone 1 (Weeks 1-3): Core setup, user authentication, profile pages, and dashboard shell.
+• Milestone 2 (Weeks 4-6): In-app messaging, transactions (lore points), and complete dashboard with real-time features.
+• Milestone 3 (Weeks 7-9): Database expansion, responsive UI, analytics/logging, testing, and final deployment prep.
+
+References:
+• H2-Console Error: https://www.baeldung.com/spring-boot-h2-console-error
+• How-to JPA: https://spring.io/guides/gs/accessing-data-jpa
+• Adding password encoder: https://docs.spring.io/spring-boot/reference/web/spring-security.html#web.security
+• JPA Tables: https://www.geeksforgeeks.org/advance-java/spring-data-jpa-table-annotation/
+• JPA updating: https://www.geeksforgeeks.org/java/java-jpa-vs-hibernate/
+• General Spring Boot Tutorial: https://www.youtube.com/watch?v=QuvS_VLbGko&t=3661s
+• JPA Tutorial: https://www.youtube.com/watch?v=GkkcZXF-mD8&t=137s
+• JPA and H2 setup Tutorial: https://www.youtube.com/watch?v=YD_ga0r87wU
+• CRUD in Spring Boot: https://youtu.be/MUhDe_yZ5WQ?si=P2gh36o0rVu6vk-B
