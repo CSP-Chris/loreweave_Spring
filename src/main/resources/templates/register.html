@@ -4,7 +4,8 @@
     Created On: 9/15/2025
     Purpose: To provide registration capabilities to the Loreweave application
 
-    Updated By: <name> on <date>
+      Updated By: Jamie Coker on 9/21/2025
+    Update Notes: Changed form action to Thymeleaf, added th:field bindings.
 -->
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
@@ -19,31 +20,35 @@
   </head>
   <body>
     <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center">
-      <form class="mb-3" action="/register" method="post" novalidate>
-        <div class="mb-3">
-          <label for="username" class="form-label">Username</label>
-          <input type="text"
-                 class="form-control"
-                 id="username"
-                 name="username"
-                 placeholder="Username"
-                 required>
-        </div>
+        <!--  Added th:object so username/email/password are resolvable -->
+        <form class="mb-3" th:action="@{/register}" th:object="${user}" method="post" novalidate>
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <!--  Added th:field -->
+                <input type="text"
+                       class="form-control"
+                       id="username"
+                       th:field="*{username}"
+                       placeholder="Username"
+                       required>
+            </div>
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
-          <input type="email"
-                 class="form-control"
-                 id="email"
-                 name="email"
-                 placeholder="name@example.com"
-                 required>
+            !--  Added th:field -->
+            <input type="email"
+                   class="form-control"
+                   id="email"
+                   th:field="*{email}"
+                   placeholder="name@example.com"
+                   required>
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
+            <!--  Added th:field -->
           <input type="password"
                  class="form-control"
                  id="password"
-                 name="password"
+                 th:field="*{password}"
                  placeholder="Password"
                  required>
         </div>

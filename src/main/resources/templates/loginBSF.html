@@ -4,7 +4,9 @@
     Created On: 9/15/2025
     Purpose: To provide login capabilities to the loreweave application
 
-    Updated By: <name> on <date>
+    Updated By: Jamie Coker on 9/21/2025
+    Update Notes: Added Thymeleaf th:action + method="post" for Spring Security integration.
+
 -->
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
@@ -19,7 +21,8 @@
   </head>
   <body>
     <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center">
-      <form class="mb-3">
+        <!--  Changed: added th:action + method -->
+        <form class="mb-3" th:action="@{/login}" method="post">
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
           <input type="text" 
