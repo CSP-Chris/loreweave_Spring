@@ -72,23 +72,6 @@ public class AuthController {
         model.addAttribute("user", new User());
         return "register"; // resolves templates/register.html
     }
-
-    //  Registration API (POST)
-    @PostMapping("/register")
-    public String register(@ModelAttribute("user") User user, Model model) {
-        try {
-            user.setPassword(passwordEncoder.encode(user.getPassword())); // hash password
-            userRepository.save(user);
-            return "redirect:/loginBSF";
-        }
-        catch (Exception exception) {
-            model.addAttribute("user", user);
-            model.addAttribute("error", exception.getMessage());
-            return "register";
-        }
-        
-    }
-
     // DTO for login binding
     public static class LoginRequest {
         private String username;
