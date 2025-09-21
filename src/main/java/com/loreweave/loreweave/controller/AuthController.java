@@ -6,7 +6,12 @@
 ///  Updated By: Jamie Coker on 9/21/2025
 ///  Update Notes: Integrated password encoding + JWT response.
 ///         Combined Thymeleaf views + REST API in one controller.
-/// Updated By:
+/// Updated By: Wyatt Bechtle - 9/21/2025
+///             Updated the mapping to register
+///                 Added try catch for failure registering
+///                 Updated to accept data from Thymeleaf
+///             Updated restController to Controller for Thymeleaf models use
+///             Removed login mapping
 /// ==========================================
 package com.loreweave.loreweave.controller;
 
@@ -18,6 +23,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 //import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import com.loreweave.loreweave.model.User;
@@ -28,7 +34,7 @@ import org.springframework.ui.Model;
 
 
 @Controller
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
 
     private final AuthenticationManager authManager;
@@ -53,33 +59,18 @@ public class AuthController {
 
     //  Registration API (POST)
     @PostMapping("/register")
-    @ResponseBody
-    public ResponseEntity<String> register(@RequestBody User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-        return ResponseEntity.ok("User registered successfully!");
-    }
-
-    //  Login page (GET)
-    @GetMapping("/login")
-    public String showLoginForm(Model model) {
-        model.addAttribute("loginRequest", new LoginRequest());
-        return "loginBSF"; // resolves templates/loginBSF.html
-    }
-
-    //  Login API (POST)
-    @PostMapping("/login")
-    @ResponseBody
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-        Authentication auth = authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
-                        loginRequest.getPassword()
-                )
-        );
-
-        String token = jwtService.generateToken(auth.getName());
-        return ResponseEntity.ok(token);
+    public String register(@ModelAttribute("user") User user, Model model) {
+        try {
+            user.setPassword(passwordEncoder.encode(user.getPassword())); // hash password
+            userRepository.save(user);
+            return "redirect:/loginBSF";
+        }
+        catch (Exception exception) {
+            model.addAttribute("user", user);
+            model.addAttribute("error", exception.getMessage());
+            return "register";
+        }
+        
     }
 
     // DTO for login binding

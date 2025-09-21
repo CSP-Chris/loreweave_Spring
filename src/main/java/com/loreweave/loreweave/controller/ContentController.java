@@ -4,13 +4,15 @@
 // Purpose: Handles HTTP requests.
 
 
-// Updated By: <name> on <date>
+// Updated By: Wyatt Bechtle on 9/21/2025
+//              Added a model object to the register mapping
 package com.loreweave.loreweave.controller;
 
 import com.loreweave.loreweave.model.User;
 import com.loreweave.loreweave.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 //import org.springframework.web.bind.annotation.RequestParam;
@@ -32,7 +34,8 @@ public class ContentController {
     }
 
     @GetMapping("/register")
-    public String register() {
+    public String register(Model model) {
+        model.addAttribute("user", new User());
         return "register";
     }
 
