@@ -11,7 +11,9 @@ How the Project Meets Requirements
 • Transactions: Each submitted story turn is a recorded transaction. Lore point awards also act as micro-transactions.
 • Database: Planned tables include Users, Characters, Stories, Story_Turns, Lore_Points_Ledger, and potential quest/achievement tables—exceeding the minimum five-table requirement.
 Contributions Since the Last Meeting
+
 Jamie:
+
 JWT Security Implementation
 • Added SecurityConfig.java with stateless session handling and JWT filter.
 • Built JwtService for token generation, validation, and username extraction.

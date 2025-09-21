@@ -34,6 +34,7 @@ Week 1: Updated pom.xml to target Java 17 and ensured compatibility with Spring 
         Ensured the application now builds successfully and can run with JWT authentication enabled.
 
 Learning Experience
+
         This week deepened my understanding of Spring Security with JWT and the importance of clean dependency management.
         Resolving merge conflicts reinforced best practices for collaborative Git workflows. Configuring the H2 database
         and Hibernate taught me effective strategies for rapid testing and schema resets. Overall, I gained practical
