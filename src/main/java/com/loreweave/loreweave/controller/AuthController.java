@@ -50,7 +50,23 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    //  Registration page (GET)
+    // Register new user
+    @PostMapping("/register")
+    public String register(@ModelAttribute("user") User user, Model model) {
+        try {
+            user.setPassword(passwordEncoder.encode(user.getPassword())); // hash password
+            userRepository.save(user);
+            return "redirect:/loginBSF";
+        }
+        catch (Exception exception) {
+            model.addAttribute("user", user);
+            model.addAttribute("error", exception.getMessage());
+            return "register";
+        }
+        
+    }
+
+    //  Provide model for Thymeleaf register form
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
         model.addAttribute("user", new User());
