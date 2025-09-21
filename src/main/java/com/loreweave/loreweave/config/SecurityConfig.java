@@ -1,3 +1,6 @@
+package com.loreweave.loreweave.config;
+
+
 /*
  This has to go here or there's an error loading the beans
  ==========================================
@@ -10,10 +13,11 @@
  Update Notes: Integrated JwtAuthenticationFilter, enforced stateless
                sessions, configured /api/auth/** as public, and added
                BCryptPasswordEncoder bean.
- ==========================================
-*/
+  Updated By: Jamie Coker on 9/21/2025
+  Update Notes: Configured authenticationManager, JWT filter, password encoder.
+ */
 
-package com.loreweave.loreweave.config;
+
 
 import com.loreweave.loreweave.security.filter.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
@@ -48,6 +52,9 @@ public class SecurityConfig {
                         .requestMatchers("/", "/loginBSF", "/register", "/c", "/contributors.html", "/css/**", "/favicon.ico", "/api/auth/**","/h2-console/**").permitAll()
                         .anyRequest().authenticated()
                 )
+                // Use stateless sessions (JWT)
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // Add JWT filter before username-password filter
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

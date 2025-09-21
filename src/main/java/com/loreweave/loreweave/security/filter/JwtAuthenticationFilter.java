@@ -4,7 +4,6 @@
  * Created By:   Jamie Coker
  * Created On:   2025-09-15
  * Purpose:      Validates JWT tokens for each request
- *
  * Updated By:   Jamie Coker
  * Updated On:   2025-09-16
  * Update Notes: Fixed package, imports, replaced `var` with explicit type.
