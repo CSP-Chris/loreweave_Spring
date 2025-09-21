@@ -1,0 +1,8 @@
+==========================================
+ File Name:    <filename.ext>
+ Created By:   <Your Name>
+ Created On:   <YYYY-MM-DD>
+ Purpose:      <Short description of the file’s purpose>
+ Updated By:   <Name> on <YYYY-MM-DD> – <Summary of change>
+ Updated By:   <Name> on <YYYY-MM-DD> – <Summary of change>
+==========================================

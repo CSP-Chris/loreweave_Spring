@@ -13,10 +13,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@jakarta.persistence.Table(name = "`character`")
 public class Character {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String description;
@@ -26,7 +27,7 @@ public class Character {
     @OneToOne
     @JoinColumn(name = "user_id") // foreign key needs table
     @JsonBackReference
-    public User user;
+    private User user;
 
     protected Character() {}
 
