@@ -1,26 +1,84 @@
-Group Members:
-    Jamie Coker, Wyatt Bechtle & Chris Ennis (Milestone 1 PM)
+Status Report 1
+Loreweave Project Report
+**Group Members:**
+Jamie Coker, Wyatt Bechtle & Chris Ennis (Milestone 1 PM)
+Project Overview
+Our project, Loreweave, is a community-based story-weaving platform where users collaboratively create characters and narratives. Each story is built piece-by-piece as players take turns adding “story turns,” enabling a dynamic, shared storytelling experience.
+How the Project Meets Requirements
+• User Authentication: Players securely log in and create character profiles.
+• User Profile: Each player maintains a profile showing created characters, active stories, contributions, and earned lore points—a voting system for rating stories. Profiles are editable by the player.
+• Messaging: Communication occurs through story-turn submissions and voting interactions tied to lore points.
+• Transactions: Each submitted story turn is a recorded transaction. Lore point awards also act as micro-transactions.
+• Database: Planned tables include Users, Characters, Stories, Story_Turns, Lore_Points_Ledger, and potential quest/achievement tables—exceeding the minimum five-table requirement.
+Contributions Since the Last Meeting
 
-Project idea:
-    Loreweave - It's a community based story weaver where users create characters and stories. Stories are added to piece-by-piece by different players.
+Jamie:
 
-How it meets the requirements:
-    User Authentication: Players login in and create character profiles
-    User Profile: Each player has a profile showing their created character, active stories, story contributions, and earned "lore points." (Voting system for rating stories) Profiles will be editable by the player.
-    Messaging: The addition of story turns and voting communication via lore points.
-    Transactions: The transaction is the submission of a "story turn." Players take turns adding to the narrative, and these submissions are tracked. Lore point could also be seen as transactions.
-    Database: Would require tables for Users, Characters, Stories, Story_Turns, Lore_Points_Ledger, and potentially other quests or achievements tied to lore points.
+JWT Security Implementation
+• Added SecurityConfig.java with stateless session handling and JWT filter.
+• Built JwtService for token generation, validation, and username extraction.
+• Created JwtAuthenticationFilter to validate tokens on requests.
+• Implemented CustomUserDetailsService to load user credentials from the database.
+• Integrated BCryptPasswordEncoder for secure password hashing.
+• Developed AuthController with /api/auth/login to authenticate users and return JWT tokens.
+Repository & Entity Updates
+• Verified and updated User entity and UserRepository to ensure database authentication works.
+• Resolved merge conflicts in application.properties and pom.xml, merging Spring Security, Thymeleaf, and Actuator dependencies.
 
-What tools are you using?
-    Java Spring Boot - Maven - H2 Database - Oauth2(?)
+These changes allow the application to build successfully and run with fully enabled JWT authentication.
+Learning Experience
+This week deepened my understanding of Spring Security with JWT and the importance of clean dependency management. Resolving merge conflicts reinforced best practices for collaborative Git workflows. Configuring the H2 database and Hibernate taught me effective strategies for rapid testing and schema resets. Overall, I gained practical experience in backend authentication and team-based development that will benefit future milestones.
+Chris:
+Initial Project Setup and Frontend Foundation:
+    - Created the initial project structure and set up the GitHub repository.
+    - Authored the foundational frontend files, including welcome.html, contributors.html, and the corresponding styles.css to establish a consistent look and feel for the project.
+Database Architecture and Implementation:
+    - Architected and managed all database-related tasks.
+    - Initially configured the project with an embedded H2 database for rapid prototyping and development.
+    - Led the transition from the H2 database to a more robust, remote MySQL database hosted on ifastnet.com, which involved updating connection properties and ensuring data integrity.
+    - Designed and implemented all JPA (Java Persistence API) entities, creating the object-relational mapping for all database tables. This includes the `User`, `Story`, `StoryPart`, `Character`, and `LoreVote` entities.
+Domain and Deployment:
+    - Purchased the domain loreweave.app for the project.
+    - Began the process of learning and implementing the necessary steps to connect the Spring Boot application to the purchased domain, paving the way for a publicly accessible application.
+Learning Experience:
+I learned a lot about Spring Boot specifically how to use databases and control the framework with maven and various settings found within applications.properties and the pom.xml file.
+Wyatt:
+I started off researching frontend frameworks that work well with Spring Boot. After considering a few different options, I chose Thymeleaf. I spent a few days learning more about how to use Thymeleaf’s. Java template engine. Then I researched how to style the html, i.e., CSS files within a static resource or Bootstrap. I had yet to utilize Bootstrap, so I chose Bootstrap and began learning more about it.
+Once I knew how to do the basics, I completed the following tasks:
+1) Integrated Thymeleaf into the Maven pom.xml
+      a) Added two dependencies to allow for the use of Thymeleaf
+2) Created the ContentController to handle HTTP requests
+      a) Mapped login, register, and welcome pages
+      b) Moved mapping from HomePageController to ContentController
+3) Updated main method in LoreWeaveApplication
+      a) Change the Header to standard form
+4) Created associated directories for Thymeleaf
+      a) directories for html and static resources
+      b) directory for Controller for HTTP request handling
+5) Created a login page
+      a) Utilized HTML and Bootstrap to make the login page with actionless forms (Next on To-Do)
+      b) Linked the webpage to a registration page
+6) Created a register page
+      a) Utilized HTML and Bootstrap to make the registration page with actionless forms (Next on To-Do)
+      b) Linked the webpage to a login page
+7) Hosted Zoom Meeting for team
 
-What will be accomplished by the next meeting:
-    Repo + DB design + Entities, JWT security config, Frontend scaffold + login UI
 
-Show off what you have so far:
-    https://github.com/CSP-Chris/loreweave_Spring
+Tools & Repository
+• Tech Stack: Java 21, Spring Boot 3, Maven, H2 Database (development), MySQL Database.
+• Source Control: https://github.com/CSP-Chris/loreweave_Spring
+• IDE and External Sites: IntelliJ IDEA Ultimate, ifastnet.com, porkbun.com, Slack and Zoom
 
-Also, each group member should be prepared to discuss what they worked on and what they are focusing on next:
-   Chris: Repo + DB design + Entities
-   Jamie: JWT security config
-   Wyatt: Frontend scaffold + login UI
+
+Team Effort
+Wyatt advanced the frontend interface and styling, while Chirs handled additional backend items, ensuring smooth integration of database logic and initial endpoints. Jamie build and implemented JWT Security.
+Next Steps
+By the next meeting we plan to complete all of Milestone 1, which includes:
+• Finalizing user registration and profile editing functionality.
+• Creating a basic dashboard shell to display logged-in user info.
+• Initial CI/CD configuration and database migrations for production use.
+Timeline & Milestones
+• Milestone 1 (Weeks 1-3): Core setup, user authentication, profile pages, and dashboard shell.
+• Milestone 2 (Weeks 4-6): In-app messaging, transactions (lore points), and complete dashboard with real-time features.
+• Milestone 3 (Weeks 7-9): Database expansion, responsive UI, analytics/logging, testing, and final deployment prep.
+
