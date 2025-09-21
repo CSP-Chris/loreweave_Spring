@@ -5,10 +5,12 @@
 /// Purpose:      Handles login requests and issues JWT tokens
 ///  Updated By: Jamie Coker on 9/21/2025
 ///  Update Notes: Integrated password encoding + JWT response.
+///         Combined Thymeleaf views + REST API in one controller.
 /// Updated By:
 /// ==========================================
 package com.loreweave.loreweave.controller;
 
+import org.springframework.stereotype.Controller;
 import com.loreweave.loreweave.repository.UserRepository;
 import com.loreweave.loreweave.security.jwt.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,8 +27,8 @@ import org.springframework.ui.Model;
 
 
 
-@RestController
-@RequestMapping("/api/auth")
+@Controller
+@RequestMapping("/auth")
 public class AuthController {
 
     private final AuthenticationManager authManager;
@@ -42,50 +44,53 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // Register new user
+    //  Registration page (GET)
+    @GetMapping("/register")
+    public String showRegisterForm(Model model) {
+        model.addAttribute("user", new User());
+        return "register"; // resolves templates/register.html
+    }
+
+    //  Registration API (POST)
     @PostMapping("/register")
+    @ResponseBody
     public ResponseEntity<String> register(@RequestBody User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword())); // hash password
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return ResponseEntity.ok("User registered successfully!");
     }
 
+    //  Login page (GET)
+    @GetMapping("/login")
+    public String showLoginForm(Model model) {
+        model.addAttribute("loginRequest", new LoginRequest());
+        return "loginBSF"; // resolves templates/loginBSF.html
+    }
 
-    //  Login existing user
-
+    //  Login API (POST)
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Map<String, String> loginRequest) {
+    @ResponseBody
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
         Authentication auth = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginRequest.get("username"),
-                        loginRequest.get("password")
+                        loginRequest.getUsername(),
+                        loginRequest.getPassword()
                 )
         );
 
-        // Generate and return token
         String token = jwtService.generateToken(auth.getName());
         return ResponseEntity.ok(token);
     }
 
-    //  Provide model for Thymeleaf register form
-    @GetMapping("/register")
-    public String showRegisterForm(Model model) {
-        model.addAttribute("user", new User());
-        return "register"; // resolves to register.html
-    }
-
-    // Replaced record with a simple DTO class for Java 8+ compatibility
+    // DTO for login binding
     public static class LoginRequest {
-        private String email;
+        private String username;
         private String password;
 
-        public String getEmail() { return email; }
-        public void setEmail(String email) { this.email = email; }
+        public String getUsername() { return username; }
+        public void setUsername(String username) { this.username = username; }
 
         public String getPassword() { return password; }
         public void setPassword(String password) { this.password = password; }
     }
-
-
 }
-
