@@ -33,43 +33,8 @@ Week 1: Updated pom.xml to target Java 17 and ensured compatibility with Spring 
 
         Ensured the application now builds successfully and can run with JWT authentication enabled.
 
-FROM STATUS REPORT 1 DOC:
-
-Contributions Since the Last Meeting
-This week I focused on backend setup and security:
-
-JWT Security Implementation
-• Added SecurityConfig.java with stateless session handling and JWT filter.
-• Built JwtService for token generation, validation, and username extraction.
-• Created JwtAuthenticationFilter to validate tokens on requests.
-• Implemented CustomUserDetailsService to load user credentials from the database.
-• Integrated BCryptPasswordEncoder for secure password hashing.
-• Developed AuthController with /api/auth/login to authenticate users and return JWT tokens.
-
-Repository & Entity Updates
-• Verified and updated User entity and UserRepository to ensure database authentication works.
-• Resolved merge conflicts in application.properties and pom.xml, merging Spring Security, Thymeleaf, and Actuator dependencies.
-
-These changes allow the application to build successfully and run with fully enabled JWT authentication.
-
-Team Effort
-Wyatt advanced the frontend interface and styling, while Chris handled additional backend items, ensuring smooth integration of database logic and initial endpoints.
-
-Next Steps -
-
-By the next meeting we plan to complete all of Milestone 1, which includes:
-• Finalizing user registration and profile editing functionality.
-• Creating a basic dashboard shell to display logged-in user info.
-• Initial CI/CD configuration and database migrations for production use.
-
-Timeline & Milestones
-• Milestone 1 (Weeks 1-3): Core setup, user authentication, profile pages, and dashboard shell.
-• Milestone 2 (Weeks 4-6): In-app messaging, transactions (lore points), and complete dashboard with real-time features.
-• Milestone 3 (Weeks 7-9): Database expansion, responsive UI, analytics/logging, testing, and final deployment prep.
-
-Tools & Repository
-• Tech Stack: Java 17, Spring Boot 3, Maven, H2 Database (development), OAuth2/JWT Security.
-• Source Control: https://github.com/CSP-Chris/loreweave_Spring
-
 Learning Experience
-This week deepened my understanding of Spring Security with JWT and the importance of clean dependency management. Resolving merge conflicts reinforced best practices for collaborative Git workflows. Configuring the H2 database and Hibernate taught me effective strategies for rapid testing and schema resets. Overall, I gained practical experience in backend authentication and team-based development that will benefit future milestones.
+        This week deepened my understanding of Spring Security with JWT and the importance of clean dependency management.
+        Resolving merge conflicts reinforced best practices for collaborative Git workflows. Configuring the H2 database
+        and Hibernate taught me effective strategies for rapid testing and schema resets. Overall, I gained practical
+        experience in backend authentication and team-based development that will benefit future milestones.
