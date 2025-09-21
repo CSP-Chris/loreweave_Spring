@@ -6,6 +6,9 @@
 
       Updated By: Jamie Coker on 9/21/2025
     Update Notes: Changed form action to Thymeleaf, added th:field bindings.
+
+      Updated By: Wyatt Bechtle on 9/21/2025
+    Update Notes: Updated form action to full path
 -->
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
@@ -21,7 +24,7 @@
   <body>
     <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center">
         <!--  Added th:object so username/email/password are resolvable -->
-        <form class="mb-3" th:action="@{/register}" th:object="${user}" method="post" novalidate>
+        <form class="mb-3" th:action="@{/api/auth/register}" th:object="${user}" method="post" novalidate>
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
                 <!--  Added th:field -->
@@ -34,7 +37,7 @@
             </div>
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
-            !--  Added th:field -->
+            <!--  Added th:field -->
             <input type="email"
                    class="form-control"
                    id="email"

@@ -5,7 +5,12 @@
 /// Purpose:      Handles login requests and issues JWT tokens
 ///  Updated By: Jamie Coker on 9/21/2025
 ///  Update Notes: Integrated password encoding + JWT response.
-/// Updated By:
+/// Updated By: Wyatt Bechtle - 9/21/2025
+///             Updated the mapping to register
+///                 Added try catch for failure registering
+///                 Updated to accept data from Thymeleaf
+///             Updated restController to Controller for Thymeleaf models use
+///             Removed login mapping
 /// ==========================================
 package com.loreweave.loreweave.controller;
 
@@ -16,6 +21,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 //import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import com.loreweave.loreweave.model.User;
@@ -25,7 +31,7 @@ import org.springframework.ui.Model;
 
 
 
-@RestController
+@Controller
 @RequestMapping("/api/auth")
 public class AuthController {
 
@@ -44,27 +50,18 @@ public class AuthController {
 
     // Register new user
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword())); // hash password
-        userRepository.save(user);
-        return ResponseEntity.ok("User registered successfully!");
-    }
-
-
-    //  Login existing user
-
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Map<String, String> loginRequest) {
-        Authentication auth = authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.get("username"),
-                        loginRequest.get("password")
-                )
-        );
-
-        // Generate and return token
-        String token = jwtService.generateToken(auth.getName());
-        return ResponseEntity.ok(token);
+    public String register(@ModelAttribute("user") User user, Model model) {
+        try {
+            user.setPassword(passwordEncoder.encode(user.getPassword())); // hash password
+            userRepository.save(user);
+            return "redirect:/loginBSF";
+        }
+        catch (Exception exception) {
+            model.addAttribute("user", user);
+            model.addAttribute("error", exception.getMessage());
+            return "register";
+        }
+        
     }
 
     //  Provide model for Thymeleaf register form

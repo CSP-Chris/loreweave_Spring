@@ -15,6 +15,8 @@ package com.loreweave.loreweave.config;
                BCryptPasswordEncoder bean.
   Updated By: Jamie Coker on 9/21/2025
   Update Notes: Configured authenticationManager, JWT filter, password encoder.
+  Updated by: Wyatt Bechtle on 9/21/2025
+  Update Notes: Added form login configuration, enable session for forms
  */
 
 
@@ -46,16 +48,21 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
-                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)) // Session-based for forms
                 .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/loginBSF", "/register", "/c", "/contributors.html", "/css/**", "/favicon.ico", "/api/auth/**","/h2-console/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                // Use stateless sessions (JWT)
-                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                //.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // Add JWT filter before username-password filter
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .formLogin(form -> form
+                    .loginPage("/loginBSF")
+                    .loginProcessingUrl("/loginBSF")
+                    .defaultSuccessUrl("/", true)
+                    .permitAll()
+                    );
 
         return http.build();
     }
