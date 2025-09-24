@@ -15,59 +15,59 @@ package com.loreweave.loreweave.config;
                BCryptPasswordEncoder bean.
   Updated By: Jamie Coker on 9/21/2025
   Update Notes: Configured authenticationManager, JWT filter, password encoder.
+  Updated By:   Jamie Coker on 9/25/2025
+ Update Notes: Removed JWT, switched to stateful session-based authentication
+               with Thymeleaf form login, custom login/logout pages, and
+               session cookie handling.
  */
 
 
 
-import com.loreweave.loreweave.security.filter.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
 
-    private final JwtAuthenticationFilter jwtFilter;
-
-    public SecurityConfig(JwtAuthenticationFilter jwtFilter) {
-        this.jwtFilter = jwtFilter;
-    }
-
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
-                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/loginBSF", "/register", "/c", "/contributors.html", "/css/**", "/favicon.ico", "/api/auth/**","/h2-console/**").permitAll()
+                        .requestMatchers("/register", "/loginBSF", "/css/**", "/js/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                // Use stateless sessions (JWT)
-                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // Add JWT filter before username-password filter
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .formLogin(form -> form
+                        .loginPage("/loginBSF")       // your custom login page
+                        .loginProcessingUrl("/login") // Spring Security handles POST here
+                        .defaultSuccessUrl("/welcome", true)
+                        .failureUrl("/loginBSF?error=true")
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/loginBSF?logout=true")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll()
+                )
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                );
 
         return http.build();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Used to hash and verify passwords
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
+        return new BCryptPasswordEncoder();
     }
 
 }

@@ -7,6 +7,8 @@
     Purpose: Maven build file for Loreweave Spring Boot application
     Updated By: Jamie Coker on 9/21/2025
     Update Notes: Added Thymeleaf for frontend
+    Updated By: Jamie Coker on 9/24/2025
+    Update Notes: Removed JWT dependencies
 -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -72,26 +74,7 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- JWT -->
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-api</artifactId>
-            <version>0.11.5</version>
-        </dependency>
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-impl</artifactId>
-            <version>0.11.5</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-jackson</artifactId>
-            <version>0.11.5</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <!-- Lombok (optional, but very handy) -->
+              <!-- Lombok (optional, but very handy) -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
