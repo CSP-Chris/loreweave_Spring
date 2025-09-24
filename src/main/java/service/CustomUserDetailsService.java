@@ -8,7 +8,7 @@
 /// Update Note:  Added Spring Security UserDetails builder with
 ///               authorities to resolve “cannot find symbol” compile errors.
 /// ==========================================
-package com.loreweave.loreweave.security.service;
+package service;
 
 import com.loreweave.loreweave.model.User;
 import com.loreweave.loreweave.repository.UserRepository;
