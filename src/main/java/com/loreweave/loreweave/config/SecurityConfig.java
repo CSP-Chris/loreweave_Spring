@@ -19,7 +19,7 @@ package com.loreweave.loreweave.config;
  Update Notes: Removed JWT, switched to stateful session-based authentication
                with Thymeleaf form login, custom login/logout pages, and
                session cookie handling.
-  Updated By:   Chris Ennis
+  Updated By:   Chris Ennis on 9/24/2025
   Update Notes: Added /auth/register to permitAll() to fix login redirect loop.
  */
 

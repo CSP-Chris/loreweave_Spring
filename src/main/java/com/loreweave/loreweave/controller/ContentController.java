@@ -9,7 +9,7 @@ package com.loreweave.loreweave.controller;
 
 import com.loreweave.loreweave.model.User;
 import com.loreweave.loreweave.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
