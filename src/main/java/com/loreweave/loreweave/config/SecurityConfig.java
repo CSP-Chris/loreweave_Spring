@@ -19,6 +19,8 @@ package com.loreweave.loreweave.config;
  Update Notes: Removed JWT, switched to stateful session-based authentication
                with Thymeleaf form login, custom login/logout pages, and
                session cookie handling.
+  Updated By:   Chris Ennis
+  Update Notes: Added /auth/register to permitAll() to fix login redirect loop.
  */
 
 
@@ -41,7 +43,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register", "/loginBSF", "/css/**", "/js/**").permitAll()
+                        .requestMatchers("/auth/register", "/register", "/loginBSF", "/css/**", "/js/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

@@ -7,6 +7,8 @@
     Purpose: Maven build file for Loreweave Spring Boot application
     Updated By: Jamie Coker on 9/21/2025
     Update Notes: Added Thymeleaf for frontend
+    Updated By: Chris Ennis
+    Update Notes: Removed duplicate dependency to fix build warning.
     Updated By: Jamie Coker on 9/24/2025
     Update Notes: Removed JWT dependencies
 -->
@@ -97,10 +99,6 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
