@@ -21,7 +21,10 @@ package com.loreweave.loreweave.config;
                session cookie handling.
   Updated By:   Chris Ennis on 9/24/2025
   Update Notes: Added /auth/register to permitAll() to fix login redirect loop.
+  Updated By:   Jamie Coker on 2025-09-26
+ Update Notes: extended static resource paths (CSS, JS, images, favicon).
  */
+
 
 
 
@@ -43,7 +46,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/register", "/register", "/loginBSF", "/css/**", "/js/**").permitAll()
+                        .requestMatchers("/auth/register", "/register", "/loginBSF",
+                                "/css/**", "/js/**","/images/**", "/webjars/**", "/favicon.ico"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -69,6 +74,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+
         return new BCryptPasswordEncoder();
     }
 

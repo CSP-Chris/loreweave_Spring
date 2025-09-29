@@ -7,6 +7,9 @@
 /// Updated On:   2025-09-16
 /// Update Note:  Added Spring Security UserDetails builder with
 ///               authorities to resolve “cannot find symbol” compile errors.
+/// Updated By:   Jamie Coker on 2025-09-23
+///  Update Notes: integrated with session-based
+///                authentication instead of JWT.
 /// ==========================================
 package service;
 
@@ -37,10 +40,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
                 .password(user.getPassword())
-                .authorities("ROLE_USER")
+                .roles("USER") // ✅ Hardcoded role
                 .build();
-
-
-
     }
 }
