@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/api/auth")
-@RequestMapping("/api/auth")
 public class AuthController {
 
     private final UserRepository userRepository;
