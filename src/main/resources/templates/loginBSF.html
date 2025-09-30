@@ -10,6 +10,13 @@
     Updated By: Chris Ennis on 9/24/2025
     Update Notes: Corrected registration link to point to /auth/register.
 
+    Updated By: Wyatt Bechtle on 9/27/2025
+    Update Notes: Updated the styling and interaction of the form
+                  Added CSRF protection
+                  Added checkbox to show password
+                  Created JS to toggle PW visibility
+                  Integrated remember-me with Spring Security
+
 -->
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
@@ -21,54 +28,77 @@
           rel="stylesheet" 
           integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" 
           crossorigin="anonymous">
+    <!-- Bootstrap icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+          rel="stylesheet">
   </head>
   <body>
     <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center">
         <!--  Changed: added th:action + method -->
-        <form class="mb-3" th:action="@{/loginBSF}" method="post">
-        
-        <div class="mb-3">
-          <label for="username" class="form-label">Username</label>
+        <form class="mb-3 p-4 p-md-5 bg-body-tertiary border rounded-3" 
+              th:action="@{/loginBSF}" 
+              method="post">
+          <input type="hidden"
+                 th:if="${_csrf != null}"
+                 th:name="${_csrf.parameterName}"
+                 th:value="${_csrf.token}" />
+          <h1 class="h3 text-center mb-4">
+            <i class="bi bi-door-open me-2"></i>Sign in
+          </h1>
+          <!--  Username -->
+          <label for="username" 
+                 class="form-label">Username</label>
           <input type="text" 
-                 class="form-control form-control-lg" 
+                 class="form-control mb-3" 
                  id="username" 
                  name="username" 
                  placeholder="Username" 
                  required>
-        </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
+          <!-- Password -->
+          <label for="password" 
+                 class="form-label">Password</label>
           <input type="password" 
                  class="form-control" 
                  id="password" 
                  name="password" 
                  placeholder="Password" 
                  required>
+          <div class="form-check my-2">
+            <label class="form-check-label" for="showPW">Show password</label>
+            <input class="form-check-input" type="checkbox" id="showPW">
+          </div>
+          <div class="form-check mb-3">
+            <label class="form-check-label" 
+                   for="rememberMe">Remember me</label>
+            <input type="checkbox" 
+                   class="form-check-input" 
+                   id="rememberMe" 
+                   name="remember-me">
+          </div>
+        <div th:if="${param.error}" 
+             class="alert alert-danger" 
+             role="alert">Invalid Username or Password
         </div>
-        <div class="mb-3 form-check">
-          <label class="form-check-label" for="rememberMe">Remember me</label>
-          <input type="checkbox" 
-                 class="form-check-input" 
-                 id="rememberMe" 
-                 name="rememberMe">
-        </div>
-        <a class="link-secondary" href="/forgot-password">Forgot password?</a>
-
-        <div th:if="${param.error}" class="alert alert-danger" role="alert">
-          Invalid Username or Password
-        </div>
-
-        <button type="submit" class="btn btn-primary">Sign in</button>
-
-        <p class="text-center mt-3 mb-0 text-secondary">
-          New to Loreweave? <a class="link-light" href="/auth/register">Create an account</a>
+        <button type="submit" 
+                class="btn btn-primary w-100 mb-3">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Sign in
+        </button>
+        <p class="text-center mb-0 text-secondary">
+          New to Loreweave? <a class="link-light" 
+                               href="/auth/register">Create an account</a>
         </p>
       </form>
     </div>
-        
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
             integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
             crossorigin="anonymous">
+    </script>
+    <!-- Toggles password visibility -->
+    <script>
+      const password = document.getElementById('password');
+      const checkbox = document.getElementById('showPW');
+      checkbox?.addEventListener('change', () => {password.type = checkbox.checked ? 'text' : 'password';});
     </script>
   </body>
 </html>
