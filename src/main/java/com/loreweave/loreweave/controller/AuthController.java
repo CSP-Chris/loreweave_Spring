@@ -25,7 +25,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
 
     private final UserRepository userRepository;
