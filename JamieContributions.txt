@@ -39,3 +39,24 @@ Learning Experience
         Resolving merge conflicts reinforced best practices for collaborative Git workflows. Configuring the H2 database
         and Hibernate taught me effective strategies for rapid testing and schema resets. Overall, I gained practical
         experience in backend authentication and team-based development that will benefit future milestones.
+Week 2 & 3:
+Backend & Security Updates
+•	Replaced JWT stateless authentication with stateful session-based authentication integrated with Spring Security and Thymeleaf.
+•	Configured SecurityConfig.java to handle custom login/logout, session cookies, and redirect handling.
+•	Updated AuthController.java to focus only on user registration (login/logout now fully managed by Spring Security).
+•	Updated CustomUserDetailsService.java to load users from the database and apply a default USER role without requiring a roles table.
+•	Removed unused JWT files (JwtService, JwtAuthenticationFilter) and cleaned up imports/dependencies in pom.xml.
+•	Secured static resources (/css/**, /js/**, /images/**, /favicon.ico) to ensure proper page rendering without login issues.
+•	Strengthened database configuration in application.properties and prepared for environment variable integration.
+Frontend Integration
+•	Connected Thymeleaf login (loginBSF.html) and registration (register.html) pages with the new Spring Security session-based backend.
+•	Verified redirects: successful login goes to /welcome, failed login redirects with error flag.
+DevOps & CI/CD
+•	Added a GitHub Actions CI workflow (maven-ci.yml) to automatically run Maven build and tests on each push/PR.
+•	Structured .github/workflows folder in the repo and confirmed integration with GitHub Actions.
+•	Started preparations for environment variable usage (DB_USER, DB_PASS) in CI/CD pipelines.
+✅ Current Status (End of Milestone 1)
+•	User can register, log in, and log out via the browser.
+•	Session-based authentication works correctly with Spring Security.
+•	Frontend pages (login, register, welcome) are integrated with backend.
+•	CI pipeline in place with GitHub Actions running Maven build/tests.
