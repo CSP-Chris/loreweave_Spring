@@ -23,6 +23,11 @@ package com.loreweave.loreweave.config;
   Update Notes: Added /auth/register to permitAll() to fix login redirect loop.
   Updated By:   Jamie Coker on 2025-09-26
  Update Notes: extended static resource paths (CSS, JS, images, favicon).
+ Updated By: Wyatt Bechtle on 10/02/2025
+ Update Notes: Changed defaultSuccessUrl to /profile
+               Changed loginBSF->login
+               Added in remember me functionality
+               Added authenticationProvider bean for custom user details service
  */
 
 
@@ -36,6 +41,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import com.loreweave.loreweave.security.CustomUserDetailsService;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 
 
 @Configuration
@@ -43,27 +50,34 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http,
+                                                   DaoAuthenticationProvider authProvider) throws Exception {
         http
+                .authenticationProvider(authProvider)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("api/auth/register", "/register", "/loginBSF",
+                        .requestMatchers("/api/auth/register", "/register", "/login",
                                 "/css/**", "/js/**","/images/**", "/webjars/**", "/favicon.ico"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/loginBSF")
-                        .loginProcessingUrl("/login") // Spring Security handles POST here
-                        .defaultSuccessUrl("/welcome", true)
-                        .failureUrl("/loginBSF?error=true")
+                        .loginPage("/login")       
+                        .loginProcessingUrl("/login") 
+                        .defaultSuccessUrl("/profile", true)
+                        .failureUrl("/login?error=true")
                         .permitAll()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/loginBSF?logout=true")
+                        .logoutSuccessUrl("/login?logout=true")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                         .permitAll()
+                )
+                .rememberMe(rm -> rm
+                        .rememberMeParameter("remember-me")
+                        .key("change-me-in-config")
+                        .tokenValiditySeconds(86400) // 1 day
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
@@ -76,6 +90,14 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
 
         return new BCryptPasswordEncoder();
+    }
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider(CustomUserDetailsService uds,
+                                                            PasswordEncoder encoder) {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(uds);
+        provider.setPasswordEncoder(encoder);
+        return provider;
     }
 
 }

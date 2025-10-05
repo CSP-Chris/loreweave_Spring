@@ -17,6 +17,9 @@
                   Created JS to toggle PW visibility
                   Integrated remember-me with Spring Security
 
+    Updated By: Wyatt Bechtle on 10/04/2025
+    Update Notes: Changed loginBSF -> login
+
 -->
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
@@ -36,7 +39,7 @@
     <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center">
         <!--  Changed: added th:action + method -->
         <form class="mb-3 p-4 p-md-5 bg-body-tertiary border rounded-3" 
-              th:action="@{/loginBSF}" 
+              th:action="@{/login}" 
               method="post">
           <input type="hidden"
                  th:if="${_csrf != null}"
