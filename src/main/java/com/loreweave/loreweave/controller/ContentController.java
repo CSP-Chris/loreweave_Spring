@@ -6,10 +6,14 @@
 
 // Updated By: Wyatt Bechtle on 9/21/2025
 //              Added a model object to the register mapping
+// Updated By: Wyatt Bechtle on 10/03/2025
+//              Added password encoding to the register post mapping
 package com.loreweave.loreweave.controller;
 
 import com.loreweave.loreweave.model.User;
 import com.loreweave.loreweave.repository.UserRepository;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,14 +27,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class ContentController {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public ContentController(UserRepository userRepository) {
+    public ContentController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+
     }
 
-    @GetMapping("/loginBSF")
+    @GetMapping("/login")
     public String login() {
-        return "loginBSF";
+        return "login";
     }
 
     @GetMapping("/register")
@@ -41,8 +48,9 @@ public class ContentController {
 
     @PostMapping("/register")
     public String register(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-        return "redirect:/loginBSF";
+        return "redirect:/login";
     }
 
 

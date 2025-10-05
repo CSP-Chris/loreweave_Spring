@@ -10,8 +10,10 @@
 /// Updated By:   Jamie Coker on 2025-09-23
 ///  Update Notes: integrated with session-based
 ///                authentication instead of JWT.
+/// Updated By:   Wyatt on 2025-10-04
+///  Update Notes: Moved file into a security package for Spring Boot to find it.
 /// ==========================================
-package service;
+package com.loreweave.loreweave.security;
 
 import com.loreweave.loreweave.model.User;
 import com.loreweave.loreweave.repository.UserRepository;
@@ -40,7 +42,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
                 .password(user.getPassword())
-                .roles("USER") // ✅ Hardcoded role
+                .roles("USER") 
                 .build();
     }
 }
