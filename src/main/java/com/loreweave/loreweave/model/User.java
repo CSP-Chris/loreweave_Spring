@@ -1,10 +1,9 @@
 /// ==========================================
 /// File Name:    User.java
-/// Created By:   Jamie Coker
+/// Created By:   Chris Ennis
 /// Created On:   2025-09-15
-/// Purpose:      Entity representing application users
-/// Updated By:
-/// Updated By:
+/// Purpose:      JPA file that creates the User entity
+/// Update History: I believe that Jamie also created a version of this page, but they are combined.
 /// ==========================================
 package com.loreweave.loreweave.model;
 
@@ -20,10 +19,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = true)
+    @Column()
     private String firstName;
 
-    @Column(nullable = true)
+    @Column()
     private String lastName;
 
     @Column(unique = true, nullable = false)

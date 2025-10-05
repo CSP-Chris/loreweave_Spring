@@ -52,7 +52,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/loginBSF")       // your custom login page
+                        .loginPage("/loginBSF")
                         .loginProcessingUrl("/login") // Spring Security handles POST here
                         .defaultSuccessUrl("/welcome", true)
                         .failureUrl("/loginBSF?error=true")

@@ -1,3 +1,11 @@
+/// ==========================================
+/// File Name:    LoreVote.java
+/// Created By:   Chris Ennis
+/// Created On:   2025-09-15
+/// Purpose:      JPA file that creates the LoreVote entity
+/// Update History:
+/// ==========================================
+
 package com.loreweave.loreweave.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
