@@ -34,5 +34,8 @@ public class User {
     @Column(nullable = false)
     private String username;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Character character;
+
 }
 
