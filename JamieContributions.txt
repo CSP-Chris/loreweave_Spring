@@ -55,8 +55,28 @@ DevOps & CI/CD
 •	Added a GitHub Actions CI workflow (maven-ci.yml) to automatically run Maven build and tests on each push/PR.
 •	Structured .github/workflows folder in the repo and confirmed integration with GitHub Actions.
 •	Started preparations for environment variable usage (DB_USER, DB_PASS) in CI/CD pipelines.
-✅ Current Status (End of Milestone 1)
+Current Status (End of Milestone 1)
 •	User can register, log in, and log out via the browser.
 •	Session-based authentication works correctly with Spring Security.
 •	Frontend pages (login, register, welcome) are integrated with backend.
 •	CI pipeline in place with GitHub Actions running Maven build/tests.
+
+
+Milestone 2
+    Week 1:
+
+    Focus: Transactions and Security
+
+    Added new Transaction, TransactionRepository, TransactionService, and TransactionController files to support user-to-user point transfers.
+
+    Updated SecurityConfig.java to secure /api/transactions/** and keep session-based login and logout working.
+
+    Created LoreVoteRepository.java and VoteController.java to start the voting system for story parts.
+
+    Connected voting to TransactionService so users can earn or spend points when voting.
+
+    Fixed build issues in VoteController and synced database entity changes.
+
+    Added WebSocketConfig.java to prepare for messaging and real-time updates in later milestones.
+
+    Verified that all new API routes require login and the project builds successfully in Maven.
