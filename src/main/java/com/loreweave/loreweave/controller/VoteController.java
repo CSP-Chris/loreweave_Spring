@@ -7,6 +7,9 @@ package com.loreweave.loreweave.controller;
  Created On:   2025-10-10
  Purpose:      Allows authenticated users to cast votes on StoryParts.
                Integrated with LoreVote entity and TransactionService.
+    Updated By:   Jamie Coker on 2025-10-12
+/// Update Notes: Removed TransactionService calls and added direct
+///               transaction tracking to LoreVote entity.
  ==========================================
  */
 
@@ -14,11 +17,9 @@ import com.loreweave.loreweave.model.LoreVote;
 import com.loreweave.loreweave.model.LoreVote.VoteType;
 import com.loreweave.loreweave.model.StoryPart;
 import com.loreweave.loreweave.model.User;
-import com.loreweave.loreweave.model.Transaction;
 import com.loreweave.loreweave.repository.LoreVoteRepository;
 import com.loreweave.loreweave.repository.StoryPartRepository;
 import com.loreweave.loreweave.repository.UserRepository;
-import com.loreweave.loreweave.service.TransactionService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -33,16 +34,13 @@ public class VoteController {
     private final LoreVoteRepository loreVoteRepository;
     private final StoryPartRepository storyPartRepository;
     private final UserRepository userRepository;
-    private final TransactionService transactionService;
 
     public VoteController(LoreVoteRepository loreVoteRepository,
                           StoryPartRepository storyPartRepository,
-                          UserRepository userRepository,
-                          TransactionService transactionService) {
+                          UserRepository userRepository) {
         this.loreVoteRepository = loreVoteRepository;
         this.storyPartRepository = storyPartRepository;
         this.userRepository = userRepository;
-        this.transactionService = transactionService;
     }
 
     /**
@@ -60,32 +58,22 @@ public class VoteController {
         StoryPart storyPart = storyPartRepository.findById(storyPartId)
                 .orElseThrow(() -> new RuntimeException("Story part not found"));
 
-        // Prevent duplicate votes
         Optional<LoreVote> existing = loreVoteRepository.findByStoryPartAndVoter(storyPart, voter);
         if (existing.isPresent()) {
             return "You have already voted on this story part.";
         }
 
-        // Create and save new vote
+        // Create new vote (with embedded transaction)
         LoreVote vote = new LoreVote(storyPart, voter, type);
+
+        // 🔽 ADD: merged transaction logic directly into LoreVote
+        vote.setAmount(type == VoteType.POSITIVE ? 1.0 : 0.0);
+        vote.setReceiverId(storyPart.getAuthor().getId()); // assumes StoryPart has getAuthor()
+        vote.setStatus("COMPLETED");
+
         loreVoteRepository.save(vote);
 
-        // Optional: reward author with a transaction (for POSITIVE votes)
-        if (type == VoteType.POSITIVE) {
-            Transaction tx = new Transaction();
-            tx.setSenderId(voter.getId());
-            tx.setReceiverId(1L); // TODO: replace with actual story author ID
-
-            //Once we identify which User owns each StoryPart, replace the above line:
-            //tx.setReceiverId(storyPart.getAuthor().getId());
-            //That will make the point-reward system dynamic.
-
-            tx.setAmount(1.0);
-            tx.setStatus("PENDING");
-            transactionService.createTransaction(tx);
-        }
-
-        return "Vote recorded successfully!";
+        return "Vote recorded and transaction completed!";
     }
 
     /**
@@ -101,7 +89,7 @@ public class VoteController {
     }
 
     /**
-     * Get all votes made by the logged-in user.
+     * Get all votes (with transaction data) made by the logged-in user.
      */
     @GetMapping("/myvotes")
     public List<LoreVote> getMyVotes() {

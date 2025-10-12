@@ -63,20 +63,24 @@ Current Status (End of Milestone 1)
 
 
 Milestone 2
-    Week 1:
+    Week 1: Focus: Transactions and Security
 
-    Focus: Transactions and Security
+Created Transaction.java, TransactionRepository, TransactionService, and TransactionController to handle point transfers between users.
 
-    Added new Transaction, TransactionRepository, TransactionService, and TransactionController files to support user-to-user point transfers.
+Built the foundation for the voting system by creating VoteController and LoreVoteRepository.
 
-    Updated SecurityConfig.java to secure /api/transactions/** and keep session-based login and logout working.
+Updated LoreVote.java to include point and transaction fields (amount, receiverId, status).
 
-    Created LoreVoteRepository.java and VoteController.java to start the voting system for story parts.
+Combined voting and transaction logic so each vote automatically rewards the story’s author.
 
-    Connected voting to TransactionService so users can earn or spend points when voting.
+Updated StoryPart.java to include an author field linked to the User entity.
 
-    Fixed build issues in VoteController and synced database entity changes.
+Simplified TransactionService for potential reporting use only.
 
-    Added WebSocketConfig.java to prepare for messaging and real-time updates in later milestones.
+Cleaned up SecurityConfig.java — removed /api/transactions/** and secured /api/votes/**.
 
-    Verified that all new API routes require login and the project builds successfully in Maven.
+Added WebSocketConfig.java to prepare for future messaging features.
+
+Verified that all new endpoints (/api/votes/**) require authentication and build runs successfully.
+
+    Week 2:

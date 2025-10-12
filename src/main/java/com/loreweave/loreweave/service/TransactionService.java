@@ -1,38 +1,20 @@
 package com.loreweave.loreweave.service;
 
-/*
- ==========================================
- File Name:    TransactionService.java
- Created By:   Jamie Coker
- Created On:   2025-10-10
- Purpose:      Business logic for processing user transactions.
- ==========================================
- */
+/// ==========================================
+/// File Name:    TransactionService.java
+/// Created By:   Jamie Coker
+/// Created On:   2025-10-10
+/// Purpose:      Simplified helper for financial logic if needed.
+/// Updated By:   Jamie Coker on 2025-10-12
+/// Update Notes: Deprecated direct transaction creation;
+///               all transactions now occur through LoreVote.
+/// ==========================================
 
-import com.loreweave.loreweave.model.Transaction;
-import com.loreweave.loreweave.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import java.util.List;
 
 @Service
 public class TransactionService {
 
-    private final TransactionRepository transactionRepository;
-
-    public TransactionService(TransactionRepository transactionRepository) {
-        this.transactionRepository = transactionRepository;
-    }
-
-    @Transactional
-    public Transaction createTransaction(Transaction tx) {
-        // Week 1 placeholder logic — just save
-        tx.setStatus("PENDING");
-        return transactionRepository.save(tx);
-    }
-
-    public List<Transaction> getUserTransactions(Long userId) {
-        return transactionRepository.findBySenderIdOrReceiverId(userId, userId);
-    }
+    // This service can be used later for analytics, reports, or totals.
+    // Transaction creation is now handled through LoreVoteController.
 }
-

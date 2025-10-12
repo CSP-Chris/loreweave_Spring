@@ -3,7 +3,9 @@
 /// Created By:   Chris Ennis
 /// Created On:   2025-09-15
 /// Purpose:      JPA file that creates the StoryPart entity
-/// Update History:
+/// Updated By:   Jamie Coker on 2025-10-12
+///Update Notes: Added author relationship (ManyToOne with User)
+///            to enable point rewards via LoreVote transactions.
 /// ==========================================
 
 package com.loreweave.loreweave.model;
@@ -40,6 +42,11 @@ public class StoryPart {
     private int partOrder;
 
     private LocalDateTime createdAt;
+
+// NEW: link to the author (User who wrote this story part)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id", nullable = false)
+    private User author;
 
     @OneToMany(mappedBy = "storyPart", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
