@@ -3,7 +3,9 @@
 /// Created By:   Chris Ennis
 /// Created On:   2025-09-15
 /// Purpose:      JPA file that creates the LoreVote entity
-/// Update History:
+/// Updated By:   Jamie Coker on 2025-10-12
+/// Update Notes: Integrated transaction data (amount, status, receiverId)
+///           to combine voting and transactions in one entity.
 /// ==========================================
 
 package com.loreweave.loreweave.model;
@@ -36,6 +38,17 @@ public class LoreVote {
     private VoteType voteType;
 
     private LocalDateTime createdAt;
+// NEW: transaction-related fields added for integration
+    @Column(nullable = false)
+    private double amount = 0.0; // value assigned to the vote
+
+    @Column(name = "receiver_id")
+    private Long receiverId; // who gets the reward (usually story author)
+
+    @Column(name = "status")
+    private String status = "COMPLETED"; // SUCCESS / FAILED / PENDING
+// Now each LoreVote doubles as a transaction record.
+
 
     protected LoreVote() {}
 

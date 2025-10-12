@@ -28,6 +28,9 @@ package com.loreweave.loreweave.config;
                Changed loginBSF->login
                Added in remember me functionality
                Added authenticationProvider bean for custom user details service
+ Updated By:   Jamie Coker on 2025-10-10
+ Update Notes: Secured /api/transactions/** endpoints for Milestone 2,
+               restricting access to authenticated users.
  */
 
 
@@ -88,9 +91,9 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public DaoAuthenticationProvider authenticationProvider(CustomUserDetailsService uds,
                                                             PasswordEncoder encoder) {
@@ -99,5 +102,4 @@ public class SecurityConfig {
         provider.setPasswordEncoder(encoder);
         return provider;
     }
-
 }
