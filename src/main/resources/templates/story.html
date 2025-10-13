@@ -1,0 +1,71 @@
+<!--
+    File Name: story.html
+    Created By: Wyatt Bechtle
+    Created On: 10/10/2025
+    Purpose: Template for displaying a story and its parts.
+
+    Updated By: 
+    Update Notes: 
+
+-->
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${story != null ? story.title : 'story'}">story</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" 
+          crossorigin="anonymous">
+    <!-- Bootstrap icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" 
+          rel="stylesheet">
+  </head>
+  <body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <!-- Story Details and Parts List -->
+    <div class="container-fluid py-4">
+      <h1 class="h3 mb-1" th:text="${story.title}">Story Title</h1>
+
+      <!-- Story Metadata -->
+      <p class="text-secondary small mb-4">
+        Created by
+        <span th:text="${(story.creator != null and story.creator.user != null) ? story.creator.user.username : 'unknown'}">creator</span>
+        ·
+        <span th:text="${(story.createdAt != null) ? #temporals.format(story.createdAt,'yyyy-MM-dd HH:mm') : '—'}">created</span>
+        · Updated
+        <span th:text="${(story.lastUpdatedAt != null) ? #temporals.format(story.lastUpdatedAt,'yyyy-MM-dd HH:mm') : '—'}">updated</span>
+      </p>
+
+      <!-- Story Description -->
+      <h2 class="h6 mb-2">Parts</h2>
+
+      <!-- Parts List -->
+      <ul class="list-group mb-3" th:if="${parts}" th:each="p : ${parts}">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a class="text-decoration-none" th:href="@{/story-parts/{id}(id=${p.id})}">
+            Part <span th:text="${p.partOrder}">1</span> —
+            <span th:text="${(p.contributor != null and p.contributor.user != null) ? p.contributor.user.username : 'unknown'}">user</span>
+          </a>
+          <small class="text-muted"
+                th:text="${(p.createdAt != null) ? #temporals.format(p.createdAt,'yyyy-MM-dd HH:mm') : '—'}">time</small>
+        </li>
+      </ul>
+
+      <!-- No Parts Notice -->
+      <p class="text-muted" th:if="${parts == null or #lists.isEmpty(parts)}">No parts yet.</p>
+
+      <!-- Add Part Button -->
+      <a class="btn btn-primary" th:href="@{/story-parts/new(storyId=${story.id})}">
+        <i class="bi bi-plus-lg me-1"></i>Add part
+      </a>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
+            crossorigin="anonymous"></script>
+  </body>
+</html>

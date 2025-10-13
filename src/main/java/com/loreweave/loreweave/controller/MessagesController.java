@@ -21,11 +21,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/messages")
-public class MessageController {
+public class MessagesController {
 
     private final NotificationService notificationService;
 
-    public MessageController(NotificationService notificationService) {
+    public MessagesController(NotificationService notificationService) {
         this.notificationService = notificationService;
     }
 

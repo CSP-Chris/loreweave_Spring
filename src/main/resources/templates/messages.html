@@ -1,21 +1,115 @@
 <!--
-/// ==========================================
-/// File Name:    messages.html
-/// Created By:   Wyatt Bechtle
-/// Created On:   2025-10-03
-/// Purpose:      Provides a messages page for the web application.
-///  Updated By: 
-///  Update Notes: 
-///
-/// ==========================================
-/// Placeholder for now
+    File Name: messages.html
+    Created By: Wyatt Bechtle
+    Created On: 10/02/2025
+    Purpose: To provide messaging capabilities to the loreweave application.
+
+    Updated By:   Wyatt Bechtle
+    Update Notes: Built the initial version of the messages.html template.
+
 -->
-<!doctype html><html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Messages</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"></head>
-<body class="bg-dark text-light">
-<div th:replace="~{fragments/navbar :: navbar}"></div>
-<main class="container my-4"><p>Messages coming soon…</p></main>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-</body></html>
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>messages</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" 
+          crossorigin="anonymous">
+    <!-- Bootstrap icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" 
+          rel="stylesheet">
+  </head>
+  <body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <div class="container-fluid py-4">
+      <h1 class="h3 mb-3">
+        <i class="bi bi-chat-dots me-2"></i>Messages
+      </h1>
+      <div class="row g-3">
+        <!-- Conversations List -->
+        <section class="col-12 col-lg-4">
+          <h2 class="h6 mb-2">Conversations</h2>
+          <ul class="list-group" 
+              th:if="${conversations}" 
+              th:each="c : ${conversations}">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <a class="text-decoration-none" 
+                 th:href="@{/messages/{id}(id=${c.id})}" 
+                 th:text="${c.otherPartyUsername}">username
+              </a>
+              <small class="text-muted" 
+                     th:text="${#temporals.format(c.lastMessageAt,'yyyy-MM-dd HH:mm')}">time
+              </small>
+            </li>
+          </ul>
+          <!-- No conversations notice -->
+          <p class="text-muted" 
+             th:if="${conversations == null or #lists.isEmpty(conversations)}">No conversations.
+          </p>
+        </section>
+        <!-- Active Conversation and Message Form -->
+        <section class="col-12 col-lg-8">
+          <h2 class="h6 mb-2" 
+              th:text="${activeConversation != null ? activeConversation.otherPartyUsername : 'Thread'}">Thread
+          </h2>
+          <!-- Messages Display -->
+          <div style="max-height:50vh;overflow:auto" 
+               class="bg-body-tertiary border rounded-3 p-3 mb-3">
+            <div th:each="n : ${messages}">
+              <div class="mb-2">
+                <div th:text="${n.message}">content</div>
+                <div class="small text-muted"
+                    th:text="${#temporals.format(n.createdAt,'yyyy-MM-dd HH:mm')}">time</div>
+              </div>
+            </div>
+            <!-- No messages notice -->
+            <p class="text-muted mb-0"
+              th:if="${messages == null or #lists.isEmpty(messages)}">No messages.</p>
+
+          </div>
+          <!-- Message Form -->
+          <form th:action="@{/messages/send}" 
+                method="post" 
+                class="bg-body-tertiary border rounded-3 p-3">
+            <!-- CSRF Token -->
+            <input type="hidden" 
+                   th:if="${_csrf != null}" 
+                   th:name="${_csrf.parameterName}" 
+                   th:value="${_csrf.token}">
+            <!-- To and Content Fields -->
+            <label for="to" 
+                   class="form-label">To</label>
+            <input id="to" 
+                   name="to" 
+                   class="form-control mb-2" 
+                   placeholder="username" 
+                   th:value="${activeConversation != null} ? activeConversation.otherPartyUsername : ''" 
+                   required>
+            <label for="content" 
+                   class="form-label">Message</label>
+            <textarea id="content" 
+                      name="content" 
+                      class="form-control mb-3" 
+                      rows="2" 
+                      placeholder="Type a message..." 
+                      required></textarea>
+            <!-- Submit Button -->
+            <button class="btn btn-primary" 
+                    type="submit">
+                <i class="bi bi-send me-2"></i>Send
+            </button>
+          </form>
+        </section>
+      </div>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
+            crossorigin="anonymous">
+    </script>
+  </body>
+</html>

@@ -5,11 +5,16 @@
 /// Purpose:      Repository interface for Story entity
 /// Update History:
 /// 
+/// 
+///  Updated By:     Wyatt Bechtle
+///  Update Notes:   queries added to fetch stories with creators and users
+///                  and by id
+/// 
 /// ==========================================
-/// Not 100% sure if the queries are optimal, but they work for now.
 package com.loreweave.loreweave.repository;
 
 import com.loreweave.loreweave.model.Story;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,6 +25,7 @@ import java.util.List;
 @Repository
 public interface StoryRepository extends JpaRepository<Story, Long> {
 
+    // Fetch stories created by a specific user
     @Query("""
            SELECT s
            FROM Story s
@@ -28,6 +34,7 @@ public interface StoryRepository extends JpaRepository<Story, Long> {
            """)
     List<Story> findStoriesCreatedByUser(@Param("userId") Long userId);
 
+    // Fetch stories where the user has contributed via StoryParts
     @Query("""
            SELECT DISTINCT sp.story
            FROM StoryPart sp
@@ -35,4 +42,24 @@ public interface StoryRepository extends JpaRepository<Story, Long> {
            ORDER BY sp.story.lastUpdatedAt DESC
            """)
     List<Story> findStoriesContributedByUser(@Param("userId") Long userId);
+
+    // Fetch stories with their creators and users, ordered by last updated timestamp
+    @Query("""
+           SELECT DISTINCT s
+           FROM Story s
+           LEFT JOIN FETCH s.creator c
+           LEFT JOIN FETCH c.user u
+           ORDER BY s.lastUpdatedAt DESC
+           """)
+    List<Story> findAllWithCreatorAndUserOrderByLastUpdatedAtDesc();
+
+    // Fetch a story by ID with its creator and user
+    @Query("""
+           SELECT s
+           FROM Story s
+           LEFT JOIN FETCH s.creator c
+           LEFT JOIN FETCH c.user u
+           WHERE s.id = :id
+           """)
+    Optional<Story> findByIdWithCreatorAndUser(@Param("id") Long id);
 }

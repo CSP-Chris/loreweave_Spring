@@ -4,6 +4,11 @@
 /// Created On:   2025-10-08
 /// Purpose:      Service for notification-related business logic
 /// Update History:
+/// 
+///  Updated By:    Wyatt Bechtle
+///  Update Notes:  Added method to get count of unread notifications for a user
+///  
+/// ==========================================
 /// ==========================================
 
 package com.loreweave.loreweave.service;
@@ -28,5 +33,9 @@ public class NotificationService {
 
     public List<Notification> getUnreadNotifications(User user) {
         return notificationRepository.findByUserAndIsRead(user, false);
+    }
+    // New method to get count of unread notifications
+    public long getUnreadCount(User user) {
+        return notificationRepository.countByUserAndIsReadFalse(user);
     }
 }

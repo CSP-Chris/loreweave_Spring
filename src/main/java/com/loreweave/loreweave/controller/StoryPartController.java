@@ -3,7 +3,11 @@
 /// Created By:   Chris Ennis
 /// Created On:   2025-10-08
 /// Purpose:      Controller for handling story part creation
-/// Update History:
+/// Update History: 
+/// 
+///  Updated By:    Wyatt Bechtle
+///  Update Notes:  Set story part author to authenticated user
+///  
 /// ==========================================
 
 package com.loreweave.loreweave.controller;
@@ -32,6 +36,7 @@ public class StoryPartController {
     @MessageMapping("/story/{storyId}")
     @SendTo("/topic/story/{storyId}")
     public StoryPart addPart(@RequestBody StoryPart storyPart, @AuthenticationPrincipal User user) throws Exception {
+        storyPart.setAuthor(user);
         return storyPartService.addStoryPart(storyPart, user.getCharacter());
     }
 

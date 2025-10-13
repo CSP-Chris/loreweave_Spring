@@ -4,8 +4,8 @@
 /// Created By:   Wyatt Bechtle
 /// Created On:   2025-10-03
 /// Purpose:      Provides a navigation bar for the web application.
-///  Updated By: 
-///  Update Notes: 
+///  Updated By:    Wyatt Bechtle
+///  Update Notes:  Added notification bell with unread count
 ///
 /// ==========================================
 -->
@@ -21,9 +21,22 @@
         <div id="lwNav" class="collapse navbar-collapse">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item"><a class="nav-link" href="/profile">User Profile</a></li>
-            <li class="nav-item"><a class="nav-link" href="/messages">Messages</a></li>
+            <li class="nav-item"><a class="nav-link" href="/messages">Messages<span class="badge" th:text="${unreadNotificationsCount}">0</span></a></li>
             <li class="nav-item"><a class="nav-link" href="/stories">Stories</a></li>
             <li class="nav-item"><a class="nav-link" href="/characters">Characters</a></li>
+            <!-- Notifications bell -->
+            <li class="nav-item dropdown" th:if="${#authorization.expression('isAuthenticated()')}">
+              <a class="nav-link position-relative" href="#" id="notifMenu"
+                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-bell" style="font-size: 1.5rem;"></i>
+                <span th:if="${unreadCount > 0}"
+                      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                      th:text="${unreadCount}">0</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notifMenu">
+                <li><a class="dropdown-item" th:href="@{/notifications}">View notifications</a></li>
+              </ul>
+            </li>
           </ul>
           <form th:action="@{/logout}" method="post" class="d-flex">
             <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
