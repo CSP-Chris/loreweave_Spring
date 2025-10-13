@@ -12,6 +12,9 @@
 ///                by Spring Security with Thymeleaf.
 ///  Updated By:   Chris Ennis
 ///  Update Notes: Added GET mapping to display registration page and provide user object to the model.
+/// 
+/// Updated By:   Wyatt Bechtle
+///  Update Notes: changed loginBSF -> login
 /// ==========================================
 package com.loreweave.loreweave.controller;
 
@@ -51,7 +54,7 @@ public class AuthController {
     public String register(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-        return "redirect:/loginBSF"; // after successful registration
+        return "redirect:/login"; 
     }
 }
 

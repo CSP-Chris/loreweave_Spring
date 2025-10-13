@@ -4,6 +4,8 @@
 /// Created On:   2025-10-08
 /// Purpose:      JPA file that creates the Notification entity
 /// Update History:
+///             Updated By: Wyatt Bechtle
+///         Update Details: Added senderUsername field to track who sent the notification
 /// ==========================================
 
 package com.loreweave.loreweave.model;
@@ -31,6 +33,9 @@ public class Notification {
     private String message;
 
     private String link;
+    
+    @Transient
+    private String senderUsername;
 
     @Column(nullable = false)
     private boolean isRead = false;

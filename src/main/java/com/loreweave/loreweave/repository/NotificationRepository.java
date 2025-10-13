@@ -4,6 +4,10 @@
 /// Created On:   2025-10-08
 /// Purpose:      JPA repository for the Notification entity
 /// Update History:
+/// 
+///  Updated By:    Wyatt Bechtle
+///  Update Notes:  Added method to count unread notifications for a user
+///  
 /// ==========================================
 
 package com.loreweave.loreweave.repository;
@@ -16,4 +20,7 @@ import java.util.List;
 
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
     List<Notification> findByUserAndIsRead(User user, boolean isRead);
+
+    // Custom method to count unread notifications for a user
+    long countByUserAndIsReadFalse(User user);
 }
