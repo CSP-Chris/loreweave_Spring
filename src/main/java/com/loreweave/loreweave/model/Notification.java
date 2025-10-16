@@ -29,13 +29,14 @@ public class Notification {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sender_id", nullable = false)
+    private User sender;
+
     @Column(nullable = false)
     private String message;
 
     private String link;
-    
-    @Transient
-    private String senderUsername;
 
     @Column(nullable = false)
     private boolean isRead = false;
@@ -43,12 +44,17 @@ public class Notification {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    protected Notification() {}
+    public Notification(User recipient, String content, Object message) {}
 
-    public Notification(User user, String message, String link) {
+    public Notification(User user, User sender, String message, String link) {
         this.user = user;
+        this.sender = sender;
         this.message = message;
         this.link = link;
         this.createdAt = LocalDateTime.now();
+    }
+
+    public Notification() {
+
     }
 }

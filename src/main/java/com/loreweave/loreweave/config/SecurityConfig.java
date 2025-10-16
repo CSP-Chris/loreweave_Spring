@@ -59,7 +59,7 @@ public class SecurityConfig {
                 .authenticationProvider(authProvider)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/register", "/register", "/login", "/test",
-                                "/css/**", "/js/**","/images/**", "/webjars/**", "/favicon.ico"
+                                "/css/**","/characters/**", "/js/**","/images/**", "/webjars/**", "/favicon.ico, "
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

@@ -67,7 +67,7 @@ public class VoteController {
         LoreVote vote = new LoreVote(storyPart, voter, type);
 
         // 🔽 ADD: merged transaction logic directly into LoreVote
-        vote.setAmount(type == VoteType.POSITIVE ? 1.0 : 0.0);
+        vote.setAmount(type == VoteType.POSITIVE ? 1.0 : -1.0);
         vote.setReceiverId(storyPart.getAuthor().getId()); // assumes StoryPart has getAuthor()
         vote.setStatus("COMPLETED");
 

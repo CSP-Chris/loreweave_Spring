@@ -31,7 +31,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String username;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)

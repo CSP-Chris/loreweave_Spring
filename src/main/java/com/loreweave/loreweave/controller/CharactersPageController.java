@@ -31,6 +31,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
+
 
 import java.util.Collections;
 import java.util.List;
@@ -58,10 +61,10 @@ public class CharactersPageController {
     }
     // Character detail page
     @GetMapping("/characters/{id}")
-    public String character(@PathVariable Long id, Model model) {
+    public String character(@PathVariable("id") Long id, Model model) {
 
         // Fetch character or 404
-        var ch = characterRepository.findById(id).orElseThrow();
+        var ch = characterRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Character not found"));
         model.addAttribute("character", ch);
 
         // Default to empty lists if no owner

@@ -45,7 +45,7 @@ public class StoryPart {
 
 // NEW: link to the author (User who wrote this story part)
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id", nullable = false)
+    @JoinColumn(name = "author_id")
     private User author;
 
     @OneToMany(mappedBy = "storyPart", cascade = CascadeType.ALL, orphanRemoval = true)
