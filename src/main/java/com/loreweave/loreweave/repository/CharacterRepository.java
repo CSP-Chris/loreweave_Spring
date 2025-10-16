@@ -3,7 +3,9 @@
 /// Created By:   Wyatt Bechtle
 /// Created On:   2025-10-02
 /// Purpose:      Repository interface for Character entity
-/// Update History:
+/// Update History: 
+///             Updated By: Wyatt Bechtle
+///     Update discription: Fixed Javadoc for findByUser method
 ///
 /// ==========================================
 package com.loreweave.loreweave.repository;
@@ -19,7 +21,7 @@ public interface CharacterRepository extends JpaRepository<Character, Long> {
 
     /**
      * Find a user by username.
-     * @param username the username to look up
+     * @param user the user associated with the character
      * @return Optional containing User if found
      */
     Optional<Character> findByUser(User user);
