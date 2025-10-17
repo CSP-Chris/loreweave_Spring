@@ -7,6 +7,12 @@
     Updated By:   Wyatt Bechtle
     Update Notes: Improved layout and styling for better user experience.
                   Added Character name display.
+  Updated By:   Jamie Coker
+  Updated On:   2025-10-13
+  Update Notes: Added logic to disable voting buttons once a user has already voted on a story part.
+                Uses 'userHasVoted' flag from StoryPartController to toggle visibility.
+                Displays an 'Already Voted' message when userHasVoted = true.
+
 -->
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
@@ -47,8 +53,13 @@
                   style="white-space:pre-wrap" 
                   th:text="${part.content}">Part content...
           </article>
+
           <!-- Voting Section -->
           <div class="d-flex align-items-center gap-2 mb-4">
+
+              <!--  If user has NOT voted -->
+              <div th:if="${!userHasVoted}">
+
             <!-- Upvote Form -->
             <form th:action="@{'/api/votes/' + ${part.id} + '?type=POSITIVE'}" 
                   method="post">
@@ -63,6 +74,7 @@
                       class="btn btn-success"><i class="bi bi-hand-thumbs-up me-1"></i>Upvote
               </button>
             </form>
+
             <!-- Downvote Form -->
             <form th:action="@{'/api/votes/' + ${part.id} + '?type=NEGATIVE'}"
                   method="post">
@@ -77,7 +89,16 @@
                       class="btn btn-danger"><i class="bi bi-hand-thumbs-down me-1"></i>Downvote
               </button>
             </form>
-            <!-- Vote Score and Total Votes -->
+
+                  <!--  If the user ALREADY voted -->
+                  <div th:if="${userHasVoted}">
+                      <button class="btn btn-secondary" disabled>
+                          <i class="bi bi-hand-thumbs-up me-1"></i>Already Voted
+                      </button>
+                  </div>
+
+
+                  <!-- Vote Score and Total Votes -->
             <span class="ms-2">Score: <strong th:text="${voteScore}">0</strong></span>
             <span class="text-muted small ms-2">Total votes: <span th:text="${totalVotes}">0</span></span>
           </div>  
@@ -89,6 +110,7 @@
             integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
             crossorigin="anonymous">
     </script>
+    </div>
   </body>
 </html>
 

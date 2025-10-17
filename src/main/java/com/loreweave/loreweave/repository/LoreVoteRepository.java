@@ -27,4 +27,6 @@ public interface LoreVoteRepository extends JpaRepository<LoreVote, Long> {
 
     // Check if a user already voted on a specific story part
     Optional<LoreVote> findByStoryPartAndVoter(StoryPart storyPart, User voter);
+
+
 }

@@ -19,6 +19,13 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
+
+@Table(
+        name = "lore_vote",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"story_part_id", "voter_id"})
+        }
+)
 public class LoreVote {
 
     @Id

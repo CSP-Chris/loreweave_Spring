@@ -15,9 +15,11 @@ package com.loreweave.loreweave.controller;
 /// Update Notes: Refactored to use @RestController and return ResponseEntity to match RESTController style.
 ///               Added IncrementLorePoints method from CharacterRepository to adjust lore points directly.
 ///               Added @Transactional to interact with DB. Redirects user back to story part after voting.
- ///              Also integrated CharacterRepository to adjust lore points directly. 
- ==========================================
+ ///              Also integrated CharacterRepository to adjust lore points directly.
+ ///Updated By: Jamie Coker 10/17/2025
+ Update Notes: Add lines to check if the user already voted on this story part
  */
+
 
 import com.loreweave.loreweave.model.LoreVote;
 import com.loreweave.loreweave.model.LoreVote.VoteType;
@@ -53,40 +55,7 @@ public class VoteController {
         this.characterRepository = characterRepository;
     }
 
-    /**
-     * Cast a vote (POSITIVE or NEGATIVE) on a story part.
-     */
-    /** 
-    @PostMapping("/{storyPartId}")
-    public String castVote(@PathVariable Long storyPartId,
-                           @RequestParam(defaultValue = "POSITIVE") VoteType type) {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        User voter = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        StoryPart storyPart = storyPartRepository.findById(storyPartId)
-                .orElseThrow(() -> new RuntimeException("Story part not found"));
-
-        Optional<LoreVote> existing = loreVoteRepository.findByStoryPartAndVoter(storyPart, voter);
-        if (existing.isPresent()) {
-            return "You have already voted on this story part.";
-        }
-
-        // Create new vote (with embedded transaction)
-        LoreVote vote = new LoreVote(storyPart, voter, type);
-
-        // 🔽 ADD: merged transaction logic directly into LoreVote
-        vote.setAmount(type == VoteType.POSITIVE ? 1.0 : -1.0);
-        vote.setReceiverId(storyPart.getAuthor().getId()); // assumes StoryPart has getAuthor()
-        vote.setStatus("COMPLETED");
-
-        loreVoteRepository.save(vote);
-
-        return "Vote recorded and transaction completed!";
-    }
-    */
     /**
      * Cast a vote (POSITIVE or NEGATIVE) on a story part.
      * This endpoint now also handles the transaction logic directly within the LoreVote entity.
@@ -103,6 +72,14 @@ public class VoteController {
         var part = storyPartRepository.findById(storyPartId).orElseThrow();
         var contributor = part.getContributor();
         if (contributor == null) throw new RuntimeException("Story part has no contributor");
+
+        // Check if the user already voted on this story part
+        var existingVote = loreVoteRepository.findByStoryPartAndVoter(part, voter);
+        if (existingVote.isPresent()) {
+            // Return 409 Conflict with redirect back to the story part
+            var location = java.net.URI.create("/story-parts/" + storyPartId);
+            return org.springframework.http.ResponseEntity.status(409).location(location).build();
+        }
 
         // delta: +1 for POSITIVE, -1 for NEGATIVE
         int delta = (type == LoreVote.VoteType.POSITIVE) ? +1 : -1;

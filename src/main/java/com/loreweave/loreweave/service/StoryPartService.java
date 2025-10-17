@@ -15,6 +15,7 @@
 
 package com.loreweave.loreweave.service;
 
+import java.util.Optional;
 import com.loreweave.loreweave.model.StoryPart;
 import com.loreweave.loreweave.model.Character;
 import com.loreweave.loreweave.model.Story;
@@ -71,9 +72,14 @@ public class StoryPartService {
         // Determine the next order number
         int nextOrder = storyPartRepository.findMaxPartOrderForStory(storyId) + 1;
 
-        // Create and save the new story part
+        /* Create and save the new story part */
         StoryPart sp = new StoryPart(story, character, content, nextOrder);
         sp.setAuthor(user);
         return addStoryPart(sp, character);
     }
+
+    public Optional<StoryPart> getStoryPartById(Long id) {
+        return storyPartRepository.findById(id);
+    }
+
 }
