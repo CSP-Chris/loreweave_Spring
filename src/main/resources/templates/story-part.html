@@ -4,9 +4,9 @@
     Created On: 10/11/2025
     Purpose: Template for displaying a story part with voting and continuation features.
 
-    Updated By: 
-    Update Notes: 
-
+    Updated By:   Wyatt Bechtle
+    Update Notes: Improved layout and styling for better user experience.
+                  Added Character name display.
 -->
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
@@ -25,82 +25,64 @@
   </head>
   <body>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
-    <div class="container-fluid py-4">
-      <!-- Back to Story Link -->
-      <p class="mb-2">
-        <a class="link-light" 
-           th:href="@{/story/{id}(id=${part.story.id})}"><i class="bi bi-arrow-left me-1"></i>Back to story
-        </a>
-      </p>
-      <!-- Part Details -->
-      <h1 class="h4 mb-1">Part <span th:text="${part.partOrder}">1</span></h1>
-      <p class="text-secondary small mb-3">
-        By <span th:text="${part.contributor.user.username}">contributor</span> · <span th:text="${#temporals.format(part.createdAt,'yyyy-MM-dd HH:mm')}">time</span>
-      </p>
-      <!-- Part Content -->
-      <article class="bg-body-tertiary border rounded-3 p-3 mb-3" 
-               style="white-space:pre-wrap" 
-               th:text="${part.content}">Part content...
-      </article>
-      <!-- Voting Section -->
-      <div class="d-flex align-items-center gap-2 mb-4">
-        <!-- Upvote Form -->
-        <form th:action="@{'/api/votes/' + ${part.id} + '?type=POSITIVE'}" 
-              method="post">
-          <input type="hidden" 
-                 name="type" 
-                 value="POSITIVE">
-          <input type="hidden" 
-                 th:if="${_csrf != null}" 
-                 th:name="${_csrf.parameterName}" 
-                 th:value="${_csrf.token}">
-          <button type="submit" 
-                  class="btn btn-success"><i class="bi bi-hand-thumbs-up me-1"></i>Upvote
-          </button>
-        </form>
-        <!-- Downvote Form -->
-        <form th:action="@{'/api/votes/' + ${part.id} + '?type=NEGATIVE'}"
-              method="post">
-          <input type="hidden" 
-                 name="type" 
-                 value="NEGATIVE">
-          <input type="hidden" 
-                 th:if="${_csrf != null}" 
-                 th:name="${_csrf.parameterName}" 
-                 th:value="${_csrf.token}">
-          <button type="submit" 
-                  class="btn btn-danger"><i class="bi bi-hand-thumbs-down me-1"></i>Downvote
-          </button>
-        </form>
-        <!-- Vote Score and Total Votes -->
-        <span class="ms-2">Score: <strong th:text="${voteScore}">0</strong></span>
-        <span class="text-muted small ms-2">Total votes: <span th:text="${totalVotes}">0</span></span>
+    <div class="container py-4">
+      <div class="row justify-content-center">
+        <!-- Adjust the widths here -->
+        <div class="col-12 col-md-10 col-lg-8 col-xl-7">
+          <!-- Back to Story Link -->
+          <p class="mb-2">
+            <a class="link-light" 
+              th:href="@{/story/{id}(id=${part.story.id})}"><i class="bi bi-arrow-left me-1"></i>Back to story
+            </a>
+          </p>
+          <!-- Part Details -->
+          <h1 class="h4 mb-1">Part <span th:text="${part.partOrder}">1</span></h1>
+          <p class="text-secondary small mb-3">
+            By <span th:text="${(part.contributor != null and part.contributor.user != null) ? part.contributor.user.username : 'unknown'}">contributor</span> · <span th:text="${part.createdAt != null ? #temporals.format(part.createdAt,'yyyy-MM-dd HH:mm') : '—'}">time</span>
+            <br/>
+            Featuring <span th:text="${part.contributor != null ? part.contributor.name : 'unknown'}">character</span>
+          </p>
+          <!-- Part Content -->
+          <article class="bg-body-tertiary border rounded-3 p-3 mb-3" 
+                  style="white-space:pre-wrap" 
+                  th:text="${part.content}">Part content...
+          </article>
+          <!-- Voting Section -->
+          <div class="d-flex align-items-center gap-2 mb-4">
+            <!-- Upvote Form -->
+            <form th:action="@{'/api/votes/' + ${part.id} + '?type=POSITIVE'}" 
+                  method="post">
+              <input type="hidden" 
+                    name="type" 
+                    value="POSITIVE">
+              <input type="hidden" 
+                    th:if="${_csrf != null}" 
+                    th:name="${_csrf.parameterName}" 
+                    th:value="${_csrf.token}">
+              <button type="submit" 
+                      class="btn btn-success"><i class="bi bi-hand-thumbs-up me-1"></i>Upvote
+              </button>
+            </form>
+            <!-- Downvote Form -->
+            <form th:action="@{'/api/votes/' + ${part.id} + '?type=NEGATIVE'}"
+                  method="post">
+              <input type="hidden" 
+                    name="type" 
+                    value="NEGATIVE">
+              <input type="hidden" 
+                    th:if="${_csrf != null}" 
+                    th:name="${_csrf.parameterName}" 
+                    th:value="${_csrf.token}">
+              <button type="submit" 
+                      class="btn btn-danger"><i class="bi bi-hand-thumbs-down me-1"></i>Downvote
+              </button>
+            </form>
+            <!-- Vote Score and Total Votes -->
+            <span class="ms-2">Score: <strong th:text="${voteScore}">0</strong></span>
+            <span class="text-muted small ms-2">Total votes: <span th:text="${totalVotes}">0</span></span>
+          </div>  
+        </div>
       </div>
-        <!-- Compose New Part Section -->
-      <section th:if="${allowCompose}" 
-               class="bg-body-tertiary border rounded-3 p-3">
-        <h2 class="h6">Add a continuation</h2>
-        <!-- New Part Form -->
-        <form th:action="@{/story-parts}" 
-              method="post">
-          <input type="hidden" 
-                 name="storyId" 
-                 th:value="${part.storyId}">
-          <label for="content" 
-                 class="form-label">Content</label>
-          <textarea id="content" 
-                    name="content" 
-                    class="form-control mb-3" 
-                    rows="6" 
-                    required></textarea>
-          <input type="hidden" 
-                 th:if="${_csrf != null}" 
-                 th:name="${_csrf.parameterName}" 
-                 th:value="${_csrf.token}">
-          <button type="submit" 
-                  class="btn btn-primary">Submit part</button>
-        </form>
-      </section>
     </div>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
