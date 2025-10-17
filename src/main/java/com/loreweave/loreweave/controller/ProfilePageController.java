@@ -5,8 +5,9 @@
 /// Purpose:      Controller for handling user profile page requests
 ///               and profile editing functionality.
 /// 
-///  Updated By: 
-///  Update Notes:
+///  Updated By: Wyatt Bechtle
+///  Update Notes: Added functionality to calculate and display
+///                lore points based on character votes.
 ///  
 /// ==========================================
 package com.loreweave.loreweave.controller;
@@ -58,8 +59,12 @@ public class ProfilePageController {
         User user = currentUser();
         model.addAttribute("user", user);
 
-        // Get associated character
+        // Get user's character and calculate lore points
         Character character = characterRepository.findByUser(user).orElse(null);
+        if (character != null) {
+            int pts = characterRepository.sumVotesForCharacter(character.getId());
+            character.setLorePoints(pts);            
+        }
         model.addAttribute("character", character);
 
         // Get stories created and contributed to by the user

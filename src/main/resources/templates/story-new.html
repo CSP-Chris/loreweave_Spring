@@ -1,0 +1,79 @@
+<!--
+    File Name: story-new.html
+    Created By: Wyatt Bechtle
+    Created On: 10/15/2025
+    Purpose: Provides a form to create a new story.
+
+    Updated By:   
+    Update Notes: 
+
+-->
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>New Story</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+          crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+          rel="stylesheet">
+  </head>
+  <body class="bg-dark text-light">
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <main class="container my-4">
+
+      <!-- Back to Stories Link -->
+      <a class="btn btn-link p-0 mb-3" 
+         th:href="@{/stories}">
+        <i class="bi bi-arrow-left me-1"></i>Back to Stories
+      </a>
+
+      <!-- New Story Form -->
+      <section class="bg-body-tertiary border rounded-3 p-3 p-md-4">
+        <h1 class="h5 mb-3">
+          <i class="bi bi-journal-plus me-2"></i>Create a New Story
+        </h1>
+
+        <!-- Error Message -->
+        <div th:if="${error}" 
+             class="alert alert-danger" 
+             th:text="${error}">
+        </div>
+        <form th:action="@{/story/new}" 
+              method="post" 
+              novalidate>
+
+          <!-- For spring security - prevents CSRF-->
+          <input type="hidden" 
+                 th:if="${_csrf != null}" 
+                 th:name="${_csrf.parameterName}" 
+                 th:value="${_csrf.token}"/>
+
+          <!-- Story Title -->
+          <label for="title" 
+                 class="form-label">Title</label>
+          <input id="title" 
+                 name="title" 
+                 type="text" 
+                 class="form-control mb-3" 
+                 placeholder="Enter story title" 
+                 required>
+
+          <!-- Submit button-->       
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check2 me-1"></i>Create
+          </button>
+        </form>
+      </section>
+    </main>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+            crossorigin="anonymous"></script>
+  </body>
+</html>

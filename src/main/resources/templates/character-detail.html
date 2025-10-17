@@ -4,8 +4,8 @@
     Created On: 10/14/2025
     Purpose: To provide character detail capabilities to the loreweave application.
 
-    Updated By: 
-    Update Notes: 
+    Updated By:   Wyatt Bechtle
+    Update Notes: Updated route to match new routing scheme.
 -->
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
@@ -65,7 +65,7 @@
             <!-- Story title-->
             <span th:text="${s.title}">Story title</span>
             <!-- View story button -->
-            <a th:href="@{'/stories/' + ${s.id}}"
+            <a th:href="@{'/story/' + ${s.id}}"
                class="btn btn-sm btn-outline-light">
               View
             </a>
@@ -88,7 +88,7 @@
             <!-- Story title -->
             <span th:text="${s.title}">Story title</span>
             <!-- View story button -->
-            <a th:href="@{'/stories/' + ${s.id}}"
+            <a th:href="@{'/story/' + ${s.id}}"
                class="btn btn-sm btn-outline-light">
               View
             </a>

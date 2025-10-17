@@ -4,8 +4,8 @@
     Created On: 10/10/2025
     Purpose: Template for displaying a story and its parts.
 
-    Updated By: 
-    Update Notes: 
+    Updated By:   Wyatt Bechtle
+    Update Notes: Improved layout and styling for better readability and usability.
 
 -->
 <!doctype html>
@@ -26,41 +26,45 @@
   <body>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
     <!-- Story Details and Parts List -->
-    <div class="container-fluid py-4">
-      <h1 class="h3 mb-1" th:text="${story.title}">Story Title</h1>
+    <div class="container py-4">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8 col-xl-7">
+          <h1 class="h3 mb-1" th:text="${story.title}">Story Title</h1>
 
-      <!-- Story Metadata -->
-      <p class="text-secondary small mb-4">
-        Created by
-        <span th:text="${(story.creator != null and story.creator.user != null) ? story.creator.user.username : 'unknown'}">creator</span>
-        ·
-        <span th:text="${(story.createdAt != null) ? #temporals.format(story.createdAt,'yyyy-MM-dd HH:mm') : '—'}">created</span>
-        · Updated
-        <span th:text="${(story.lastUpdatedAt != null) ? #temporals.format(story.lastUpdatedAt,'yyyy-MM-dd HH:mm') : '—'}">updated</span>
-      </p>
+          <!-- Story Metadata -->
+          <p class="text-secondary small mb-4">
+            Created by
+            <span th:text="${(story.creator != null and story.creator.user != null) ? story.creator.user.username : 'unknown'}">creator</span>
+            ·
+            <span th:text="${(story.createdAt != null) ? #temporals.format(story.createdAt,'yyyy-MM-dd HH:mm') : '—'}">created</span>
+            · Updated
+            <span th:text="${(story.lastUpdatedAt != null) ? #temporals.format(story.lastUpdatedAt,'yyyy-MM-dd HH:mm') : '—'}">updated</span>
+          </p>
 
-      <!-- Story Description -->
-      <h2 class="h6 mb-2">Parts</h2>
+          <!-- Story Description -->
+          <h2 class="h6 mb-2">Parts</h2>
 
-      <!-- Parts List -->
-      <ul class="list-group mb-3" th:if="${parts}" th:each="p : ${parts}">
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <a class="text-decoration-none" th:href="@{/story-parts/{id}(id=${p.id})}">
-            Part <span th:text="${p.partOrder}">1</span> —
-            <span th:text="${(p.contributor != null and p.contributor.user != null) ? p.contributor.user.username : 'unknown'}">user</span>
+          <!-- Parts List -->
+          <ul class="list-group mb-3" th:if="${parts}" th:each="p : ${parts}">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <a class="text-decoration-none" th:href="@{/story-parts/{id}(id=${p.id})}">
+                Part <span th:text="${p.partOrder}">1</span> —
+                <span th:text="${(p.contributor != null and p.contributor.user != null) ? p.contributor.user.username : 'unknown'}">user</span>
+              </a>
+              <small class="text-muted"
+                    th:text="${(p.createdAt != null) ? #temporals.format(p.createdAt,'yyyy-MM-dd HH:mm') : '—'}">time</small>
+            </li>
+          </ul>
+
+          <!-- No Parts Notice -->
+          <p class="text-muted" th:if="${parts == null or #lists.isEmpty(parts)}">No parts yet.</p>
+
+          <!-- Add Part Button -->
+          <a class="btn btn-primary" th:href="@{/story-parts/new(storyId=${story.id})}">
+            <i class="bi bi-plus-lg me-1"></i>Add part
           </a>
-          <small class="text-muted"
-                th:text="${(p.createdAt != null) ? #temporals.format(p.createdAt,'yyyy-MM-dd HH:mm') : '—'}">time</small>
-        </li>
-      </ul>
-
-      <!-- No Parts Notice -->
-      <p class="text-muted" th:if="${parts == null or #lists.isEmpty(parts)}">No parts yet.</p>
-
-      <!-- Add Part Button -->
-      <a class="btn btn-primary" th:href="@{/story-parts/new(storyId=${story.id})}">
-        <i class="bi bi-plus-lg me-1"></i>Add part
-      </a>
+        </div>
+      </div>
     </div>
 
     <!-- Bootstrap JS -->
