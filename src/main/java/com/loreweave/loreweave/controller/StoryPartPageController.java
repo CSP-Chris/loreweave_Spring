@@ -48,35 +48,11 @@ public class StoryPartPageController {
         this.userRepository = userRepository;
     }
 
-    // Display a specific story part
-    @GetMapping("/story-parts/{id:\\d+}")
-    public String storyPart(@PathVariable Long id, Model model) {
 
-        // Fetch the story part with contributor.user 
-        StoryPart part = storyPartRepository
-                .findByIdWithContributorUserAndStory(id)
-                .orElseThrow();
-
-        // Calculate vote score
-        long positives = loreVoteRepository.findByStoryPart(part).stream()
-                .filter(v -> v.getVoteType() == LoreVote.VoteType.POSITIVE).count();
-        long negatives = loreVoteRepository.findByStoryPart(part).stream()
-                .filter(v -> v.getVoteType() == LoreVote.VoteType.NEGATIVE).count();
-
-        // Add attributes to the model
-        model.addAttribute("part", part);
-        model.addAttribute("voteScore", positives - negatives);
-        model.addAttribute("totalVotes", positives + negatives);
-
-        // For now, composing new parts is disabled
-        model.addAttribute("allowCompose", false);
-
-        return "story-part";
-    }
     // Handle creating a new story part
     @PostMapping("/story-parts")
-    public String createPart(@RequestParam Long storyId,
-                             @RequestParam String content,
+    public String createPart(@RequestParam("storyId") Long storyId,
+                             @RequestParam("content") String content,
                              Authentication auth,
                              RedirectAttributes ra) throws Exception {
 
@@ -90,7 +66,7 @@ public class StoryPartPageController {
     }
     // Show form to create a new story part
     @GetMapping("/story-parts/new")
-    public String newPartForm(@RequestParam Long storyId, Model model) {
+    public String newPartForm(@RequestParam("storyId") Long storyId, Model model) {
 
         // Add storyId to the model for the form
         model.addAttribute("storyId", storyId);

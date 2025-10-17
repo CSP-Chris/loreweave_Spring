@@ -85,7 +85,7 @@
           <li class="list-group-item bg-body-tertiary" 
               th:each="s : ${createdStories}">
             <span th:text="${s.title}">Story title</span>
-            <a th:href="@{'/stories/' + ${s.id}}" 
+            <a th:href="@{'/story/' + ${s.id}}"
                class="btn btn-sm btn-outline-light float-end">View</a>
           </li>
         </ul>
@@ -102,7 +102,7 @@
           <li class="list-group-item bg-body-tertiary" 
               th:each="s : ${contributedStories}">
             <span th:text="${s.title}">Story title</span>
-            <a th:href="@{'/stories/' + ${s.id}}" 
+            <a th:href="@{'/story/' + ${s.id}}"
                class="btn btn-sm btn-outline-light float-end">View</a>
           </li>
         </ul>

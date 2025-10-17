@@ -82,4 +82,8 @@ public class StoryPartService {
         return storyPartRepository.findById(id);
     }
 
+    public Optional<StoryPart> getStoryPartByIdWithContributorAndUser(Long id) {
+        return storyPartRepository.findByIdWithContributorUserAndStory(id);
+    }
+
 }

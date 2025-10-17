@@ -58,7 +58,7 @@
           <div class="d-flex align-items-center gap-2 mb-4">
 
               <!--  If user has NOT voted -->
-              <div th:if="${!userHasVoted}">
+              <div th:if="${!userHasVoted}" class="d-flex gap-2">
 
             <!-- Upvote Form -->
             <form th:action="@{'/api/votes/' + ${part.id} + '?type=POSITIVE'}" 
@@ -89,6 +89,7 @@
                       class="btn btn-danger"><i class="bi bi-hand-thumbs-down me-1"></i>Downvote
               </button>
             </form>
+              </div>
 
                   <!--  If the user ALREADY voted -->
                   <div th:if="${userHasVoted}">
@@ -110,7 +111,6 @@
             integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
             crossorigin="anonymous">
     </script>
-    </div>
   </body>
 </html>
 

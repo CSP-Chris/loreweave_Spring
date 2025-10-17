@@ -30,7 +30,7 @@ import java.util.Optional;
 
 public interface StoryPartRepository extends JpaRepository<StoryPart, Long> {
     @Query("SELECT sp FROM StoryPart sp WHERE sp.story.id = :storyId ORDER BY sp.createdAt DESC")
-    List<StoryPart> findLatestStoryPartsForStory(Long storyId);
+    List<StoryPart> findLatestStoryPartsForStory(@Param("storyId") Long storyId);
 
     // Original method, may still be useful in some contexts
     List<StoryPart> findByStoryIdOrderByPartOrderAsc(Long storyId);

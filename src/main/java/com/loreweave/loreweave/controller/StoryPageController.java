@@ -65,7 +65,7 @@ public class StoryPageController {
     }
     // Route to display a specific story by ID
     @GetMapping("/story/{id:\\d+}")
-    public String story(@PathVariable Long id, Model model) {
+    public String story(@PathVariable("id") Long id, Model model) {
 
         // Fetch the story with its creator and users
         Story story = storyRepository.findByIdWithCreatorAndUser(id).orElseThrow();

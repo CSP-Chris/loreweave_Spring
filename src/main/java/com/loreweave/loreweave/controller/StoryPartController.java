@@ -50,11 +50,11 @@ public class StoryPartController {
 
     // NEW: Display a single story part and voting info
     @GetMapping("/story-parts/{id}")
-    public String viewStoryPart(@PathVariable Long id, Model model, Authentication authentication) {
+    public String viewStoryPart(@PathVariable("id") Long id, Model model, Authentication authentication) {
 
-        Optional<StoryPart> optionalPart = storyPartService.getStoryPartById(id);
+        Optional<StoryPart> optionalPart = storyPartService.getStoryPartByIdWithContributorAndUser(id);
         if (optionalPart.isEmpty()) {
-            throw new RuntimeException("Stoory part not found");
+            throw new RuntimeException("Story part not found");
         }
         StoryPart part = optionalPart.get();
 
