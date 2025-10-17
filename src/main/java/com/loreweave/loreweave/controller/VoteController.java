@@ -10,6 +10,12 @@ package com.loreweave.loreweave.controller;
     Updated By:   Jamie Coker on 2025-10-12
 /// Update Notes: Removed TransactionService calls and added direct
 ///               transaction tracking to LoreVote entity.
+/// 
+/// Updated By:   Wyatt Bechtle
+/// Update Notes: Refactored to use @RestController and return ResponseEntity to match RESTController style.
+///               Added IncrementLorePoints method from CharacterRepository to adjust lore points directly.
+///               Added @Transactional to interact with DB. Redirects user back to story part after voting.
+ ///              Also integrated CharacterRepository to adjust lore points directly. 
  ==========================================
  */
 
@@ -17,15 +23,16 @@ import com.loreweave.loreweave.model.LoreVote;
 import com.loreweave.loreweave.model.LoreVote.VoteType;
 import com.loreweave.loreweave.model.StoryPart;
 import com.loreweave.loreweave.model.User;
+import com.loreweave.loreweave.repository.CharacterRepository;
 import com.loreweave.loreweave.repository.LoreVoteRepository;
 import com.loreweave.loreweave.repository.StoryPartRepository;
 import com.loreweave.loreweave.repository.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/votes")
@@ -34,18 +41,22 @@ public class VoteController {
     private final LoreVoteRepository loreVoteRepository;
     private final StoryPartRepository storyPartRepository;
     private final UserRepository userRepository;
+    private final CharacterRepository characterRepository;
 
     public VoteController(LoreVoteRepository loreVoteRepository,
                           StoryPartRepository storyPartRepository,
-                          UserRepository userRepository) {
+                          UserRepository userRepository,
+                          CharacterRepository characterRepository) {
         this.loreVoteRepository = loreVoteRepository;
         this.storyPartRepository = storyPartRepository;
         this.userRepository = userRepository;
+        this.characterRepository = characterRepository;
     }
 
     /**
      * Cast a vote (POSITIVE or NEGATIVE) on a story part.
      */
+    /** 
     @PostMapping("/{storyPartId}")
     public String castVote(@PathVariable Long storyPartId,
                            @RequestParam(defaultValue = "POSITIVE") VoteType type) {
@@ -67,7 +78,7 @@ public class VoteController {
         LoreVote vote = new LoreVote(storyPart, voter, type);
 
         // 🔽 ADD: merged transaction logic directly into LoreVote
-        vote.setAmount(type == VoteType.POSITIVE ? 1.0 : 0.0);
+        vote.setAmount(type == VoteType.POSITIVE ? 1.0 : -1.0);
         vote.setReceiverId(storyPart.getAuthor().getId()); // assumes StoryPart has getAuthor()
         vote.setStatus("COMPLETED");
 
@@ -75,7 +86,42 @@ public class VoteController {
 
         return "Vote recorded and transaction completed!";
     }
+    */
+    /**
+     * Cast a vote (POSITIVE or NEGATIVE) on a story part.
+     * This endpoint now also handles the transaction logic directly within the LoreVote entity.
+     */
+    @PostMapping("/{storyPartId}")
+    @Transactional
+    public org.springframework.http.ResponseEntity<Void> castVote(@PathVariable Long storyPartId,
+                                                                 @RequestParam(defaultValue = "POSITIVE") LoreVote.VoteType type) {
+        // Who is voting
+        var auth = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+        var voter = userRepository.findByUsername(auth.getName()).orElseThrow();
 
+        // Target part and author character
+        var part = storyPartRepository.findById(storyPartId).orElseThrow();
+        var contributor = part.getContributor();
+        if (contributor == null) throw new RuntimeException("Story part has no contributor");
+
+        // delta: +1 for POSITIVE, -1 for NEGATIVE
+        int delta = (type == LoreVote.VoteType.POSITIVE) ? +1 : -1;
+
+        // Record a vote 
+        var vote = new LoreVote(part, voter, type);
+        vote.setAmount(delta);                 // +1 or -1
+        vote.setReceiverId(contributor.getId());
+        vote.setStatus("COMPLETED");
+        loreVoteRepository.save(vote);
+
+        // Adjust lore points
+        characterRepository.incrementLorePoints(contributor.getId(), delta);
+
+        // Redirect back to where the user came from
+        // REST based but could be simplified with MVC controller type
+        var location = java.net.URI.create("/story-parts/" + storyPartId);
+        return org.springframework.http.ResponseEntity.status(303).location(location).build();
+    }
     /**
      * Count positive votes for a story part.
      */

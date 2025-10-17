@@ -12,6 +12,9 @@
 ///                 Added flash messages for user feedback on character creation.
 ///                 Improved code comments and structure for clarity.
 ///                 Updated character-detail route to include story lists.
+/// 
+///   Updated By:  Wyatt Bechtle
+/// Update Notes:  Added lore point recalculation on character listing and detail pages.
 /// ==========================================
 package com.loreweave.loreweave.controller;
 
@@ -52,7 +55,12 @@ public class CharactersPageController {
     // Characters listing page
     @GetMapping("/characters")
     public String characters(Model model) {
-        List<Character> characters = characterRepository.findAll();
+
+        // Fetch all characters and recalculate lore points
+        var characters = characterRepository.findAll();
+        for (var ch : characters) {
+            ch.setLorePoints(characterRepository.sumVotesForCharacter(ch.getId()));
+        }
         model.addAttribute("characters", characters);
         return "characters"; 
     }
@@ -60,8 +68,10 @@ public class CharactersPageController {
     @GetMapping("/characters/{id}")
     public String character(@PathVariable Long id, Model model) {
 
-        // Fetch character or 404
+        // Fetch character and recalculate lore points
         var ch = characterRepository.findById(id).orElseThrow();
+        int pts = characterRepository.sumVotesForCharacter(ch.getId());
+        ch.setLorePoints(pts);            
         model.addAttribute("character", ch);
 
         // Default to empty lists if no owner

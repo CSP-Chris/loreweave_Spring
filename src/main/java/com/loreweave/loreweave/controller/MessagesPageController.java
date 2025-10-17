@@ -5,8 +5,8 @@
 /// Purpose:      Controller for handling messaging functionality
 ///               including viewing and sending messages.
 /// 
-///  Updated By: 
-///  Update Notes:
+///  Updated By:    Wyatt Bechtle
+///  Update Notes:  Removed unnecessary import.
 ///  
 /// ==========================================
 package com.loreweave.loreweave.controller;
@@ -15,7 +15,6 @@ import com.loreweave.loreweave.model.Notification;
 import com.loreweave.loreweave.model.User;
 import com.loreweave.loreweave.repository.UserRepository;
 import com.loreweave.loreweave.service.NotificationService;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

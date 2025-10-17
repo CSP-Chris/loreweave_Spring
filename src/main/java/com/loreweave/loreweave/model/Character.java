@@ -4,6 +4,8 @@
 /// Created On:   2025-09-15
 /// Purpose:      JPA file that creates the Character entity
 /// Update History:
+/// Updated by:  Wyatt Bechtle
+/// Updated Notes: Added getters and setters for lorePoints
 /// ==========================================
 
 package com.loreweave.loreweave.model;
@@ -45,6 +47,9 @@ public class Character {
         this.lorePoints = lorePoints;
         this.user = user;
     }
+    // Getters and Setters
+    public int getLorePoints() { return lorePoints; }
+    public void setLorePoints(int lorePoints) { this.lorePoints = lorePoints; }
 
     @Override
     public String toString() {

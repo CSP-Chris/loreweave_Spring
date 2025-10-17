@@ -4,8 +4,8 @@
     Created On: 10/10/2025
     Purpose: Displays a list of stories with links to their details.
 
-    Updated By: 
-    Update Notes: 
+    Updated By:   Wyatt Bechtle
+    Update Notes: Added create story button. Enhanced UI for better readability and usability.
 
 -->
 <!doctype html>
@@ -25,27 +25,36 @@
   </head>
   <body>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
-    <div class="container-fluid py-4">
-      <h1 class="h3 mb-3">
-        <i class="bi bi-journal-text me-2"></i>Stories
-      </h1>
-      <!-- Stories List -->
-      <ul class="list-group mb-3" th:if="${stories}" th:each="s : ${stories}">
-        <!-- Story -->
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <a class="text-decoration-none" th:href="@{/story/{id}(id=${s.id})}">
-            <span class="fw-semibold" th:text="${s.title}">Story title</span>
+    <div class="container py-4">
+      <div class="row justify-content-center">
+        <!-- Adjust the widths here -->
+        <div class="col-12 col-md-10 col-lg-8 col-xl-7">
+          <h1 class="h3 mb-3">
+            <i class="bi bi-journal-text me-2"></i>Stories
+          </h1>
+          <!-- Create Story Button -->
+          <a class="btn btn-primary mb-3" th:href="@{/story/new}">
+            <i class="bi bi-plus-lg me-1"></i>Create story
           </a>
-          <!-- Creator and Last Updated -->
-          <small class="text-muted">
-            <span th:text="${(s.creator != null and s.creator.user != null) ? s.creator.user.username : 'unknown'}">creator</span>
-            &nbsp;·&nbsp;
-            <span th:text="${(s.lastUpdatedAt != null) ? #temporals.format(s.lastUpdatedAt,'yyyy-MM-dd HH:mm') : '—'}">updated</span>
-          </small>
-        </li>
-      </ul>
-      <!-- No Stories Message -->
-      <p class="text-muted" th:if="${stories == null or #lists.isEmpty(stories)}">No stories yet.</p>
+          <!-- Stories List -->
+          <ul class="list-group mb-3" th:if="${stories}" th:each="s : ${stories}">
+            <!-- Story -->
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <a class="text-decoration-none" th:href="@{/story/{id}(id=${s.id})}">
+                <span class="fw-semibold" th:text="${s.title}">Story title</span>
+              </a>
+              <!-- Creator and Last Updated -->
+              <small class="text-muted">
+                <span th:text="${(s.creator != null and s.creator.user != null) ? s.creator.user.username : 'unknown'}">creator</span>
+                &nbsp;·&nbsp;
+                <span th:text="${(s.lastUpdatedAt != null) ? #temporals.format(s.lastUpdatedAt,'yyyy-MM-dd HH:mm') : '—'}">updated</span>
+              </small>
+            </li>
+          </ul>
+          <!-- No Stories Message -->
+          <p class="text-muted" th:if="${stories == null or #lists.isEmpty(stories)}">No stories yet.</p>
+        </div>
+      </div>
     </div>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
