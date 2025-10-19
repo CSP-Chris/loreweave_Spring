@@ -12,6 +12,9 @@
 ///                authentication instead of JWT.
 /// Updated By:   Wyatt on 2025-10-04
 ///  Update Notes: Moved file into a security package for Spring Boot to find it.
+/// Updated By:   Jamie Coker on 2025-10-19
+///  Update Notes: Added .disabled(!user.isEnabled()) to prevent login
+///                for unverified accounts (email not yet confirmed).
 /// ==========================================
 package com.loreweave.loreweave.security;
 
@@ -44,5 +47,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .password(user.getPassword())
                 .roles("USER") 
                 .build();
+
+
     }
 }

@@ -11,6 +11,10 @@
     Update Notes: Removed duplicate dependency to fix build warning.
     Updated By: Jamie Coker on 9/24/2025
     Update Notes: Removed JWT dependencies
+    Updated By: Jamie Coker on 10/19/2025
+    Update Notes:
+        - Switched from manual dependencyManagement to Spring Boot parent
+        - Fixed missing mail dependency resolution
 -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -19,6 +23,14 @@
                              https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
+
+    <!-- >>> Spring Boot parent for automatic dependency management -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.5</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
 
     <groupId>com.loreweave</groupId>
     <artifactId>loreweave</artifactId>
@@ -32,7 +44,8 @@
         <spring.boot.version>3.2.5</spring.boot.version>
     </properties>
 
-    <dependencyManagement>
+<!-- commented dependencyManagement block (now handled by parent POM)
+   <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -43,6 +56,14 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+-->
+
+    <repositories>
+        <repository>
+            <id>maven-central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <!-- Spring Boot Starter Web -->
@@ -112,6 +133,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
+
+        <!-- >>> Mail support -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

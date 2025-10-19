@@ -15,11 +15,17 @@
 /// 
 /// Updated By:   Wyatt Bechtle
 ///  Update Notes: changed loginBSF -> login
+///  Updated By:  Jamie Coker on 10/19/2025
+///  Update Notes: Integrated email OTP verification flow.
+///                - Injected EmailOtpService
+///                - Sends OTP after registration
+///                - Disables user until verified
 /// ==========================================
 package com.loreweave.loreweave.controller;
 
 import com.loreweave.loreweave.model.User;
 import com.loreweave.loreweave.repository.UserRepository;
+import com.loreweave.loreweave.service.EmailOtpService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,9 +40,12 @@ public class AuthController {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    private final EmailOtpService emailOtpService;
+
+    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder, EmailOtpService emailOtpService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.emailOtpService = emailOtpService;
     }
 
     @GetMapping("/register")
@@ -51,10 +60,24 @@ public class AuthController {
      * Redirects to login page on success.
      */
     @PostMapping("/register")
-    public String register(User user) {
+    public String register(User user, Model model) {
+        // >>> ADDED: prevent duplicate email registration
+        if (userRepository.findByEmail(user.getEmail()) != null) {
+            model.addAttribute("error", "Email already in use.");
+            return "register";
+        }
+
+        // >>> UPDATED: disable user until email is verified
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setEnabled(false);
         userRepository.save(user);
-        return "redirect:/login"; 
+
+        // >>> ADDED: send OTP after registration
+        emailOtpService.sendOtp(user.getEmail());
+
+        // >>> UPDATED: redirect to verify email page
+        return "redirect:/verify-email?email=" + user.getEmail();
     }
-}
+
+    }
 

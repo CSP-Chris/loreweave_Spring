@@ -31,9 +31,12 @@ package com.loreweave.loreweave.config;
  Updated By:   Jamie Coker on 2025-10-10
  Update Notes: Secured /api/transactions/** endpoints for Milestone 2,
                restricting access to authenticated users.
+ Updated By:   Jamie Coker on 2025-10-19
+ Update Notes:
+   - Added permitAll() access for /verify-email endpoints.
+   - Ensured that only users with enabled=true can authenticate
+     (CustomUserDetailsService now enforces this automatically).
  */
-
-
 
 
 import org.springframework.context.annotation.Bean;
@@ -58,7 +61,7 @@ public class SecurityConfig {
         http
                 .authenticationProvider(authProvider)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/register", "/register", "/login", "/test",
+                        .requestMatchers("/api/auth/register", "/register", "/login", "/verify-email/**", "/test",
                                 "/css/**","/characters/**", "/js/**","/images/**", "/webjars/**", "/favicon.ico, "
                         ).permitAll()
                         .anyRequest().authenticated()
