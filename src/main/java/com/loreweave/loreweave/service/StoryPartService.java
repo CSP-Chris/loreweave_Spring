@@ -18,7 +18,7 @@ package com.loreweave.loreweave.service;
 import java.util.Optional;
 import com.loreweave.loreweave.model.StoryPart;
 import com.loreweave.loreweave.model.Character;
-import com.loreweave.loreweave.model.Story;
+//import com.loreweave.loreweave.model.Story;
 import com.loreweave.loreweave.model.User;
 import com.loreweave.loreweave.repository.StoryRepository;
 import com.loreweave.loreweave.repository.StoryPartRepository;
@@ -59,7 +59,7 @@ public class StoryPartService {
     }
     // Create a new story part for a given story
     @Transactional
-    public StoryPart createPartForStory(Long storyId, String content, User user) throws Exception {
+    public void createPartForStory(Long storyId, String content, User user) throws Exception {
 
         // Fetch the story
         var story = storyRepository.findById(storyId).orElseThrow();
@@ -75,12 +75,12 @@ public class StoryPartService {
         /* Create and save the new story part */
         StoryPart sp = new StoryPart(story, character, content, nextOrder);
         sp.setAuthor(user);
-        return addStoryPart(sp, character);
+        addStoryPart(sp, character);
     }
 
-    public Optional<StoryPart> getStoryPartById(Long id) {
-        return storyPartRepository.findById(id);
-    }
+//    public Optional<StoryPart> getStoryPartById(Long id) {
+//        return storyPartRepository.findById(id);
+//    }
 
     public Optional<StoryPart> getStoryPartByIdWithContributorAndUser(Long id) {
         return storyPartRepository.findByIdWithContributorUserAndStory(id);
