@@ -84,3 +84,12 @@ Added WebSocketConfig.java to prepare for future messaging features.
 Verified that all new endpoints (/api/votes/**) require authentication and build runs successfully.
 
     Week 2:
+Completed the design and implementation of the /api/transactions endpoints to allow secure point transfers between users.
+
+Developed methods for atomic balance updates with rollback functionality on failure.
+
+Implemented server-side validation for sufficient funds and transfer restrictions to prevent fraudulent activity.
+
+Updated SecurityConfig.java to enforce authenticated access for transaction-related endpoints.
+
+Strengthened session-based authentication and tested login persistence across the Thymeleaf interface.
