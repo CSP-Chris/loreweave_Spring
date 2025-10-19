@@ -10,7 +10,8 @@
 ///  *     type for findByUsername so that CustomUserDetailsService
 ///  *     can use Optional.orElseThrow without errors.
 ///  *  Verified table name mapping to avoid H2 keyword conflict.
-///
+/// Updated By:   Jamie Coker on 2025-10-19
+/// Update Notes: Added findByEmail() for email verification and duplicate checks.
 /// ==========================================
 package com.loreweave.loreweave.repository;
 
@@ -28,4 +29,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return Optional containing User if found
      */
     Optional<User> findByUsername(String username);
+
+    // >>>  Find user by email for registration and verification
+    User findByEmail(String email);
 }

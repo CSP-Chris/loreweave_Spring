@@ -4,6 +4,9 @@
 /// Created On:   2025-09-15
 /// Purpose:      JPA file that creates the User entity
 /// Update History: I believe that Jamie also created a version of this page, but they are combined.
+/// Updated By:   Jamie Coker on 2025-10-19
+/// Update Notes: Added `enabled` field for email verification workflow.
+///               Used by Spring Security to determine if a user can log in.
 /// ==========================================
 package com.loreweave.loreweave.model;
 
@@ -36,6 +39,10 @@ public class User {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Character character;
+
+    // >>> Field to track if user has verified email
+    @Column(nullable = false)
+    private boolean enabled = false;
 
 }
 
