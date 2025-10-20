@@ -8,19 +8,18 @@
 //              Added a model object to the register mapping
 // Updated By: Wyatt Bechtle on 10/03/2025
 //              Added password encoding to the register post mapping
+// Updated By: Wyatt Bechtle on 10/20/2025
+//              Deleted duplicate methods and associated imports and attributes.
+//              Methods were implemented in AuthController instead.
 package com.loreweave.loreweave.controller;
 
 import com.loreweave.loreweave.model.Story;
 import com.loreweave.loreweave.model.User;
-import com.loreweave.loreweave.repository.UserRepository;
 
 import com.loreweave.loreweave.service.StoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,13 +30,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Controller
 public class ContentController {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
     private final StoryService storyService;
 
-    public ContentController(UserRepository userRepository, PasswordEncoder passwordEncoder, StoryService storyService) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
+    public ContentController(StoryService storyService) {
         this.storyService = storyService;
     }
 
@@ -52,20 +47,6 @@ public class ContentController {
     public String login() {
         return "login";
     }
-
-    @GetMapping("/register")
-    public String register(Model model) {
-        model.addAttribute("user", new User());
-        return "register";
-    }
-
-    @PostMapping("/register")
-    public String register(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-        return "redirect:/login";
-    }
-
 
     @GetMapping("/")
     public String welcome() {
