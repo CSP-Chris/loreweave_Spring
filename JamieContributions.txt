@@ -93,3 +93,20 @@ Implemented server-side validation for sufficient funds and transfer restriction
 Updated SecurityConfig.java to enforce authenticated access for transaction-related endpoints.
 
 Strengthened session-based authentication and tested login persistence across the Thymeleaf interface.
+
+Week 3:
+feat(auth): add email verification with OTP and update test configuration
+
+- Added EmailOtpService.java to handle both email sending and OTP verification
+- Updated User.java model to include `enabled` field for email verification status
+- Updated AuthController.java to send OTP on registration and restrict login to verified users
+- Added findByEmail() method to UserRepository.java for email lookups
+- Updated SecurityConfig.java to support verified user login flow
+- Added test profile configuration (application-test.properties) using H2 in-memory DB
+- Fixed Maven test failure by isolating test database context
+- Updated pom.xml to include spring-boot-starter-mail dependency
+
+These updates enable email verification during registration and ensure users
+cannot log in until their email address has been confirmed.
+
+
