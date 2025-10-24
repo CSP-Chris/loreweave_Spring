@@ -7,6 +7,9 @@
     Updated By:   Wyatt Bechtle
     Update Notes: Built the initial version of the messages.html template.
 
+    Updated By:   Wyatt Bechtle
+    Update Notes: Integrated WebSocket functionality for real-time messaging.
+                  Implemented both public and private messaging features using STOMP over SockJS.
 -->
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
@@ -22,6 +25,53 @@
     <!-- Bootstrap icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" 
           rel="stylesheet">
+
+    <!-- STOMP and SockJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+
+    <!-- WebSocket Client Setup -->
+    <script>
+      
+      // Declare clients
+      let publicClient, privateClient;
+
+      // Public (topic)
+      publicClient = Stomp.over(new SockJS('/ws'));
+      publicClient.connect({}, () => {
+        publicClient.subscribe('/topic/messages', (res) => show(JSON.parse(res.body)));
+      });
+
+      // Private (queue)
+      privateClient = Stomp.over(new SockJS('/ws'));
+      privateClient.connect({}, () => {
+        privateClient.subscribe('/user/queue/notifications', (res) => show(JSON.parse(res.body)));
+      });
+      // Send functions
+      function sendMessage() {
+        // Get text value
+        const text = document.getElementById('text').value;
+        // Send to server
+        publicClient.send('/app/application', {}, JSON.stringify({ text }));
+      }
+      // Send private message
+      function sendPrivateMessage() {
+        // Get text and recipient values
+        const text = document.getElementById('privateText').value;
+        const to   = document.getElementById('to').value;
+        // Send to server
+        privateClient.send('/app/private', {}, JSON.stringify({ text, to }));
+      }
+      // Show function
+      function show(msg) {
+        // Append message to messages div
+        const response = document.getElementById('messages');
+        const p = document.createElement('p');
+        p.textContent = `message: ${msg.text}  from: ${msg.from ?? ''}  at: ${msg.createdAt ?? ''}`;
+        response.appendChild(p);
+      }
+      </script>
+
   </head>
   <body>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
@@ -29,6 +79,25 @@
       <h1 class="h3 mb-3">
         <i class="bi bi-chat-dots me-2"></i>Messages
       </h1>
+      <!-- Messaging boxes for testing ATM. Will be fulling integrated into page once confidently developed.-->
+      <div>
+        <div>
+            <button id="sendMessage" onclick="sendMessage();">Send</button>
+            <input type="text" id="text" placeholder="Text"/>
+        </div>
+        <br />
+        <div>
+            <button id="sendPrivateMessage" onclick="sendPrivateMessage();">Send Private</button>
+            <input type="text" id="privateText" placeholder="Private Message"/>
+            <input type="text" id="to" placeholder="To"/>
+        </div>
+        <br />
+        <br />
+        <br />
+
+            <div id="messages"></div>
+
+    </div>
       <div class="row g-3">
         <!-- Conversations List -->
         <section class="col-12 col-lg-4">
