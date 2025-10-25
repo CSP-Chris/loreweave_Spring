@@ -7,7 +7,9 @@
 /// 
 ///  Updated By:    Wyatt Bechtle
 ///  Update Notes:  Removed unnecessary import.
-///  
+/// 
+///  Updated By:    Chris Ennis
+///  Update Notes:  Removed the send method to rely on WebSocket handling.
 /// ==========================================
 package com.loreweave.loreweave.controller;
 
@@ -42,19 +44,5 @@ public class MessagesPageController {
         model.addAttribute("activeConversation", null);
         model.addAttribute("messages", notificationService.getUnreadNotifications(current));
         return "messages";
-    }
-    // Handle sending a new message
-    @PostMapping("/messages/send")
-    public String send(Authentication auth,
-                       @RequestParam("to") String toUsername,
-                       @RequestParam("content") String content) {
-        // Fetch recipient users
-        User recipient = userRepository.findByUsername(toUsername)
-                .orElseThrow(() -> new IllegalArgumentException("Recipient not found: " + toUsername));
-        // Create and save the notification
-        Notification n = new Notification(recipient, content, null);
-        notificationService.createNotification(n);
-
-        return "redirect:/messages";
     }
 }

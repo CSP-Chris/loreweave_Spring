@@ -8,7 +8,8 @@
 ///       Updated By: Wyatt Bechtle
 ///   Update Details: Refactored to MessagesController.java and added WebSocket support,
 ///                   along with private messaging and notification persistence.
-///                   
+///       Updated By: Chris Ennis
+///   Update Details: Corrected Notification object creation.
 /// ==========================================
 
 package com.loreweave.loreweave.controller;
@@ -86,7 +87,7 @@ public class MessagesController {
 
         // Create and save notification to DB
         Notification saved = notificationService.createNotification(
-            new Notification(recipient, sender, dto.text(), null)
+            new Notification(recipient, sender, dto.text())
         );
 
         // Send notification to recipient

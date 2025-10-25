@@ -10,6 +10,10 @@
     Updated By:   Wyatt Bechtle
     Update Notes: Integrated WebSocket functionality for real-time messaging.
                   Implemented both public and private messaging features using STOMP over SockJS.
+
+    Updated By:   Chris Ennis
+    Update Notes: Refactored WebSocket client to a single instance, improved message display,
+                  and fixed DOM issues causing the message form to disappear.
 -->
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
@@ -31,71 +35,70 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
 
     <!-- WebSocket Client Setup -->
-    <script>
-      
-      // Declare clients
-      let publicClient, privateClient;
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+      // Declare client
+      let client;
+      const username = /*[[${#authentication.principal.username}]]*/ '';
 
-      // Public (topic)
-      publicClient = Stomp.over(new SockJS('/ws'));
-      publicClient.connect({}, () => {
-        publicClient.subscribe('/topic/messages', (res) => show(JSON.parse(res.body)));
+      // Connect to WebSocket
+      client = Stomp.over(new SockJS('/ws'));
+      client.connect({}, () => {
+        // Subscribe to public topic
+        client.subscribe('/topic/messages', (res) => show(JSON.parse(res.body)));
+        // Subscribe to private queue
+        client.subscribe('/user/queue/notifications', (res) => show(JSON.parse(res.body)));
       });
 
-      // Private (queue)
-      privateClient = Stomp.over(new SockJS('/ws'));
-      privateClient.connect({}, () => {
-        privateClient.subscribe('/user/queue/notifications', (res) => show(JSON.parse(res.body)));
-      });
       // Send functions
       function sendMessage() {
-        // Get text value
-        const text = document.getElementById('text').value;
-        // Send to server
-        publicClient.send('/app/application', {}, JSON.stringify({ text }));
-      }
-      // Send private message
-      function sendPrivateMessage() {
         // Get text and recipient values
-        const text = document.getElementById('privateText').value;
+        const text = document.getElementById('content').value;
         const to   = document.getElementById('to').value;
+
         // Send to server
-        privateClient.send('/app/private', {}, JSON.stringify({ text, to }));
+        if (to) {
+          client.send('/app/private', {}, JSON.stringify({ text, to }));
+        } else {
+          client.send('/app/application', {}, JSON.stringify({ text }));
+        }
+        document.getElementById('content').value = '';
       }
+
       // Show function
       function show(msg) {
         // Append message to messages div
-        const response = document.getElementById('messages');
-        const p = document.createElement('p');
-        p.textContent = `message: ${msg.text}  from: ${msg.from ?? ''}  at: ${msg.createdAt ?? ''}`;
-        response.appendChild(p);
+        const response = document.getElementById('message-display');
+        if (!response) return;
+
+        const div = document.createElement('div');
+        div.className = 'mb-2';
+        if (msg.from === username) {
+          div.className += ' text-end';
+        }
+
+        const textDiv = document.createElement('div');
+        textDiv.textContent = msg.message;
+
+        const small = document.createElement('small');
+        small.className = 'text-muted';
+        small.textContent = `from: ${msg.from ?? ''} at: ${msg.createdAt ?? ''}`;
+
+        div.appendChild(textDiv);
+        div.appendChild(small);
+        response.appendChild(div);
+        response.scrollTop = response.scrollHeight;
       }
+      /*]]>*/
       </script>
 
   </head>
-  <body>
+  <body th:attr="data-username=${#authentication.principal.username}">
     <div th:replace="~{fragments/navbar :: navbar}"></div>
     <div class="container-fluid py-4">
       <h1 class="h3 mb-3">
         <i class="bi bi-chat-dots me-2"></i>Messages
       </h1>
-      <!-- Messaging boxes for testing ATM. Will be fulling integrated into page once confidently developed.-->
-      <div>
-        <div>
-            <button id="sendMessage" onclick="sendMessage();">Send</button>
-            <input type="text" id="text" placeholder="Text"/>
-        </div>
-        <br />
-        <div>
-            <button id="sendPrivateMessage" onclick="sendPrivateMessage();">Send Private</button>
-            <input type="text" id="privateText" placeholder="Private Message"/>
-            <input type="text" id="to" placeholder="To"/>
-        </div>
-        <br />
-        <br />
-        <br />
-
-            <div id="messages"></div>
 
     </div>
       <div class="row g-3">
@@ -126,9 +129,9 @@
               th:text="${activeConversation != null ? activeConversation.otherPartyUsername : 'Thread'}">Thread
           </h2>
           <!-- Messages Display -->
-          <div style="max-height:50vh;overflow:auto" 
+          <div id="message-display" style="max-height:50vh;overflow:auto" 
                class="bg-body-tertiary border rounded-3 p-3 mb-3">
-            <div th:each="n : ${messages}">
+            <div th:each="n : ${messages}" th:class="${n.sender.username == #authentication.principal.username ? 'text-end' : ''}">
               <div class="mb-2">
                 <div th:text="${n.message}">content</div>
                 <div class="small text-muted"
@@ -141,9 +144,7 @@
 
           </div>
           <!-- Message Form -->
-          <form th:action="@{/messages/send}" 
-                method="post" 
-                class="bg-body-tertiary border rounded-3 p-3">
+          <form class="bg-body-tertiary border rounded-3 p-3" onsubmit="sendMessage(); return false;">
             <!-- CSRF Token -->
             <input type="hidden" 
                    th:if="${_csrf != null}" 

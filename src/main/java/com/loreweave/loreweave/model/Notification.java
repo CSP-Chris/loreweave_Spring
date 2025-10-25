@@ -6,6 +6,8 @@
 /// Update History:
 ///             Updated By: Wyatt Bechtle
 ///         Update Details: Added senderUsername field to track who sent the notification
+///             Updated By: Chris Ennis
+///         Update Details: Refactored constructors to properly initialize fields.
 /// ==========================================
 
 package com.loreweave.loreweave.model;
@@ -44,7 +46,12 @@ public class Notification {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    public Notification(User recipient, String content, Object message) {}
+    public Notification(User user, User sender, String message) {
+        this.user = user;
+        this.sender = sender;
+        this.message = message;
+        this.createdAt = LocalDateTime.now();
+    }
 
     public Notification(User user, User sender, String message, String link) {
         this.user = user;
