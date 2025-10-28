@@ -1,3 +1,5 @@
+package com.loreweave.loreweave.model;
+
 /// ==========================================
 /// File Name:    Story.java
 /// Created By:   Chris Ennis
@@ -6,7 +8,7 @@
 /// Update History:
 /// ==========================================
 
-package com.loreweave.loreweave.model;
+
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;

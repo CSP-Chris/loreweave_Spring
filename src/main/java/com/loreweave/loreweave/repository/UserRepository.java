@@ -1,3 +1,6 @@
+package com.loreweave.loreweave.repository;
+
+
 /// ==========================================
 /// File Name:    UserRepository.java
 /// Created By:   Jamie Coker
@@ -13,7 +16,7 @@
 /// Updated By:   Jamie Coker on 2025-10-19
 /// Update Notes: Added findByEmail() for email verification and duplicate checks.
 /// ==========================================
-package com.loreweave.loreweave.repository;
+
 
 import com.loreweave.loreweave.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

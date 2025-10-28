@@ -1,3 +1,5 @@
+package com.loreweave.loreweave.service;
+
 /// ==========================================
 /// File Name:    StoryPartService.java
 /// Created By:   Chris Ennis
@@ -13,7 +15,7 @@
 ///               refactor)
 /// ==========================================
 
-package com.loreweave.loreweave.service;
+
 
 import java.util.Optional;
 import com.loreweave.loreweave.model.StoryPart;

@@ -20,6 +20,8 @@
 ///                - Injected EmailOtpService
 ///                - Sends OTP after registration
 ///                - Disables user until verified
+/// Updated By:  Jamie Coker on 10/27/2025
+///  Update Notes: Added email check + OTP resend for existing/unverified users.
 /// ==========================================
 package com.loreweave.loreweave.controller;
 
@@ -39,7 +41,6 @@ public class AuthController {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
     private final EmailOtpService emailOtpService;
 
     public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder, EmailOtpService emailOtpService) {
@@ -55,29 +56,39 @@ public class AuthController {
     }
 
     /**
-     * Handles user registration.
-     * Encodes the password and saves the user to the database.
-     * Redirects to login page on success.
+     * Handles new user registration.
+     * - Checks if email already exists
+     * - Creates user as disabled until verified
+     * - Sends OTP to verify email
      */
     @PostMapping("/register")
     public String register(User user, Model model) {
-        // >>> ADDED: prevent duplicate email registration
-        if (userRepository.findByEmail(user.getEmail()) != null) {
-            model.addAttribute("error", "Email already in use.");
-            return "register";
+
+        // Step 1: Check if email already exists
+        User existingUser = userRepository.findByEmail(user.getEmail());
+        if (existingUser != null) {
+
+            // Case 1: User already verified
+            if (existingUser.isEnabled()) {
+                model.addAttribute("error", "Email already registered. Please log in instead.");
+                return "register";
+            }
+
+            // Case 2: User exists but not yet verified → resend OTP
+            emailOtpService.sendOtp(existingUser.getEmail());
+            model.addAttribute("message", "Verification email resent! Please check your inbox.");
+            return "verify-email";
         }
 
-        // >>> UPDATED: disable user until email is verified
+        // Step 2: Register new user (disabled until verified)
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEnabled(false);
         userRepository.save(user);
 
-        // >>> ADDED: send OTP after registration
+        // Step 3: Send OTP to email
         emailOtpService.sendOtp(user.getEmail());
 
-        // >>> UPDATED: redirect to verify email page
+        // Step 4: Redirect to verification page
         return "redirect:/verify-email?email=" + user.getEmail();
     }
-
-    }
-
+}

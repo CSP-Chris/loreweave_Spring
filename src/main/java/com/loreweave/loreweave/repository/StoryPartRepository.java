@@ -1,3 +1,4 @@
+package com.loreweave.loreweave.repository;
 /// ==========================================
 /// File Name:    StoryPartRepository.java
 /// Created By:   Chris Ennis
@@ -18,7 +19,7 @@
 ///  
 /// ==========================================
 
-package com.loreweave.loreweave.repository;
+
 
 import com.loreweave.loreweave.model.StoryPart;
 import org.springframework.data.jpa.repository.JpaRepository;

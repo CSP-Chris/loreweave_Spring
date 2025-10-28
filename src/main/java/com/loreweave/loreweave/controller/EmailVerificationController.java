@@ -1,11 +1,15 @@
+package com.loreweave.loreweave.controller;
+
 /// ==========================================
 /// File Name:    EmailVerificationController.java
 /// Created By:   Jamie Coker
 /// Created On:   2025-10-19
 /// Purpose:      Handles sending and verifying email OTP codes.
+/// Updated By:  Jamie Coker on 10/27/2025
+///   Update Notes: Handles OTP validation and updates user to enabled.
 /// ==========================================
 
-package com.loreweave.loreweave.controller;
+
 
 import com.loreweave.loreweave.model.User;
 import com.loreweave.loreweave.repository.UserRepository;
@@ -27,12 +31,45 @@ public class EmailVerificationController {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Step 1: Send OTP (only if email not already used)
+     */
+    @PostMapping("/send-otp")
+    public String sendOtp(@RequestParam String email, Model model) {
+        // Check if email already exists in the database
+        User existingUser = userRepository.findByEmail(email);
+        if (existingUser != null && existingUser.isEnabled()) {
+            model.addAttribute("error", "This email is already registered and verified. Please log in.");
+            return "register"; // Redirect or render the registration page with error
+        }
+
+        // If user exists but is not verified, allow resending OTP
+        if (existingUser != null && !existingUser.isEnabled()) {
+            emailOtpService.sendOtp(email);
+            model.addAttribute("email", email);
+            model.addAttribute("message", "Verification code resent! Check your email.");
+            return "verify-email";
+        }
+
+        // If it's a brand-new email, send OTP
+        emailOtpService.sendOtp(email);
+        model.addAttribute("email", email);
+        model.addAttribute("message", "Verification code sent! Please check your email.");
+        return "verify-email";
+    }
+
+    /**
+     * Step 2: Display the OTP verification page
+     */
     @GetMapping("/verify-email")
     public String showVerificationPage(@RequestParam String email, Model model) {
         model.addAttribute("email", email);
         return "verify-email";
     }
 
+    /**
+     * Step 3: Verify the OTP and activate the account
+     */
     @PostMapping("/verify-email")
     public String verifyEmail(@RequestParam String email, @RequestParam String otp, Model model) {
         boolean valid = emailOtpService.verifyOtp(email, otp);

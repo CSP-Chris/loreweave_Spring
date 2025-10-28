@@ -1,3 +1,4 @@
+package com.loreweave.loreweave.model;
 /// ==========================================
 /// File Name:    Character.java
 /// Created By:   Chris Ennis
@@ -8,7 +9,6 @@
 /// Updated Notes: Added getters and setters for lorePoints
 /// ==========================================
 
-package com.loreweave.loreweave.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;

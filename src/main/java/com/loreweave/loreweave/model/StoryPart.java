@@ -1,3 +1,5 @@
+package com.loreweave.loreweave.model;
+
 /// ==========================================
 /// File Name:    StoryPart.java
 /// Created By:   Chris Ennis
@@ -8,8 +10,8 @@
 ///            to enable point rewards via LoreVote transactions.
 /// ==========================================
 
-package com.loreweave.loreweave.model;
 
+import com.loreweave.loreweave.model.Story;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;

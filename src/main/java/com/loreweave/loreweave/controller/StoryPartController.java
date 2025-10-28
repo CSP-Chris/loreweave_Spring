@@ -1,3 +1,4 @@
+package com.loreweave.loreweave.controller;
 /// ==========================================
 /// File Name:    StoryPartController.java
 /// Created By:   Chris Ennis
@@ -14,7 +15,7 @@
 ///              for disabling vote buttons if the user already voted.
 /// ==========================================
 
-package com.loreweave.loreweave.controller;
+
 
 
 import com.loreweave.loreweave.model.StoryPart;

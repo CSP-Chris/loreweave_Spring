@@ -1,5 +1,6 @@
 package com.loreweave.loreweave.repository;
 
+
 /// ==========================================
 /// File Name:    LoreVoteRepository.java
 /// Created By:   Jamie Coker

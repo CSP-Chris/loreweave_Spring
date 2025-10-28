@@ -4,6 +4,11 @@
   Created By:   Jamie Coker
   Created On:   2025-10-19
   Purpose:      Page for user to enter OTP for email verification.
+  Updated By:   Jamie Coker on 10/27/2025
+  Update Notes:
+      - Moved alert messages above form for visibility.
+      - Added Bootstrap icons for success/error.
+      - Matched register.html feedback styling.
   ==========================================
 -->
 <!doctype html>
@@ -13,25 +18,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Email Verification</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!--  Added Bootstrap Icons for consistent UI -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 </head>
 <body class="bg-dark text-light">
 <main class="container d-flex flex-column justify-content-center align-items-center min-vh-100">
     <section class="bg-body-tertiary border rounded-3 p-4 p-md-5" style="max-width: 480px;">
-        <h1 class="h4 mb-3 text-center"><i class="bi bi-envelope-check me-2"></i>Email Verification</h1>
-        <p class="text-secondary mb-4 text-center">Enter the 6-digit code sent to <strong th:text="${email}">your email</strong>.</p>
 
+        <h1 class="h4 mb-3 text-center">
+            <i class="bi bi-envelope-check me-2"></i>Email Verification
+        </h1>
+        <p class="text-secondary mb-4 text-center">
+            Enter the 6-digit code sent to <strong th:text="${email}">your email</strong>.
+        </p>
+
+        <!--  Moved alerts ABOVE form for better visibility -->
+        <div th:if="${error}" class="alert alert-danger text-center" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <span th:text="${error}"></span>
+        </div>
+        <div th:if="${message}" class="alert alert-success text-center" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            <span th:text="${message}"></span>
+        </div>
+
+        <!-- Form Section -->
         <form th:action="@{/verify-email}" method="post">
             <input type="hidden" name="email" th:value="${email}" />
             <div class="mb-3">
                 <label for="otp" class="form-label">Verification Code</label>
-                <input type="text" id="otp" name="otp" maxlength="6" pattern="[0-9]{6}" required class="form-control" placeholder="123456">
+                <input type="text"
+                       id="otp"
+                       name="otp"
+                       maxlength="6"
+                       pattern="[0-9]{6}"
+                       required
+                       class="form-control text-center"
+                       placeholder="123456">
             </div>
-            <button type="submit" class="btn btn-primary w-100 mb-2">Verify</button>
-            <div th:if="${error}" class="alert alert-danger text-center mt-2" th:text="${error}"></div>
-            <div th:if="${message}" class="alert alert-success text-center mt-2" th:text="${message}"></div>
+
+            <button type="submit" class="btn btn-primary w-100 mb-2">
+                <i class="bi bi-check2-circle me-2"></i>Verify
+            </button>
+
+            <!--  Added helper link for resend or login -->
+            <p class="text-center mt-3 text-secondary">
+                Didn’t get a code? <a class="link-light" href="/api/auth/register">Resend</a><br>
+                Already verified? <a class="link-light" href="/login">Login</a>
+            </p>
         </form>
     </section>
 </main>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
