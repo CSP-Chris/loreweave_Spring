@@ -1,3 +1,4 @@
+package com.loreweave.loreweave.model;
 /// ==========================================
 /// File Name:    LoreVote.java
 /// Created By:   Chris Ennis
@@ -8,7 +9,7 @@
 ///           to combine voting and transactions in one entity.
 /// ==========================================
 
-package com.loreweave.loreweave.model;
+
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;

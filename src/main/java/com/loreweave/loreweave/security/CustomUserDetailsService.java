@@ -1,3 +1,5 @@
+package com.loreweave.loreweave.security;
+
 /// ==========================================
 /// File Name:    CustomUserDetailsService.java
 /// Created By:   Jamie Coker
@@ -16,7 +18,7 @@
 ///  Update Notes: Added .disabled(!user.isEnabled()) to prevent login
 ///                for unverified accounts (email not yet confirmed).
 /// ==========================================
-package com.loreweave.loreweave.security;
+
 
 import com.loreweave.loreweave.model.User;
 import com.loreweave.loreweave.repository.UserRepository;

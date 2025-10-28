@@ -1,3 +1,4 @@
+package com.loreweave.loreweave.repository;
 /// ==========================================
 /// File Name:    StoryRepository.java
 /// Created By:   Wyatt Bechtle
@@ -11,7 +12,7 @@
 ///                  and by id
 /// 
 /// ==========================================
-package com.loreweave.loreweave.repository;
+
 
 import com.loreweave.loreweave.model.Story;
 import java.util.Optional;

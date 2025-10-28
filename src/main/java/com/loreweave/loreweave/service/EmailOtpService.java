@@ -1,3 +1,5 @@
+
+package com.loreweave.loreweave.service;
 /// ==========================================
 /// File Name:    EmailOtpService.java
 /// Created By:   Jamie Coker
@@ -6,7 +8,6 @@
 ///                Used during registration to confirm user email legitimacy.
 /// ==========================================
 
-package com.loreweave.loreweave.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
