@@ -1,33 +1,83 @@
-<!--
-Created by Chris Ennis 9-15-25
-welcome.html
-
-Basic welcome page with description and link to contributors.
--->
-
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome - Loreweave</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <title>Loreweave | Welcome</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
-<body>
-<header class="main-header">
-    <a href="/static/contributors.html" class="nav-link">Meet the team!</a>
-</header>
-<main class="content-container">
-    <h1>Loreweave - Where new adventures await!</h1>
-    <p>
-        Welcome to Loreweave, the community story weaver! Where every player is an author, and every story is a legend woven together.
-    </p>
-    <p>
-        Loreweave is a unique collaborative storytelling platform designed as a turn-based RPG. It's a place where imagination meets cooperation. Users create unique characters and contribute to ongoing narratives, with each "turn" representing a new narrative contribution. It's a game where the story is the ultimate reward.
-    </p>
+<!-- Page transition overlay -->
+<div id="page-transition"></div>
+
+<body class="welcome-body">
+<div class="hero-container fade-in">
+    <h1 class="hero-title">Loreweave</h1>
+    <p class="hero-subtitle">A world where every player becomes an author and every story is a shared adventure.</p>
+    <a href="/login" class="start-weaving">Start Weaving</a>
+
+</div>
+<div class="hero-container">
+    <div class="hero-textbox">
+        <h1 class="hero-title">Loreweave</h1>
+        <p class="hero-subtitle">
+            A world where every player becomes an author and every story is a shared adventure.
+        </p>
+    </div>
+    <a href="/login" class="start-weaving">Start Weaving</a>
+</div>
+
+
+<main class="vertical-content fade-in">
+    <section class="info-section">
+        <h2>What is Loreweave?</h2>
+        <p>
+            Loreweave is a collaborative storytelling platform where imagination meets community. Players take turns
+            contributing story parts that expand shared worlds filled with adventure, creativity, and intrigue.
+            Every contribution helps weave the tapestry of an evolving narrative shaped by its participants.
+        </p>
+    </section>
+
+    <section class="info-section">
+        <h2>How It Works</h2>
+        <ul>
+            <li>Join or create a story and add your own unique part to the narrative.</li>
+            <li>Vote on other players’ contributions to decide which story paths move forward.</li>
+            <li>Earn Lore Points for writing, voting, and collaborating successfully.</li>
+            <li>Watch your characters and worlds evolve as the community continues to create.</li>
+        </ul>
+    </section>
+
+    <section class="info-section">
+        <h2>Tips for New Weavers</h2>
+        <ul>
+            <li>Read existing story parts before adding your own to keep the story cohesive.</li>
+            <li>Use vivid detail and dialogue to make your contributions stand out.</li>
+            <li>Vote regularly—every vote helps guide the story’s direction.</li>
+            <li>Collaborate respectfully and embrace the unpredictable nature of shared storytelling.</li>
+        </ul>
+    </section>
 </main>
+<!-- Footer -->
+<footer>
+    <p>&copy; 2025 Loreweave | A world where every player becomes an author.</p>
+</footer>
+<script>
+    // Fade in when page loads
+    document.body.classList.add('fade-in');
+
+    // Fade out when following internal links
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a');
+      if (link && link.href && link.target !== '_blank' && link.href.startsWith(window.location.origin)) {
+        e.preventDefault();
+        document.body.classList.add('fade-out');
+        setTimeout(() => {
+          window.location.href = link.href;
+        }, 2000); // matches slower 4s fade duration
+      }
+    });
+</script>
+
 </body>
 </html>
+

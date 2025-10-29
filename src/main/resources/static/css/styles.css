@@ -4,147 +4,1150 @@
 /* https://www.w3schools.com/css/css3_shadows.asp */
 /* https://www.w3schools.com/css/css3_flexbox_container.asp */
 
-/*
-    I'm not sure if we will keep any of this or even use html + css but here are some resources I used to freshen up.
-    Others can be found in the html pages.
-*/
+/* ===========================================================
+   Loreweave Global Styles
+   Theme: Fantasy / Storytelling
+   Fonts: Cinzel Decorative (titles), Cormorant Garamond (body)
+   Colors: Moonlight blues, golds, and parchment neutrals
+   =========================================================== */
 
+/* === GOOGLE FONT IMPORTS === */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:wght@400;500;700&display=swap');
 
-/* styles and font import */
+/* === ROOT VARIABLES === */
 :root {
     --bg-color: #1a1a1a;
-    --text-color: #e0e0e0;
-    --primary-color: #0041C2;
-    --accent-color: #4169E1;
-    --secondary-color: #ffc107;
+    --text-color: #e6dccf;           /* parchment tone */
+    --primary-color: #7fc7ff;        /* moonlight blue */
+    --accent-color: #a58bff;         /* lavender glow */
+    --secondary-color: #ffcb6b;      /* gold highlight */
     --border-radius: 12px;
 }
 
+/* === GLOBAL BODY === */
 body {
     margin: 0;
-    font-family: 'Inter', sans-serif;
-    background: #121212 linear-gradient(135deg, #121212 0%, #1a1a1a 100%) fixed;
+    font-family: 'Cormorant Garamond', serif;
+    background-color: var(--bg-color);
     color: var(--text-color);
-    line-height: 1.6;
-    display: flex;
-    flex-direction: column;
+    line-height: 1.7;
     min-height: 100vh;
 }
 
-/* Header and navigation styling */
-.main-header {
-    background-color: #242424;
-    padding: 1.5rem 2rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.nav-link {
+/* === LINKS === */
+a {
     color: var(--accent-color);
     text-decoration: none;
-    font-weight: 700;
-    font-size: 1rem;
-    padding: 0.75rem 1.5rem;
-    border: 2px solid var(--primary-color);
-    border-radius: 50px;
-    transition: all 0.3s ease;
-}
-
-.nav-link:hover,
-.nav-link:focus {
-    background-color: var(--primary-color);
-    color: #fff;
-    outline: none;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(21, 87, 84, 0.5);
-}
-
-/* Main content container */
-.content-container {
-    flex-grow: 1;
-    max-width: 900px;
-    margin: 3rem auto;
-    padding: 3rem;
-    background-color: rgba(36, 36, 36, 0.85);
-    border-radius: var(--border-radius);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(5px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-h1 {
-    font-size: 3rem;
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
-    text-shadow: 0 0 15px rgba(21, 87, 84, 0.8);
-}
-
-h2 {
-    font-size: 2rem;
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
-    text-shadow: 0 0 15px rgba(21, 87, 84, 0.8);
-}
-
-h4 {
-    font-size: 1.5rem;
-    color: var(--accent-color);
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-}
-
-/* List styling */
-.list-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-top: 1rem;
-}
-
-.list-section {
-    flex: 1;
-    margin: 1.5rem 1rem;
-    padding: 2rem;
-    background-color: rgba(26, 26, 26, 0.7);
-    border: 1px solid #333;
-    border-radius: var(--border-radius);
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
-}
-
-ul, ol {
-    list-style-position: inside;
-    padding: 0;
-}
-
-li {
-    margin: 0.75rem 0;
-    padding: 0.5rem 0;
-    font-size: 1.1rem;
-    border-bottom: 1px solid #444;
     transition: color 0.3s ease;
 }
-
-li:hover {
+a:hover {
     color: var(--secondary-color);
 }
 
-li:last-child {
-    border-bottom: none;
+/ce-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-/* Responsive adjustments for smaller screens */
-@media (min-width: 768px) {
-    .content-container {
-        padding: 4rem 5rem;
-    }
+/* === HEADER / NAVIGATION BAR === */
+.main-header {
+    background: rgba(20, 20, 20, 0.85);
+    border-bottom: 2px solid var(--accent-color);
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center; /* centers Loreweave title */
+    align-items: center;
+    position: fixed; /* stays visible */
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
 
-    .list-container {
-        flex-direction: row;
-        justify-content: space-between;
+.main-header h1 {
+    margin: 0;
+}
+
+.header-link {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 2rem;
+    color: #c4a0ff;
+    text-decoration: none;
+    text-shadow: 0 0 18px rgba(165, 139, 255, 0.9);
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.header-link:hover {
+    color: var(--secondary-color);
+    text-shadow: 0 0 25px rgba(255, 203, 107, 0.7);
+}
+
+.nav-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-link {
+    font-family: 'Cinzel Decorative', serif;
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+.nav-link:hover {
+    background-color: var(--accent-color);
+    color: #fff;
+    transform: translateY(-2px);
+}
+/* === HEADER / NAVIGATION LINKS (Loreweave title glow) === */
+.header-link {
+    font-family: 'Cinzel Decorative', serif;
+    color: #c4a0ff;
+    text-decoration: none;
+    text-shadow: 0 0 15px rgba(165, 139, 255, 0.9);
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.header-link:hover {
+    color: var(--secondary-color);
+    text-shadow: 0 0 25px rgba(255, 203, 107, 0.7);
+}
+
+
+/* === FOOTER (Fantasy Glow Style) === */
+footer {
+    position: fixed; /* stays anchored at bottom */
+    bottom: 0;
+    width: 100%;
+    background: rgba(20, 10, 40, 0.85);
+    color: #c4a0ff;
+    text-align: center;
+    padding: 1rem 0;
+    border-top: 1px solid rgba(165, 139, 255, 0.4);
+    font-size: 1rem;
+    font-family: 'Cormorant Garamond', serif;
+    text-shadow: 0 0 10px rgba(165, 139, 255, 0.6);
+    box-shadow: 0 -2px 12px rgba(165, 139, 255, 0.3);
+    z-index: 50;
+}
+
+footer a {
+    color: var(--secondary-color); /* gold accent links */
+    text-decoration: none;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+footer a:hover {
+    color: #fff;
+    text-shadow: 0 0 20px rgba(255, 203, 107, 0.8);
+}
+
+
+/* === HERO SECTION (responsive with shadow box and readability) === */
+.hero-container {
+    background: url('/images/openbook.jpeg') no-repeat center center;
+    background-size: cover;
+    height: 45vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    padding-top: 6vh; /* slightly lower on large screens */
+    z-index: 10;
+    color: #fff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    font-family: 'Cinzel Decorative', serif;
+    overflow: hidden;
+}
+
+/* Shadow backdrop for readability */
+.hero-textbox {
+    background: rgba(60, 20, 120, 0.35); /* translucent deep purple */
+    border-radius: 16px;
+    padding: 1rem 2rem;
+    box-shadow: 0 0 40px rgba(80, 40, 160, 0.5);
+    display: inline-block;
+    max-width: 85%;
+}
+
+/* Title styling */
+.hero-title {
+    font-size: 4rem;
+    color: #c5a4ff; /* soft mystical purple */
+    margin-bottom: 0.5rem;
+    text-shadow:
+        0 0 8px rgba(0, 0, 0, 0.6),
+        0 0 25px rgba(180, 150, 255, 0.8);
+    letter-spacing: 2px;
+}
+
+/* Subtitle styling */
+.hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: #e8ddff;
+    text-shadow:
+        0 0 6px rgba(0, 0, 0, 0.8),
+        0 0 14px rgba(180, 150, 255, 0.5);
+    -webkit-text-stroke: 0.4px rgba(30, 0, 60, 0.8); /* subtle outline for clarity */
+}
+
+/* === START WEAVING (fantasy-themed call-to-action) === */
+.start-weaving {
+    position: absolute;
+    bottom: 35px;
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.5rem;
+    color: #f5edff; /* light parchment white with lavender tone */
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0.6rem 2.2rem;
+    border-radius: 12px;
+
+    /* fantasy glass look */
+    background: linear-gradient(
+        to bottom,
+        rgba(40, 10, 80, 0.6),
+        rgba(20, 5, 50, 0.85)
+    );
+    border: 1px solid rgba(165, 139, 255, 0.4);
+    box-shadow:
+        0 0 25px rgba(165, 139, 255, 0.25),
+        inset 0 0 15px rgba(80, 40, 160, 0.4);
+
+    text-shadow:
+        0 0 6px rgba(0, 0, 0, 0.7),
+        0 0 12px rgba(255, 203, 107, 0.3);
+
+    transition: all 0.3s ease;
+}
+
+.start-weaving:hover {
+    background: linear-gradient(
+        to bottom,
+        rgba(80, 40, 160, 0.75),
+        rgba(50, 20, 100, 0.9)
+    );
+    color: var(--secondary-color); /* gold tone on hover */
+    box-shadow:
+        0 0 35px rgba(255, 203, 107, 0.7),
+        inset 0 0 18px rgba(165, 139, 255, 0.6);
+    transform: translateY(-2px);
+}
+
+/* === RESPONSIVE ADJUSTMENTS === */
+@media (max-width: 1024px) {
+    .hero-title { font-size: 3.2rem; }
+    .hero-subtitle { font-size: 1.2rem; }
+    .hero-container { padding-top: 8vh; }
+}
+
+@media (max-width: 768px) {
+    .hero-title { font-size: 2.5rem; }
+    .hero-subtitle { font-size: 1rem; }
+    .hero-textbox { padding: 0.75rem 1.25rem; }
+    .hero-container { padding-top: 10vh; }
+     .login-box {
+            width: 90%;
+            padding: 2rem;
+        }
+
+        .register-body .login-box {
+            padding: 2.5rem 2rem;
+        }
+}
+@keyframes weaveGlow {
+    0%, 100% {
+        box-shadow: 0 0 25px rgba(165, 139, 255, 0.25), inset 0 0 15px rgba(80, 40, 160, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 35px rgba(255, 203, 107, 0.5), inset 0 0 25px rgba(165, 139, 255, 0.6);
+    }
+}
+
+.start-weaving:hover {
+    animation: weaveGlow 1.8s ease-in-out infinite;
+}
+
+/* ===========================================================
+   MAIN CONTENT SECTIONS (used across pages)
+   =========================================================== */
+.vertical-content {
+    margin-top: 45vh;
+    background: linear-gradient(
+        to bottom,
+        rgba(20, 10, 40, 0.4),
+        rgba(20, 10, 40, 0.85)
+    );
+    padding: 5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    text-align: left;
+    z-index: 1;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; /* increased from 1.1rem */
+    color: var(--text-color);
+    line-height: 1.9;  /* smoother, more book-like spacing */
+}
+
+.content-container {
+    width: 90%;
+    max-width: 1000px;
+    background: rgba(30, 30, 30, 0.7);
+    border: 1px solid rgba(165, 139, 255, 0.3);
+    border-radius: var(--border-radius);
+    padding: 3rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
+    margin-bottom: 3rem;
+}
+
+/* === INFO SECTIONS (fantasy container boxes) === */
+.info-section {
+    margin: 3rem 0;
+    width: 100%;
+    max-width: 900px;
+    padding: 2.5rem 3rem;
+    background: rgba(25, 25, 25, 0.85); /* subtle translucent graphite */
+    border: 1px solid rgba(165, 139, 255, 0.3);
+    border-left: 4px solid var(--accent-color);
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 25px rgba(165, 139, 255, 0.2), inset 0 0 12px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.info-section:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 35px rgba(165, 139, 255, 0.4), inset 0 0 14px rgba(0, 0, 0, 0.7);
+}
+
+.info-section h2 {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 2.2rem;
+    text-align: center;
+    color: var(--accent-color);
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 14px rgba(165, 139, 255, 0.9);
+}
+
+.info-section p,
+.info-section ul {
+    font-size: 1.3rem;
+    line-height: 1.9;
+    color: var(--text-color);
+}
+
+.info-section li {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+    padding-left: 0.5rem;
+}
+
+
+/* ===========================================================
+   FORMS (Login, Register, Submit Story)
+   =========================================================== */
+form {
+    background: rgba(30, 30, 30, 0.9);
+    border: 1px solid var(--accent-color);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    max-width: 500px;
+    margin: 2rem auto;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+}
+form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    font-family: 'Cinzel Decorative', serif;
+}
+form input, form textarea, form select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #555;
+    border-radius: 8px;
+    background-color: #222;
+    color: #fff;
+    margin-bottom: 1.25rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+}
+form input:focus, form textarea:focus, form select:focus {
+    border-color: var(--accent-color);
+    outline: none;
+}
+button, .btn {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+button:hover, .btn:hover {
+    background-color: var(--secondary-color);
+    color: #000;
+}
+
+/* ===========================================================
+   TABLES (Story Lists, Contributors)
+   =========================================================== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    background-color: rgba(20, 20, 20, 0.9);
+    color: var(--text-color);
+}
+table th, table td {
+    border: 1px solid #333;
+    padding: 0.75rem;
+    text-align: left;
+}
+table th {
+    background-color: rgba(100, 80, 200, 0.3);
+    color: var(--secondary-color);
+    font-family: 'Cinzel Decorative', serif;
+}
+table tr:nth-child(even) {
+    background-color: rgba(40, 40, 40, 0.8);
+}
+table tr:hover {
+    background-color: rgba(80, 60, 140, 0.5);
+}
+
+/* ===========================================================
+   UTILITIES
+   =========================================================== */
+.center-text { text-align: center; }
+.gold-text { color: var(--secondary-color); }
+.shadow-text { text-shadow: 0 0 10px rgba(0,0,0,0.8); }
+.rounded-box {
+    background: rgba(25,25,25,0.85);
+    border: 1px solid rgba(165, 139, 255, 0.4);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+}
+
+/* ===========================================================
+   RESPONSIVE DESIGN
+   =========================================================== */
+@media (max-width: 768px) {
+    .hero-title { font-size: 2.5rem; }
+    .hero-subtitle { font-size: 1rem; }
+    .start-weaving { font-size: 1.1rem; bottom: 20px; }
+    .content-container { padding: 2rem; }
+    form { padding: 1.5rem; }
+}
+
+.info-section h2 {
+    font-size: 2.4rem; /* slightly larger */
+    text-transform: capitalize;
+    text-shadow: 0 0 18px rgba(165, 139, 255, 0.9);
+}
+
+/* ===========================================================
+   LOGIN PAGE — FINAL CENTERED FIX
+   =========================================================== */
+
+.login-body {
+    background: url('/images/hero-bg.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--text-color);
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* === HEADER (Loreweave) === */
+.login-header {
+    background: none;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.login-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 4rem;
+    color: #c4a0ff;
+    text-shadow:
+        0 0 25px rgba(165, 139, 255, 0.9),
+        0 0 50px rgba(165, 139, 255, 0.5);
+    letter-spacing: 3px;
+    margin: 0;
+    font-weight: 600;
+}
+
+/* === LOGIN / REGISTER WRAPPER (perfect centering) === */
+.login-wrapper {
+    display: flex;
+    justify-content: center;   /* centers horizontally */
+    align-items: center;       /* centers vertically */
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;         /* full-screen height */
+    padding: 2rem 1rem;        /* breathing space for mobile */
+    box-sizing: border-box;
+}
+
+
+/* === OUTER BOX (glass effect) === */
+.login-box {
+    background: rgba(30, 15, 60, 0.78);
+    border: 1px solid rgba(165, 139, 255, 0.4);
+    border-radius: 16px;
+    box-shadow:
+        0 0 35px rgba(165, 139, 255, 0.3),
+        inset 0 0 15px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+    width: 515px;
+    max-width: 95%;
+    padding: 3rem 3.5rem;     /* increased padding for larger form */
+    margin-top: 2rem;         /* adds a little breathing room below Loreweave title */
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    margin: 0 auto;
+    animation: boxGlow 4s ease-in-out infinite; /* keep the pulsing glow */
+}
+
+
+/* === SIGN-IN TITLE === */
+.login-heading {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 2.4rem;
+    color: var(--accent-color);
+    text-shadow: 0 0 20px rgba(165, 139, 255, 0.9);
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+/* === FORM === */
+.login-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* === LABELS === */
+.login-form label {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1rem;
+    color: var(--secondary-color);
+    text-align: left;
+    margin-bottom: 0.25rem;
+}
+
+/* === INPUTS === */
+.login-form input[type="text"],
+.login-form input[type="password"],
+.login-form input[type="email"]{
+    width: 100%;
+    padding: 0.9rem 1.1rem;
+    border: 1px solid rgba(165, 139, 255, 0.4);
+    border-radius: 10px;
+    background: rgba(20, 10, 40, 0.85);
+    color: #fff;
+    font-size: 1rem;
+    font-family: 'Cormorant Garamond', serif;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+     margin-bottom: 0.8rem; /* tighten spacing between fields */
+}
+
+.login-form input:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 10px rgba(255, 203, 107, 0.5);
+}
+
+/* === CHECKBOX AREA (inline + no wrap) === */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+    gap: 1rem;
+    flex-wrap: nowrap; /* prevent wrapping */
+}
+
+.form-options label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap; /* keep text on one line */
+    font-family: 'Cormorant Garamond', serif;
+    color: #ddd;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+
+/* === BUTTON === */
+.btn-login {
+    width: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(80, 40, 160, 0.95),
+        rgba(40, 20, 100, 0.95)
+    );
+    color: #fff;
+    font-family: 'Cinzel Decorative', serif;
+    border: 1px solid rgba(165, 139, 255, 0.5);
+    border-radius: 10px;
+    padding: 1rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 0 0 20px rgba(165, 139, 255, 0.3);
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    margin-top: 1.2rem;
+}
+
+.btn-login:hover {
+    background: linear-gradient(
+        to bottom,
+        rgba(120, 70, 200, 0.95),
+        rgba(60, 30, 140, 0.95)
+    );
+    color: var(--secondary-color);
+    box-shadow: 0 0 35px rgba(255, 203, 107, 0.7);
+    transform: translateY(-2px);
+}
+/* === REGISTER PAGE SPECIFIC ADJUSTMENTS === */
+.register-body .login-box {
+    margin-top: 4rem; /* pushes box slightly lower under Loreweave title */
+    padding: 3.5rem 3.5rem 3rem 3.5rem;
+}
+
+.register-body .login-form {
+    gap: 1rem;
+}
+
+.register-body .btn-login {
+    margin-top: 1rem;
+}
+
+
+/* === SIGN-UP TEXT (centered and balanced) === */
+.signup-text {
+    margin-top: 1.2rem;
+    font-size: 1rem;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap; /* prevents “Create an account” from breaking */
+}
+
+.signup-text a {
+    color: var(--accent-color);
+    text-decoration: none;
+    margin-left: 0.3rem;
+    transition: color 0.3s ease;
+}
+
+.signup-text a:hover {
+    color: var(--secondary-color);
+}
+
+
+/* === RESPONSIVENESS === */
+@media (max-width: 992px) {
+    .login-title { font-size: 3.5rem; }
+    .login-box { width: 85%; padding: 2.5rem; }
+}
+
+@media (max-width: 768px) {
+    .login-title { font-size: 2.8rem; }
+    .login-box { width: 90%; padding: 2rem; }
+    .login-heading { font-size: 2rem; }
+    .form-options { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 480px) {
+    .login-title { font-size: 2rem; }
+    .login-box { width: 95%; padding: 1.5rem; }
+    .login-heading { font-size: 1.8rem; }
+}
+/* ===========================================================
+   LOGIN BOX — PULSING GLOW ANIMATION
+   =========================================================== */
+
+/* Animation keyframes */
+@keyframes boxGlow {
+    0%, 100% {
+        box-shadow:
+            0 0 25px rgba(165, 139, 255, 0.35),
+            0 0 60px rgba(80, 40, 160, 0.3),
+            inset 0 0 10px rgba(0, 0, 0, 0.5);
+        border-color: rgba(165, 139, 255, 0.5);
+    }
+    50% {
+        box-shadow:
+            0 0 45px rgba(255, 203, 107, 0.6),
+            0 0 85px rgba(165, 139, 255, 0.5),
+            inset 0 0 15px rgba(0, 0, 0, 0.4);
+        border-color: rgba(255, 203, 107, 0.7);
+    }
+}
+/* Apply animation to the login box */
+.login-box {
+    animation: boxGlow 4s ease-in-out infinite;
+}
+/* ===========================================================
+   THEMED CHECKBOXES (Lavender Border + Gold Glow on Check)
+   =========================================================== */
+
+/* Reset default browser styling */
+.form-options input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(165, 139, 255, 0.7); /* lavender border */
+    border-radius: 4px;
+    background-color: rgba(20, 10, 40, 0.8);
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 0 6px rgba(165, 139, 255, 0.4);
+    transition: all 0.3s ease;
+}
+
+/* Hover shimmer */
+.form-options input[type="checkbox"]:hover {
+    box-shadow: 0 0 10px rgba(165, 139, 255, 0.6);
+    transform: scale(1.05);
+}
+
+/* Checked state — glowing gold pulse */
+.form-options input[type="checkbox"]:checked {
+    background-color: rgba(255, 203, 107, 0.85);
+    border-color: rgba(255, 203, 107, 0.9);
+    box-shadow:
+        0 0 12px rgba(255, 203, 107, 0.8),
+        0 0 20px rgba(165, 139, 255, 0.6);
+    animation: checkboxPulse 1.5s ease-in-out infinite;
+}
+
+/* Little golden check mark */
+.form-options input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 0px;
+    width: 5px;
+    height: 10px;
+    border: solid #fff7d1;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Pulse animation */
+@keyframes checkboxPulse {
+    0%, 100% {
+        box-shadow:
+            0 0 8px rgba(255, 203, 107, 0.6),
+            0 0 15px rgba(165, 139, 255, 0.5);
+    }
+    50% {
+        box-shadow:
+            0 0 15px rgba(255, 203, 107, 0.8),
+            0 0 25px rgba(165, 139, 255, 0.6);
+    }
+}
+/* ===========================================================
+   START WEAVING BUTTON — GOLD LAVENDER PULSE ON HOVER
+   =========================================================== */
+
+/* Keyframes for gold-lavender glow */
+@keyframes weavePulse {
+    0%, 100% {
+        box-shadow:
+            0 0 15px rgba(165, 139, 255, 0.4),
+            0 0 30px rgba(165, 139, 255, 0.25),
+            inset 0 0 8px rgba(80, 40, 160, 0.3);
+        border-color: rgba(165, 139, 255, 0.6);
+    }
+    50% {
+        box-shadow:
+            0 0 25px rgba(255, 203, 107, 0.8),
+            0 0 45px rgba(165, 139, 255, 0.6),
+            inset 0 0 10px rgba(255, 203, 107, 0.6);
+        border-color: rgba(255, 203, 107, 0.9);
+    }
+}
+
+/* Apply pulse on hover */
+.btn-login:hover {
+    animation: weavePulse 2s ease-in-out infinite;
+    background: linear-gradient(
+        to bottom,
+        rgba(120, 70, 200, 0.95),
+        rgba(60, 30, 140, 0.95)
+    );
+    color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+/* ===========================================================
+   FANTASY PAGE TRANSITION — RADIANT GOLDEN PORTAL
+   =========================================================== */
+
+#page-transition {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle at center,
+        rgba(255, 203, 107, 0.8) 0%,
+        rgba(255, 203, 107, 0.4) 15%,
+        rgba(20, 10, 40, 0.98) 80%
+    );
+    pointer-events: none;
+    opacity: 0;
+    z-index: 9999;
+    transform: scale(0.6);
+    transition: opacity 2.5s ease, transform 2.5s ease;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+/* Fade in (page load) */
+body.fade-in #page-transition {
+    opacity: 0;
+    transform: scale(1);
+    transition: opacity 2.5s ease-out, transform 2.5s ease-out;
+}
+
+/* Fade out (before navigation) — portal expansion */
+body.fade-out #page-transition {
+    opacity: 1;
+    transform: scale(2.8); /* portal expands outward */
+    transition: opacity 2.5s ease-in, transform 2.5s ease-in;
+}
+
+/* Sparkle overlay drifting over the portal */
+#page-transition::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url('/images/gold-sparkles.png') repeat;
+    background-size: 250px 250px;
+    mix-blend-mode: screen;
+    opacity: 0.1;
+    animation: sparkleFloat 10s linear infinite;
+}
+
+/* Soft floating shimmer motion */
+@keyframes sparkleFloat {
+    0% { opacity: 0.08; transform: translateY(0) scale(1); }
+    50% { opacity: 0.18; transform: translateY(-20px) scale(1.05); }
+    100% { opacity: 0.08; transform: translateY(0) scale(1); }
+}
+/* ===========================================================
+   REGISTER FORM — MAGICAL FIELD APPEAR-IN
+   =========================================================== */
+
+/* Base fade-in keyframes */
+@keyframes fieldAppear {
+    0% {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animate the inputs and labels in order */
+.register-body .login-form label,
+.register-body .login-form input,
+.register-body .login-form .form-text,
+.register-body .login-form .form-check,
+.register-body .login-form button,
+.register-body .login-form .signup-text {
+    opacity: 0;
+    animation: fieldAppear 0.6s ease forwards;
+}
+
+/* Stagger the animation for each element */
+.register-body .login-form label:nth-of-type(1),
+.register-body .login-form input:nth-of-type(1) { animation-delay: 0.2s; }
+.register-body .login-form label:nth-of-type(2),
+.register-body .login-form input:nth-of-type(2) { animation-delay: 0.4s; }
+.register-body .login-form label:nth-of-type(3),
+.register-body .login-form input:nth-of-type(3) { animation-delay: 0.6s; }
+.register-body .login-form label:nth-of-type(4),
+.register-body .login-form input:nth-of-type(4) { animation-delay: 0.8s; }
+.register-body .login-form label:nth-of-type(5),
+.register-body .login-form input:nth-of-type(5) { animation-delay: 1s; }
+.register-body .login-form .form-check { animation-delay: 1.2s; }
+.register-body .login-form button { animation-delay: 1.4s; }
+.register-body .login-form .signup-text { animation-delay: 1.6s; }
+/* ===========================================================
+   CREATE ACCOUNT BUTTON — GOLDEN SEAL PULSE
+   =========================================================== */
+
+/* Golden pulse keyframes */
+@keyframes goldenSeal {
+    0% {
+        box-shadow: 0 0 0 rgba(255, 203, 107, 0);
+        background: linear-gradient(
+            to bottom,
+            rgba(80, 40, 160, 0.95),
+            rgba(40, 20, 100, 0.95)
+        );
+    }
+    40% {
+        box-shadow:
+            0 0 25px rgba(255, 203, 107, 0.8),
+            0 0 55px rgba(255, 203, 107, 0.6);
+        background: linear-gradient(
+            to bottom,
+            rgba(255, 203, 107, 0.9),
+            rgba(165, 139, 255, 0.9)
+        );
+    }
+    100% {
+        box-shadow:
+            0 0 10px rgba(165, 139, 255, 0.4),
+            0 0 30px rgba(165, 139, 255, 0.25);
+        background: linear-gradient(
+            to bottom,
+            rgba(80, 40, 160, 0.95),
+            rgba(40, 20, 100, 0.95)
+        );
+    }
+}
+
+/* Apply pulse after form fields animate */
+.register-body .btn-login:hover {
+    animation: goldenSeal 2s ease-in-out;
+}
+/* ===========================================================
+   CREATE ACCOUNT BUTTON — GOLD SPARKLE CHIME EFFECT
+   =========================================================== */
+
+.register-body .btn-login {
+    position: relative;
+    overflow: hidden; /* keeps sparkles inside button */
+}
+
+/* Sparkle container inside the button */
+.register-body .btn-login::before,
+.register-body .btn-login::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(circle, rgba(255, 203, 107, 1) 0%, rgba(255, 203, 107, 0) 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Chime burst (main sparkles) */
+.register-body .btn-login::before {
+    animation: sparkleChime 2s ease-out 2.2s 1; /* syncs with goldenSeal timing */
+}
+
+/* Secondary faint sparkle burst */
+.register-body .btn-login::after {
+    animation: sparkleChime 2s ease-out 2.4s 1;
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(0);
+}
+
+/* Sparkle burst keyframes */
+@keyframes sparkleChime {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+    }
+    30% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        box-shadow:
+            0 -30px 0 0 rgba(255, 203, 107, 0.9),
+            20px -10px 0 0 rgba(255, 203, 107, 0.8),
+            25px 20px 0 0 rgba(255, 203, 107, 0.6),
+            -25px 20px 0 0 rgba(255, 203, 107, 0.6),
+            -15px -20px 0 0 rgba(255, 203, 107, 0.5);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.4);
+        box-shadow: none;
+    }
+}
+/* ===========================================================
+   REGISTER PAGE — Matching login fantasy theme
+   =========================================================== */
+
+/* === Checkbox styling (lavender border + gold glow when checked) === */
+.register-form input[type="checkbox"],
+.login-form input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(165, 139, 255, 0.7);
+    border-radius: 4px;
+    background: rgba(30, 15, 60, 0.8);
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 0 8px rgba(165, 139, 255, 0.4);
+    transition: all 0.25s ease;
+}
+.register-form input[type="checkbox"]:hover,
+.login-form input[type="checkbox"]:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 12px rgba(165, 139, 255, 0.6);
+}
+.register-form input[type="checkbox"]:checked,
+.login-form input[type="checkbox"]:checked {
+    background: radial-gradient(circle, rgba(255,203,107,1) 0%, rgba(165,139,255,0.6) 70%);
+    border-color: rgba(255,203,107,0.9);
+    box-shadow: 0 0 15px rgba(255,203,107,0.7), 0 0 25px rgba(165,139,255,0.5);
+}
+.register-form input[type="checkbox"]:checked::after,
+.login-form input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 9px;
+    border: solid #fff8d6;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Sparkle animation */
+@keyframes sparkleFloat {
+    0% { opacity: 0; transform: translateY(0) scale(0.5); }
+    30% { opacity: 1; transform: translateY(-4px) scale(1.2); }
+    100% { opacity: 0; transform: translateY(-10px) scale(0.6); }
+}
+
+/* === "Create Account" button — golden pulse with sparkles === */
+.btn-register {
+    background: linear-gradient(to bottom, rgba(80,40,160,0.95), rgba(40,20,100,0.95));
+    color: #fff;
+    font-family: 'Cinzel Decorative', serif;
+    border: 1px solid rgba(165,139,255,0.5);
+    border-radius: 10px;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 1rem;
+    box-shadow: 0 0 20px rgba(165,139,255,0.3);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: visible; /* fix: allow sparkles to render properly */
+    z-index: 2;
+}
+.btn-register:hover {
+    color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 0 35px rgba(255,203,107,0.7);
+    animation: goldPulse 2s ease-in-out infinite;
+}
+.btn-login:hover,
+.btn-register:hover {
+    animation: weavePulse 2s ease-in-out infinite;
+}
+
+.btn-register:active::after {
+    animation: sparkleBurst 1s ease-out forwards;
+}
+
+
+/* Gold pulse on hover */
+.btn-register:hover {
+    animation: goldPulse 1.5s ease-in-out infinite;
+    color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 0 35px rgba(255, 203, 107, 0.7);
+}
+
+/* Gold pulse animation */
+@keyframes goldPulse {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(255, 203, 107, 0.4),
+                    inset 0 0 10px rgba(165, 139, 255, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 35px rgba(255, 203, 107, 0.9),
+                    inset 0 0 20px rgba(255, 203, 107, 0.6);
+    }
+}
+
+/* Sparkle particles emitted on click */
+.btn-register::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle, rgba(255, 203, 107, 0.9), transparent 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+}
+
+.btn-register:active::after {
+    animation: sparkleBurst 1s ease-out forwards;
+}
+
+/* Sparkle expansion animation */
+@keyframes sparkleBurst {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+        box-shadow: 0 0 10px rgba(255, 203, 107, 0.8);
+    }
+    60% {
+        transform: translate(-50%, -50%) scale(10);
+        opacity: 0.6;
+        box-shadow: 0 0 20px rgba(255, 203, 107, 0.6);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(15);
+        opacity: 0;
     }
 }
