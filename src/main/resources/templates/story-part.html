@@ -13,6 +13,8 @@
                 Uses 'userHasVoted' flag from StoryPartController to toggle visibility.
                 Displays an 'Already Voted' message when userHasVoted = true.
 
+    Updated By:   Wyatt Bechtle
+    Update Notes: Implemented JS to handle vote notifications - Perserves to DB and broadcasts to WS.
 -->
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
@@ -28,6 +30,34 @@
     <!-- Bootstrap icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" 
           rel="stylesheet">
+
+    <!-- STOMP and SockJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+
+    <!-- WebSocket Client Setup -->
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+      // Declare client
+      let client;
+      const username = /*[[${#authentication.principal.username}]]*/ '';
+
+      // Connect to WebSocket
+      client = Stomp.over(new SockJS('/ws'));
+      client.connect({}, () => {});
+
+      // Send notification function
+      function sendNotification() {
+
+        // Get text and recipient values
+        const text = "New vote!";
+        const to = document.getElementById("contr").textContent;
+
+        // Send to server
+        client.send('/app/private', {}, JSON.stringify({ text, to }));
+      }
+      /*]]>*/
+      </script>
   </head>
   <body>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
@@ -44,7 +74,7 @@
           <!-- Part Details -->
           <h1 class="h4 mb-1">Part <span th:text="${part.partOrder}">1</span></h1>
           <p class="text-secondary small mb-3">
-            By <span th:text="${(part.contributor != null and part.contributor.user != null) ? part.contributor.user.username : 'unknown'}">contributor</span> · <span th:text="${part.createdAt != null ? #temporals.format(part.createdAt,'yyyy-MM-dd HH:mm') : '—'}">time</span>
+            By <span id="contr" th:text="${(part.contributor != null and part.contributor.user != null) ? part.contributor.user.username : 'unknown'}">contributor</span> · <span th:text="${part.createdAt != null ? #temporals.format(part.createdAt,'yyyy-MM-dd HH:mm') : '—'}">time</span>
             <br/>
             Featuring <span th:text="${part.contributor != null ? part.contributor.name : 'unknown'}">character</span>
           </p>
@@ -62,7 +92,8 @@
 
             <!-- Upvote Form -->
             <form th:action="@{'/api/votes/' + ${part.id} + '?type=POSITIVE'}" 
-                  method="post">
+                  method="post"
+                  onsubmit="sendNotification()">
               <input type="hidden" 
                     name="type" 
                     value="POSITIVE">
@@ -77,7 +108,8 @@
 
             <!-- Downvote Form -->
             <form th:action="@{'/api/votes/' + ${part.id} + '?type=NEGATIVE'}"
-                  method="post">
+                  method="post"
+                  onsubmit="sendNotification()">
               <input type="hidden" 
                     name="type" 
                     value="NEGATIVE">
