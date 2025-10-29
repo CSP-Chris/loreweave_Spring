@@ -45,9 +45,10 @@
       </h1>
   </header>
 
-  <main class="login-wrapper">
+  <main class="login-wrapper" style="background: transparent !important; box-shadow: none !important; border: none !important;">
       <div class="login-box">
-          <form class="login-form"
+
+      <form class="login-form"
                 th:action="@{/auth/register}"
                 th:object="${user}"
                 method="post"
