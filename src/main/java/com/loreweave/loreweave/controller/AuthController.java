@@ -12,7 +12,7 @@
 ///                by Spring Security with Thymeleaf.
 ///  Updated By:   Chris Ennis
 ///  Update Notes: Added GET mapping to display registration page and provide user object to the model.
-/// 
+///
 /// Updated By:   Wyatt Bechtle
 ///  Update Notes: changed loginBSF -> login
 ///  Updated By:  Jamie Coker on 10/19/2025

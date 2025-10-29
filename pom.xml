@@ -101,7 +101,8 @@
             <scope>runtime</scope>
         </dependency>
 
-              <!-- Lombok (optional, but very handy) -->
+
+             <!-- Lombok (optional, but very handy) -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -147,6 +148,15 @@
             <version>4.0.0</version>
         </dependency>
 
+<!-- Jamie add so she can run db on Mac, will comment out after use -->
+   <!--     <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.3.0</version>
+        </dependency>
+        -->
+
+
     </dependencies>
 
     <build>
@@ -159,6 +169,7 @@
                 <configuration>
                     <source>21</source>
                     <target>21</target>
+
                 </configuration>
             </plugin>
             <plugin>

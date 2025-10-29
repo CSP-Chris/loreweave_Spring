@@ -61,7 +61,7 @@ public class SecurityConfig {
         http
                 .authenticationProvider(authProvider)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/register", "/register", "/login", "/verify-email/**", "/test",
+                        .requestMatchers("/", "/welcome", "/api/auth/register", "/register", "/login", "/verify-email/**", "/test",
                                 "/css/**","/characters/**", "/js/**","/images/**", "/webjars/**", "/favicon.ico, "
                         ).permitAll()
                         .anyRequest().authenticated()

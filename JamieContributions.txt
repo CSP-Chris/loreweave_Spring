@@ -110,3 +110,40 @@ These updates enable email verification during registration and ensure users
 cannot log in until their email address has been confirmed.
 
 
+feat(ui): Add fantasy-themed welcome, login, and register pages with unified styling and animations
+
+✨ Added:
+- `welcome.html` — Created hero landing page with Loreweave title, tagline, and vertical scroll layout
+  • Integrated `openbook.jpeg` as hero background image
+  • Added fixed “Start Weaving” CTA with gold hover pulse animation
+  • Included “What is Loreweave,” “How It Works,” and “Tips for New Weavers” sections
+  • Implemented fantasy color palette and typography using Cinzel Decorative + Cormorant Garamond
+
+- `login.html` — Styled login page with centered glowing glass container
+  • Added Loreweave header with navigation back to home
+  • Added footer with consistent design
+  • Integrated gold pulse + sparkle hover animation for “Sign In” button
+  • Checkbox styling (lavender glow + golden highlight on selection)
+  • Fully responsive layout centered both vertically and horizontally
+
+- `register.html` — Matched visual theme with login and welcome pages
+  • Styled centered registration form inside glowing fantasy container
+  • Matching button pulse and checkbox glow effects
+  • Integrated error/success alert box styling for email/OTP feedback
+  • Ensured responsive alignment with consistent header/footer positioning
+
+🎨 Updated:
+- `styles.css`
+  • Centralized theme colors, gradients, and text shadows
+  • Added shared fantasy UI components (buttons, containers, headers, checkboxes)
+  • Implemented consistent centering via `.login-wrapper` and `.register-box`
+  • Unified hover animations (`goldPulse`, `sparkleBurst`) across pages
+  • Added responsive adjustments for all page layouts
+
+🖼️ Added assets:
+- `/images/openbook.jpeg` — main hero image for welcome page
+- `/images/hero-bg.jpeg` — shared login/register background
+
+📱 Result:
+Unified, immersive fantasy theme across landing, login, and registration pages.
+Consistent animation behavior, responsive layouts, and readable contrast on all screens.

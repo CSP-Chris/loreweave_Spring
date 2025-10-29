@@ -21,7 +21,8 @@
     Update Notes: Changed loginBSF -> login
     Updated By: Jamie Coker on 10/27/2025
     Update Notes: Added Bootstrap alert boxes to show “email already in use” or “OTP resent.”
-
+    Update: add ids on different section for styling purpose, actual code did not change
+                Added footer
 -->
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
@@ -29,24 +30,31 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>register</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-          crossorigin="anonymous">
+      <link rel="stylesheet" th:href="@{/css/styles.css}">
     <!-- Bootstrap icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
           rel="stylesheet">
   </head>
-  <body class="bg-dark text-light">
-    <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center">
-        <!--  Added th:object so username/email/password are resolvable -->
-        <form class="mb-3 p-4 p-md-5 bg-body-tertiary border rounded-3" 
-              th:action="@{/api/auth/register}" 
-              th:object="${user}" 
-              method="post" 
-              novalidate>
+  <body class="login-body register-body">
 
-            <!-- For spring security - prevents CSRF-->
+  <div id="page-transition"></div>
+
+  <header class="login-header">
+      <h1 class="login-title">
+          <a th:href="@{/}" class="header-link">Loreweave</a>
+      </h1>
+  </header>
+
+  <main class="login-wrapper">
+      <div class="login-box">
+          <form class="login-form"
+                th:action="@{/auth/register}"
+                th:object="${user}"
+                method="post"
+                novalidate>
+
+
+          <!-- For spring security - prevents CSRF-->
             <input type="hidden" 
                    th:if="${_csrf != null}"
                    th:name="${_csrf.parameterName}"
@@ -118,26 +126,24 @@
                   placeholder="Password"
                   minlength="8"
                   required>
-            <div class="form-check my-2">
-              <label class="form-check-label" 
-                     for="showPW">Show password</label>
-              <input class="form-check-input" 
-                     type="checkbox" 
-                     id="showPW">
-            </div>
-        <div class="form-text mb-3">
+              <div class="form-options">
+                  <label for="showPW">
+                      <input type="checkbox" id="showPW"> Show password
+                  </label>
+              </div>
+
+              <div class="form-text mb-3">
           Minimum 8 characters.
         </div>
-        <button type="submit" 
-                class="btn btn-primary w-100 mb-3">
-                    <i class="bi bi-person-plus me-2"></i>Create account
-        </button>
+              <button type="submit" class="btn-login">Create Account </button>
 
-        <p class="text-center mb-0 text-secondary">
-          Already have an account? <a class="link-light" href="/login">Sign in</a>
-        </p>
-      </form>
+            <p class="signup-text">
+                Already have an account? <a th:href="@{/auth/login}">Sign in</a>
+            </p>
+
+        </form>
     </div>
+  </main>
     <!-- Bootstrap JS link-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
@@ -149,5 +155,23 @@
       const checkbox = document.getElementById('showPW');
       checkbox?.addEventListener('change', () => {password.type = checkbox.checked ? 'text' : 'password';});
     </script>
+  <footer>
+      <p>© 2025 Loreweave | Every player becomes an author.</p>
+  </footer>
+
+  <script>
+      document.body.classList.add('fade-in');
+      document.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+        if (link && link.href && link.target !== '_blank' && link.href.startsWith(window.location.origin)) {
+          e.preventDefault();
+          document.body.classList.add('fade-out');
+          setTimeout(() => {
+            window.location.href = link.href;
+          }, 2500);
+        }
+      });
+  </script>
+
   </body>
 </html>

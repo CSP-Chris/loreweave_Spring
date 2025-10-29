@@ -19,6 +19,9 @@
 
     Updated By: Wyatt Bechtle on 10/04/2025
     Update Notes: Changed loginBSF -> login
+    Updated By: Jamie Coker on 11/02/2025
+    Update Notes: Added Loreweave header with navigation to home page.
+                  Added footer and applied fantasy-themed styling.
 
 -->
 <!doctype html>
@@ -27,71 +30,65 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
-          rel="stylesheet" 
-          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" 
-          crossorigin="anonymous">
+      <link rel="stylesheet" th:href="@{/css/styles.css}">
     <!-- Bootstrap icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
           rel="stylesheet">
+  <head>
+      <!-- Page transition overlay -->
+      <div id="page-transition"></div>
+
+  <body class="login-body">
+
+  <!-- Header -->
+    <header class="main-header login-header">
+      <h1 class="hero-title login-title">
+          <a th:href="@{/}" class="header-link">Loreweave</a>
+      </h1>
+  </header>
+
+
+  <!-- Login Container -->
+  <main class="login-wrapper">
+      <div class="login-box">
+          <h2 class="login-heading"><i class="bi bi-door-open me-2"></i>Sign In</h2>
+          <form th:action="@{/login}" method="post" class="login-form">
+              <input type="hidden"
+                     th:if="${_csrf != null}"
+                     th:name="${_csrf.parameterName}"
+                     th:value="${_csrf.token}" />
+
+              <!-- Username -->
+              <label for="username">Username</label>
+              <input type="text" id="username" name="username" placeholder="Username" required>
+
+              <!-- Password -->
+              <label for="password">Password</label>
+              <input type="password" id="password" name="password" placeholder="Password" required>
+
+              <div class="form-options">
+                  <label><input type="checkbox" id="showPW"> Show password</label><br>
+                  <label><input type="checkbox" name="remember-me"> Remember me</label>
+              </div>
+
+              <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                  Invalid Username or Password
+              </div>
+
+              <button type="submit" class="btn-login">Start Weaving</button>
+
+              <p class="signup-text">
+                  New to Loreweave? <a href="api/auth/register">Create an account</a>
+              </p>
+
+          </form>
+      </div>
+  </main>
   </head>
-  <body>
-    <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center">
-        <!--  Changed: added th:action + method -->
-        <form class="mb-3 p-4 p-md-5 bg-body-tertiary border rounded-3" 
-              th:action="@{/login}" 
-              method="post">
-          <input type="hidden"
-                 th:if="${_csrf != null}"
-                 th:name="${_csrf.parameterName}"
-                 th:value="${_csrf.token}" />
-          <h1 class="h3 text-center mb-4">
-            <i class="bi bi-door-open me-2"></i>Sign in
-          </h1>
-          <!--  Username -->
-          <label for="username" 
-                 class="form-label">Username</label>
-          <input type="text" 
-                 class="form-control mb-3" 
-                 id="username" 
-                 name="username" 
-                 placeholder="Username" 
-                 required>
-          <!-- Password -->
-          <label for="password" 
-                 class="form-label">Password</label>
-          <input type="password" 
-                 class="form-control" 
-                 id="password" 
-                 name="password" 
-                 placeholder="Password" 
-                 required>
-          <div class="form-check my-2">
-            <label class="form-check-label" for="showPW">Show password</label>
-            <input class="form-check-input" type="checkbox" id="showPW">
-          </div>
-          <div class="form-check mb-3">
-            <label class="form-check-label" 
-                   for="rememberMe">Remember me</label>
-            <input type="checkbox" 
-                   class="form-check-input" 
-                   id="rememberMe" 
-                   name="remember-me">
-          </div>
-        <div th:if="${param.error}" 
-             class="alert alert-danger" 
-             role="alert">Invalid Username or Password
-        </div>
-        <button type="submit" 
-                class="btn btn-primary w-100 mb-3">
-                <i class="bi bi-box-arrow-in-right me-2"></i>Sign in
-        </button>
-        <p class="text-center mb-0 text-secondary">
-          New to Loreweave? <a class="link-light" 
-                               href="api/auth/register">Create an account</a>
-        </p>
-      </form>
-    </div>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Loreweave | A world where every player becomes an author.</p>
+    </footer>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
             integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
@@ -103,5 +100,23 @@
       const checkbox = document.getElementById('showPW');
       checkbox?.addEventListener('change', () => {password.type = checkbox.checked ? 'text' : 'password';});
     </script>
+  <script>
+      // Fade in when page loads
+      document.body.classList.add('fade-in');
+
+      // Fade out when following internal links
+      document.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+        if (link && link.href && link.target !== '_blank' && link.href.startsWith(window.location.origin)) {
+          e.preventDefault();
+          document.body.classList.add('fade-out');
+          setTimeout(() => {
+            window.location.href = link.href;
+          }, 2000); // matches slower 4s fade duration
+        }
+      });
+  </script>
+
+
   </body>
 </html>
