@@ -14,6 +14,9 @@
     Updated By:   Chris Ennis
     Update Notes: Refactored WebSocket client to a single instance, improved message display,
                   and fixed DOM issues causing the message form to disappear.
+
+    Updated By:   Wyatt Bechtle
+    Update Notes: Refactored logic and fell back a commit to fix message display issues.
 -->
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
@@ -64,43 +67,67 @@
         }
         document.getElementById('content').value = '';
       }
+      // Helper functions
+      function formatStamp(ts) {
 
-      // Show function
-      function show(msg) {
-        // Append message to messages div
-        const response = document.getElementById('message-display');
-        if (!response) return;
+        if (!ts) return '';
 
-        const div = document.createElement('div');
-        div.className = 'mb-2';
-        if (msg.from === username) {
-          div.className += ' text-end';
+        // Try to parse timestamp
+        const d = new Date(ts);
+
+        // Return formatted date if valid
+        if (!isNaN(d)) {
+          return d.toLocaleString(undefined, { year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' });
         }
+        // Fallback to raw timestamp
+        return String(ts);
+      }
+      // Build message element
+      function buildMessageEl({ message, createdAt, from }) {
 
-        const textDiv = document.createElement('div');
-        textDiv.textContent = msg.message;
+        // Outer wrapper for alignment
+        const alignWrap = document.createElement('div');
 
-        const small = document.createElement('small');
-        small.className = 'text-muted';
-        small.textContent = `from: ${msg.from ?? ''} at: ${msg.createdAt ?? ''}`;
+        // Align based on sender
+        if (from === username) alignWrap.classList.add('text-end');
 
-        div.appendChild(textDiv);
-        div.appendChild(small);
-        response.appendChild(div);
-        response.scrollTop = response.scrollHeight;
+        // Inner message block 
+        const entry = document.createElement('div');
+        entry.className = 'mb-2';
+
+        // Message content
+        const contentDiv = document.createElement('div');
+        contentDiv.textContent = message ?? '';
+
+        // Timestamp
+        const timeDiv = document.createElement('div');
+        timeDiv.className = 'small text-muted';
+        timeDiv.textContent = formatStamp(createdAt);
+
+        // Assemble elements
+        entry.appendChild(contentDiv);
+        entry.appendChild(timeDiv);
+        alignWrap.appendChild(entry);
+        return alignWrap;
+      }
+      // Display message in list
+      function show(msg) {
+
+        // Append to message list
+        const list = document.getElementById('message-display');
+        if (!list) return;
+        list.appendChild(buildMessageEl(msg));
+        list.scrollTop = list.scrollHeight;
       }
       /*]]>*/
-      </script>
-
+    </script>
   </head>
-  <body th:attr="data-username=${#authentication.principal.username}">
+  <body>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
     <div class="container-fluid py-4">
       <h1 class="h3 mb-3">
         <i class="bi bi-chat-dots me-2"></i>Messages
       </h1>
-
-    </div>
       <div class="row g-3">
         <!-- Conversations List -->
         <section class="col-12 col-lg-4">
@@ -129,9 +156,10 @@
               th:text="${activeConversation != null ? activeConversation.otherPartyUsername : 'Thread'}">Thread
           </h2>
           <!-- Messages Display -->
-          <div id="message-display" style="max-height:50vh;overflow:auto" 
-               class="bg-body-tertiary border rounded-3 p-3 mb-3">
-            <div th:each="n : ${messages}" th:class="${n.sender.username == #authentication.principal.username ? 'text-end' : ''}">
+          <div style="max-height:50vh;overflow:auto" 
+               class="bg-body-tertiary border rounded-3 p-3 mb-3"
+               id="message-display">
+            <div th:each="n : ${messages}">
               <div class="mb-2">
                 <div th:text="${n.message}">content</div>
                 <div class="small text-muted"
@@ -144,7 +172,10 @@
 
           </div>
           <!-- Message Form -->
-          <form class="bg-body-tertiary border rounded-3 p-3" onsubmit="sendMessage(); return false;">
+          <form
+                onsubmit="sendMessage(); return false;"
+                method="post" 
+                class="bg-body-tertiary border rounded-3 p-3">
             <!-- CSRF Token -->
             <input type="hidden" 
                    th:if="${_csrf != null}" 
