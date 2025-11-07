@@ -17,6 +17,9 @@
 
     Updated By:   Wyatt Bechtle
     Update Notes: Refactored logic and fell back a commit to fix message display issues.
+
+    Updated By:   Wyatt Bechtle
+    Update Notes: Refactored the message display to better utilize the conversation data provided by the controller.
 -->
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
@@ -137,8 +140,9 @@
               th:each="c : ${conversations}">
             <li class="list-group-item d-flex justify-content-between align-items-center">
               <a class="text-decoration-none" 
-                 th:href="@{/messages/{id}(id=${c.id})}" 
-                 th:text="${c.otherPartyUsername}">username
+                 th:href="@{/messages/{id}(id=${c.id})}">
+                <span th:text="${'Conversation with ' + c.otherPartyUsername}">Conversation with user</span>
+                <span th:if="${c.unreadCount != null and c.unreadCount > 0}" class="badge bg-danger ms-2" th:text="${c.unreadCount}">0</span>
               </a>
               <small class="text-muted" 
                      th:text="${#temporals.format(c.lastMessageAt,'yyyy-MM-dd HH:mm')}">time
@@ -161,7 +165,10 @@
                id="message-display">
             <div th:each="n : ${messages}">
               <div class="mb-2">
-                <div th:text="${n.message}">content</div>
+                <div>
+                  <span th:text="${n.message}">content</span>
+                  <span th:if="${!n.isRead and n.user != null and n.user.username == #authentication.principal.username }" class="badge bg-info text-dark ms-2">new</span>
+                </div>
                 <div class="small text-muted"
                     th:text="${#temporals.format(n.createdAt,'yyyy-MM-dd HH:mm')}">time</div>
               </div>
@@ -184,12 +191,12 @@
             <!-- To and Content Fields -->
             <label for="to" 
                    class="form-label">To</label>
-            <input id="to" 
-                   name="to" 
-                   class="form-control mb-2" 
-                   placeholder="username" 
-                   th:value="${activeConversation != null} ? activeConversation.otherPartyUsername : ''" 
-                   required>
+       <input id="to" 
+         name="to" 
+         class="form-control mb-2" 
+         placeholder="username" 
+         th:value="${activeConversation != null ? activeConversation.otherPartyUsername : ''}" 
+         required>
             <label for="content" 
                    class="form-label">Message</label>
             <textarea id="content" 
