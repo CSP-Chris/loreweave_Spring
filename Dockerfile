@@ -7,7 +7,7 @@
 # Updated By:   <Name> on <YYYY-MM-DD> – <Summary of change>
 #==========================================
 
-FROM openjdk:21-jdk-slim
+FROM mcr.microsoft.com/openjdk/jdk:21-ubuntu
 ARG JAR_FILE=target/loreweave-0.0.1-SNAPSHOT.jar
 COPY ${JAR_FILE} app.jar
 EXPOSE 8080

@@ -1,3 +1,4 @@
+package com.loreweave.loreweave.controller;
 /// ==========================================
 /// File Name:    MessagesPageController.java
 /// Created By:   Wyatt Bechtle
@@ -21,7 +22,6 @@
 ///                 Enables user to see messages organized by senders, and when 
 ///                 clicked, displays the thread.
 /// ==========================================
-package com.loreweave.loreweave.controller;
 
 import com.loreweave.loreweave.model.Notification;
 import com.loreweave.loreweave.model.User;

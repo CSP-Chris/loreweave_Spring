@@ -16,7 +16,7 @@ package com.loreweave.loreweave.service;
 import com.loreweave.loreweave.model.Notification;
 import com.loreweave.loreweave.model.User;
 import com.loreweave.loreweave.repository.NotificationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

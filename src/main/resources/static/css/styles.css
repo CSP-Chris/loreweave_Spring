@@ -497,87 +497,66 @@ table tr:hover {
    LOGIN PAGE — FINAL CENTERED FIX
    =========================================================== */
 
-.login-body {
-    background: url('/images/hero-bg.jpeg') no-repeat center center fixed;
-    background-size: cover;
-    font-family: 'Cormorant Garamond', serif;
-    color: var(--text-color);
-    margin: 0;
-    min-height: 100vh;
-
-    /* Center everything perfectly */
-    display: flex;
-    justify-content: center;   /* centers vertically */
-    align-items: center;       /* centers horizontally */
-    flex-direction: column;
-}
-
-
-/* === HEADER (Loreweave) === */
-.login-header {
-    background: none;
-    text-align: center;
-    margin-top: 2rem;
-    margin-bottom: 1.5rem; /* reduce spacing under the Loreweave title */
-}
-
-.login-title {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 4rem;
-    color: #c4a0ff;
-    text-shadow:
-        0 0 25px rgba(165, 139, 255, 0.9),
-        0 0 50px rgba(165, 139, 255, 0.5);
-    letter-spacing: 3px;
-    margin: 0;
-    font-weight: 600;
-}
-
-/* === LOGIN WRAPPER: Centers inner box perfectly === */
-.login-wrapper {
-    background: none !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-    border: none !important;
-    padding: 0;
+.login-box .login-form {
+    box-sizing: border-box;
+    max-width: 100%;
     margin: 0;
 }
-/* Force-remove the large background panel */
-.login-body::before,
-.login-body::after,
-.login-wrapper::before,
-.login-wrapper::after,
-.login-wrapper {
-    content: none !important;
-    background: none !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-    border: none !important;
-    outline: none !important;
-    position: static !important;
-}
 
 
-/* === OUTER BOX (glass effect) === */
+
 .login-box {
     background: rgba(20, 10, 40, 0.85);
     border: 1px solid rgba(165, 139, 255, 0.5);
     border-radius: 18px;
     padding: 2.5rem 3rem;
-    width: 480px;
-    max-width: 90%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: stretch;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 1rem;
     box-shadow:
         0 0 30px rgba(165, 139, 255, 0.4),
         0 0 60px rgba(255, 203, 107, 0.25),
         inset 0 0 12px rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(10px);
     z-index: 10;
-    position: relative;
+}
+
+.login-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form label {
+    margin-bottom: 0.5rem;
+    text-align: left;
+}
+
+.form-options {
+    display: flex;
+    justify-content: center; /* Center checkboxes */
+    align-items: center;
+    margin-top: 0.5rem;
+    gap: 1.5rem; /* Add space between checkboxes */
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+}
+
+@media (max-width: 768px) {
+    .login-box {
+        padding: 2rem;
+    }
+    .form-options {
+        flex-direction: column; /* Stack checkboxes on mobile */
+        gap: 1rem;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-box {
+        padding: 1.5rem;
+        margin: 0 0.5rem;
+    }
 }
 .login-body, .login-wrapper {
     display: flex;
@@ -631,6 +610,7 @@ table tr:hover {
 /* === INPUTS === */
 .login-form input[type="text"],
 .login-form input[type="password"] {
+  box-sizing: border-box;
   width: 100%;
   padding: 0.85rem 1rem;
   border: 1px solid rgba(165,139,255,0.4);          /* lavender border */
@@ -664,11 +644,12 @@ table tr:hover {
 /* === CHECKBOX AREA (inline + no wrap) === */
 .form-options {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    margin-top: 0.5rem;
-    gap: 1rem;
-    flex-wrap: nowrap; /* prevent wrapping */
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    gap: 1.5rem;
+    flex-wrap: wrap;
 }
 
 .form-options label {
@@ -764,7 +745,7 @@ table tr:hover {
     .login-title { font-size: 2.8rem; }
     .login-box { width: 90%; padding: 2rem; }
     .login-heading { font-size: 2rem; }
-    .form-options { flex-direction: column; align-items: flex-start; }
+    .form-options { flex-direction: column; align-items: center; }
 }
 
 @media (max-width: 480px) {
@@ -2503,28 +2484,7 @@ footer {
 }
 
 /* >>> The fixed, centered login box <<< */
-.login-body .login-box {
-  position: fixed;                  /* fixed in viewport */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 5;
 
-  width: min(480px, 92vw);
-  max-height: min(88vh, 680px);     /* stays on screen on small devices */
-  overflow: auto;                   /* internal scroll if content overflows */
-
-  background: rgba(20, 10, 40, 0.88);
-  border: 1px solid rgba(165,139,255,.55);
-  border-radius: 16px;
-  padding: clamp(1.5rem, 3vw, 2.5rem);
-  box-shadow:
-    0 0 35px rgba(165,139,255,.45),
-    0 0 70px rgba(255,203,107,.25),
-    inset 0 0 14px rgba(0,0,0,.55);
-  backdrop-filter: blur(10px);
-  animation: none;                  /* stop any previous pulsing if undesired */
-}
 
 /* Inputs, labels, and button—the same fantasy look, tightened a hair */
 .login-box label {
@@ -2587,17 +2547,7 @@ footer {
 }
 
 /* Footer should NOT be fixed on login page to avoid overlap */
-.login-body footer {
-  position: static !important;
-  background: transparent;
-  border: 0;
-  box-shadow: none;
-  color: #cfc6ff;
-  text-shadow: 0 0 10px rgba(165,139,255,.35);
-  margin: 2rem 0 1rem;
-  z-index: 1;
-  text-align: center;
-}
+
 
 /* Small screens: relax padding & ensure inner scroll feels good */
 @media (max-width: 576px) {
@@ -2734,8 +2684,8 @@ footer {
    REGISTER PAGE LAYOUT OVERRIDES (keeps form centered & scrollable)
    =========================================================== */
 
-/* Make the wrapper center the long form and allow page to scroll */
-.register-body .login-wrapper {
+.register-body .login-wrapper,
+.login-body .login-wrapper {
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -2744,7 +2694,8 @@ footer {
 }
 
 /* Undo the fixed positioning we applied for the login dialog */
-.register-body .login-box {
+.register-body .login-box,
+.login-body .login-box {
   position: relative;     /* not fixed */
   top: auto;
   left: auto;
@@ -2756,7 +2707,8 @@ footer {
 }
 
 /* Header on register should not be fixed; let it scroll naturally */
-.register-body .login-header {
+.register-body .login-header,
+.login-body .login-header {
   position: static;
   margin: 1.5rem 0 0.5rem;
 }
@@ -2776,7 +2728,8 @@ footer {
 }
 
 /* Keep the footer at the bottom without overlapping the form */
-.register-body footer {
+.register-body footer,
+.login-body footer {
   position: static;
   margin-top: 2rem;
 }
@@ -2793,7 +2746,8 @@ footer {
 }
 
 /* Layout for the "Show password" row */
-.register-body .login-form .form-options {
+.register-body .login-form .form-options,
+.login-body .login-form .form-options {
   display: flex;
   align-items: center;
   gap: 18px;
@@ -2802,7 +2756,8 @@ footer {
 }
 
 /* Label next to checkbox */
-.register-body .login-form .form-options label {
+.register-body .login-form .form-options label,
+.login-body .login-form .form-options label {
   display: inline-flex;
   align-items: center;
   gap: 10px;
