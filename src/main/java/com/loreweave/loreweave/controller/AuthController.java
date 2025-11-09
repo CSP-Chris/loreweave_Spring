@@ -28,6 +28,8 @@ package com.loreweave.loreweave.controller;
 import com.loreweave.loreweave.model.User;
 import com.loreweave.loreweave.repository.UserRepository;
 import com.loreweave.loreweave.service.EmailOtpService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +40,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/api/auth")
 public class AuthController {
+
+    private static final Logger log = LoggerFactory.getLogger(AuthController.class);
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -63,10 +67,12 @@ public class AuthController {
      */
     @PostMapping("/register")
     public String register(User user, Model model) {
+        log.info("Registration attempt for email: {}", user.getEmail());
 
         // Step 1: Check if email already exists
         User existingUser = userRepository.findByEmail(user.getEmail());
         if (existingUser != null) {
+            log.info("User with email {} already exists. Enabled: {}", existingUser.getEmail(), existingUser.isEnabled());
 
             // Case 1: User already verified
             if (existingUser.isEnabled()) {
