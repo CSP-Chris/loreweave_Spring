@@ -1,4 +1,13 @@
-
+/// ==========================================
+/// File Name:    EmailOtpService.java
+/// Created By:   Jamie Coker
+/// Created On:   2025-10-19
+/// Purpose:      Combined service for sending email OTPs and verifying them.
+///                Used during registration to confirm user email legitimacy.
+/// Updated By:   Chris Ennis
+/// Updated On:   2025-11-08
+/// Update Notes: Added logging for OTP generation and verification.
+/// ==========================================
 package com.loreweave.loreweave.service;
 
 import org.slf4j.Logger;

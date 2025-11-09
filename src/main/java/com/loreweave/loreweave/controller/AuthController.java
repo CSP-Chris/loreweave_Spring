@@ -22,6 +22,9 @@
 ///                - Disables user until verified
 /// Updated By:  Jamie Coker on 10/27/2025
 ///  Update Notes: Added email check + OTP resend for existing/unverified users.
+/// Updated By:   Chris Ennis
+/// Updated On:   2025-11-08
+/// Update Notes: Added logging for registration attempts.
 /// ==========================================
 package com.loreweave.loreweave.controller;
 
