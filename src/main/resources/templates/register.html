@@ -29,43 +29,43 @@
 -->
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>register</title>
-      <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <title>Register</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
     <!-- Bootstrap icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
           rel="stylesheet">
-  </head>
-  <!-- Page transition overlay -->
-  <div id="page-transition"></div>
+</head>
+<!-- Page transition overlay -->
+<div id="page-transition"></div>
 
-  <body class="login-body register-body">
+<body class="login-body register-body">
 
-  <header class="login-header">
-      <h1 class="login-title">
-          <a th:href="@{/}" class="header-link">Loreweave</a>
-      </h1>
-  </header>
+<header class="login-header">
+    <h1 class="login-title">
+        <a th:href="@{/}" class="header-link">Loreweave</a>
+    </h1>
+</header>
 
-  <main class="login-wrapper" style="background: transparent !important; box-shadow: none !important; border: none !important;">
-      <div class="login-box">
+<main class="login-wrapper">
+    <div class="login-box">
 
-      <form class="login-form"
-                th:action="@{/api/auth/register}"
-                th:object="${user}"
-                method="post"
-                novalidate>
+        <form class="login-form"
+              th:action="@{/api/auth/register}"
+              th:object="${user}"
+              method="post"
+              novalidate>
 
 
-          <!-- For spring security - prevents CSRF-->
-            <input type="hidden" 
+            <!-- For spring security - prevents CSRF-->
+            <input type="hidden"
                    th:if="${_csrf != null}"
                    th:name="${_csrf.parameterName}"
                    th:value="${_csrf.token}"/>
             <h1 class="h3 text-center mb-4">
-              <i class="bi bi-stars me-2"></i>Create your account
+                <i class="bi bi-stars me-2"></i>Create your account
             </h1>
 
             <!--  ADDED: feedback message area -->
@@ -82,65 +82,75 @@
             <!-- ============================================= -->
 
             <!--  First name -->
-            <label for="firstname" 
-                   class="form-label">First name</label>
-            <input type="text"
-                   class="form-control mb-3"
-                   id="firstName"
-                   th:field="*{firstName}"
-                   placeholder="First name">
+            <div class="mb-3">
+                <label for="firstName"
+                       class="form-label">First name</label>
+                <input type="text"
+                       class="form-control"
+                       id="firstName"
+                       th:field="*{firstName}"
+                       placeholder="First name">
+            </div>
             <!--  Last name -->
-            <label for="lastname" 
-                   class="form-label">Last name</label>
-            <input type="text"
-                   class="form-control mb-3"
-                   id="lastName"
-                   th:field="*{lastName}"
-                   placeholder="Last name">
+            <div class="mb-3">
+                <label for="lastName"
+                       class="form-label">Last name</label>
+                <input type="text"
+                       class="form-control"
+                       id="lastName"
+                       th:field="*{lastName}"
+                       placeholder="Last name">
+            </div>
             <!-- User name -->
-            <label for="username" 
-                   class="form-label">Username</label>
+            <div class="mb-2">
+                <label for="username"
+                       class="form-label">Username</label>
                 <!--  Added th:field -->
                 <input type="text"
-                       class="form-control mb-2"
+                       class="form-control"
                        id="username"
                        th:field="*{username}"
                        placeholder="Username"
                        minlength="3"
                        required>
+            </div>
             <div class="form-text mb-3">3+ characters.</div>
 
             <!-- Email -->
-            <label for="email" 
-                   class="form-label">Email</label>
-            <!--  Added th:field adding additional text for error resolution-->
-            <input type="email"
-                   class="form-control mb-3"
-                   id="email"
-                   th:field="*{email}"
-                   placeholder="name@example.com"
-                   required>
+            <div class="mb-3">
+                <label for="email"
+                       class="form-label">Email</label>
+                <!--  Added th:field adding additional text for error resolution-->
+                <input type="email"
+                       class="form-control"
+                       id="email"
+                       th:field="*{email}"
+                       placeholder="name@example.com"
+                       required>
+            </div>
             <!-- Password -->
-            <label for="password" 
-                   class="form-label">Password</label>
-            <!--  Added th:field -->
-            <input type="password"
-                  class="form-control"
-                  id="password"
-                  th:field="*{password}"
-                  placeholder="Password"
-                  minlength="8"
-                  required>
-              <div class="form-options">
-                  <label for="showPW">
-                      <input type="checkbox" id="showPW"> Show password
-                  </label>
-              </div>
+            <div class="mb-3">
+                <label for="password"
+                       class="form-label">Password</label>
+                <!--  Added th:field -->
+                <input type="password"
+                       class="form-control"
+                       id="password"
+                       th:field="*{password}"
+                       placeholder="Password"
+                       minlength="8"
+                       required>
+            </div>
+            <div class="form-options">
+                <label for="showPW">
+                    <input type="checkbox" id="showPW"> Show password
+                </label>
+            </div>
 
-              <div class="form-text mb-3">
-          Minimum 8 characters.
-        </div>
-              <button type="submit" class="btn-login">Create Account </button>
+            <div class="form-text mb-3">
+                Minimum 8 characters.
+            </div>
+            <button type="submit" class="btn-login">Create Account</button>
 
             <p class="signup-text">
                 Already have an account? <a th:href="@{/auth/login}">Sign in</a>
@@ -148,23 +158,23 @@
 
         </form>
     </div>
-  </main>
-    <!-- Bootstrap JS link-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-            crossorigin="anonymous">
-    </script>
-    <!-- Toggles password visibility -->
-    <script>
+</main>
+<!-- Bootstrap JS link-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous">
+</script>
+<!-- Toggles password visibility -->
+<script>
       const password = document.getElementById('password');
       const checkbox = document.getElementById('showPW');
       checkbox?.addEventListener('change', () => {password.type = checkbox.checked ? 'text' : 'password';});
-    </script>
-  <footer>
-      <p>© 2025 Loreweave | Every player becomes an author.</p>
-  </footer>
+</script>
+<footer>
+    <p>&copy; 2025 Loreweave | Every player becomes an author.</p>
+</footer>
 
-  <script>
+<script>
       document.body.classList.add('fade-in');
       document.addEventListener('click', (e) => {
         const link = e.target.closest('a');
@@ -176,7 +186,7 @@
           }, 2500);
         }
       });
-  </script>
+</script>
 
-  </body>
+</body>
 </html>
