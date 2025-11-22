@@ -22,139 +22,127 @@
 ///
 /// ==========================================
 -->
+<!-- ==========================================
+     Fantasy Navbar Fragment (Unified Version)
+     ========================================== -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
 <th:block th:fragment="navbar">
-  <header>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/profile">Loreweave</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#lwNav"
-                aria-controls="lwNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div id="lwNav" class="collapse navbar-collapse">
-          <!--- Navigation Links -->
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <!-- User Profile Link -->
-            <li class="nav-item"><a class="nav-link" href="/profile">User Profile</a></li>
-            <!-- Messages Link with Unread Badge -->
-            <li class="nav-item">
-              <a class="nav-link" href="/messages">Messages
-                <!-- Always render messages badge so client-side JS can update it. Hidden when zero. -->
-                <span id="messagesBadge"
-                      class="top-0 end-0 badge rounded-pill bg-danger"
-                      th:classappend="${unreadCount == 0} ? ' visually-hidden' : ''"
-                      th:text="${unreadCount}">0</span>
-              </a>
-            </li>
-            <!-- Stories Link -->
-            <li class="nav-item"><a class="nav-link" href="/stories">Stories</a></li>
-            <!-- Characters Link -->
-            <li class="nav-item"><a class="nav-link" href="/characters">Characters</a></li>
-            <!-- Notifications bell -->
-            <li class="nav-item" th:if="${#authorization.expression('isAuthenticated()')}">
-              <a class="nav-link" id="notifBell">
-                <i class="bi bi-bell" style="font-size: 1.5rem;"></i>
-                <!-- Always render badge so client-side JS can update it. Hidden when zero. -->
-                <span id="notifBadge"
-                  class="top-0 end-0 badge rounded-pill bg-danger"
-                  th:classappend="${unreadCount == 0} ? ' visually-hidden' : ''"
-                  th:text="${unreadCount}">0</span>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notifMenu">
-                <li><a class="dropdown-item" th:href="@{/notifications}">View notifications</a></li>
-              </ul>
-            </li>
-          </ul>
-          <form th:action="@{/logout}" method="post" class="d-flex">
-            <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            <button class="btn btn-outline-danger" type="submit">
-              <i class="bi bi-box-arrow-right me-1"></i> Sign out
-            </button>
-          </form>
-        </div>
-      </div>
-    </nav>
-  </header>
-  <!-- Notification WebSocket client: subscribes to /user/queue/notifications and updates badge -->
-  <script th:inline="javascript">
-    /*<![CDATA[*/
-    (function(){
-      // Only run for authenticated users; check presence of the badges
-      const notifBadge = document.getElementById('notifBadge');
-      const messagesBadge = document.getElementById('messagesBadge');
-      if (!notifBadge && !messagesBadge) return;
+    <header>
+        <nav class="fantasy-navbar">
 
-      // Ensure SockJS/Stomp are available. If not, load them dynamically.
-      function loadScript(src, cb) {
-        const s = document.createElement('script');
-        s.src = src; s.onload = cb; s.async = false; document.head.appendChild(s);
-      }
-      // Check if SockJS and Stomp are already loaded
-      const needSock = typeof SockJS === 'undefined';
-      const needStomp = typeof Stomp === 'undefined';
+            <!-- LEFT — Brand -->
+            <div class="navbar-left">
+                <a href="/" class="btn-fantasy">Loreweave</a>
+            </div>
 
-      // Start the WebSocket client after ensuring libs are loaded
-      const startClient = () => {
+            <!-- CENTER — Main Navigation -->
+            <div class="navbar-center">
 
-        try {
+                <a href="/profile" class="btn-fantasy">User Profile</a>
 
-          // Connect to WebSocket endpoint
-          const client = Stomp.over(new SockJS('/ws'));
-          client.connect({}, () => {
+                <a href="/messages" class="btn-fantasy">
+                    Messages
+                    <!-- Unread messages badge -->
+                    <span id="messagesBadge"
+                          class="badge-pill"
+                          th:classappend="${unreadCount == 0} ? ' hidden-badge' : ''"
+                          th:text="${unreadCount}">0</span>
+                </a>
 
-            // Subscribe to user-specific notifications queue
-            client.subscribe('/user/queue/notifications', (res) => {
-              
-              // On receiving a notification, parse the message
-              try {
-                const obj = JSON.parse(res.body);
-                // Increment notification badge
-                if (notifBadge) {
-                  const currentN = parseInt(notifBadge.textContent || '0') || 0;
-                  notifBadge.textContent = currentN + 1;
-                  notifBadge.classList.remove('visually-hidden');
-                }
-                // Increment messages badge too (same unreadCount used server-side)
-                if (messagesBadge) {
-                  const currentM = parseInt(messagesBadge.textContent || '0') || 0;
-                  messagesBadge.textContent = currentM + 1;
-                  messagesBadge.classList.remove('visually-hidden');
-                }
-              } catch (e) {
+                <a href="/stories" class="btn-fantasy">Stories</a>
+                <a href="/characters" class="btn-fantasy">Characters</a>
 
-                // On parse error, just set both badges to 1
-                if (notifBadge) {
-                  notifBadge.textContent = '1';
-                  notifBadge.classList.remove('visually-hidden');
-                }
-                if (messagesBadge) {
-                  messagesBadge.textContent = '1';
-                  messagesBadge.classList.remove('visually-hidden');
-                }
-              }
+                <!-- NOTIFICATION BELL -->
+                <a id="notifBell" class="btn-fantasy position-relative">
+                    <i class="bi bi-bell" style="font-size: 1.4rem;"></i>
+
+                    <!-- Unread notifications badge -->
+                    <span id="notifBadge"
+                          class="badge-pill"
+                          th:classappend="${unreadCount == 0} ? ' hidden-badge' : ''"
+                          th:text="${unreadCount}">0</span>
+                </a>
+
+            </div>
+
+            <!-- RIGHT — Sign Out -->
+            <div class="navbar-right">
+                <form th:action="@{/logout}" method="post" class="signout-form">
+                    <input type="hidden"
+                           th:if="${_csrf != null}"
+                           th:name="${_csrf.parameterName}"
+                           th:value="${_csrf.token}" />
+
+                    <button type="submit" class="btn-fantasy">
+                        <i class="bi bi-box-arrow-right me-2"></i>
+                        Sign Out
+                    </button>
+                </form>
+            </div>
+
+        </nav>
+    </header>
+
+    <!-- ==============================
+         Notification WebSocket Client
+         ============================== -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        (function() {
+            const notifBadge = document.getElementById('notifBadge');
+            const messagesBadge = document.getElementById('messagesBadge');
+
+            function bump(badge) {
+                const current = parseInt(badge.textContent || '0') || 0;
+                badge.textContent = current + 1;
+                badge.classList.remove('hidden-badge');
+            }
+
+            if (!notifBadge && !messagesBadge) return;
+
+            function startClient() {
+                try {
+                    const client = Stomp.over(new SockJS('/ws'));
+                    client.connect({}, function () {
+
+                        client.subscribe('/user/queue/notifications', function (msg) {
+                            try {
+                                JSON.parse(msg.body);
+                                if (notifBadge) bump(notifBadge);
+                                if (messagesBadge) bump(messagesBadge);
+                            } catch (e) {
+                                if (notifBadge) bump(notifBadge);
+                                if (messagesBadge) bump(messagesBadge);
+                            }
+                        });
+
+                    });
+                } catch (e) {}
+            }
+
+            // Load SockJS/Stomp if missing
+            function load(src, cb) {
+                const s = document.createElement('script');
+                s.src = src;
+                s.onload = cb;
+                document.head.appendChild(s);
+            }
+
+            const needSock = typeof SockJS === 'undefined';
+            const needStomp = typeof Stomp === 'undefined';
+
+            if (needSock) load('https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.js', function() {
+                if (needStomp) load('https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js', startClient);
+                else startClient();
             });
-          });
-        } 
-        catch (e) {
-          // no-op on failure; keep server-rendered count
-        }
-      };
-      // Load missing libraries if needed
-      if (needSock || needStomp) {
-        // load SockJS then Stomp sequentially if missing
-        if (needSock) {
-          loadScript('https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.js', () => {
-            if (needStomp) {
-              loadScript('https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js', startClient);
-            } else startClient();
-          });
-        } else if (needStomp) {
-          loadScript('https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js', startClient);
-        }
-      } else {
-        startClient();
-      }
-    })();
-    /*]]>*/
-  </script>
+            else if (needStomp) load('https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js', startClient);
+            else startClient();
+
+        })();
+        /*]]>*/
+    </script>
 </th:block>
+
+</html>

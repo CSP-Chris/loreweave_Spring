@@ -23,8 +23,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
           rel="stylesheet">
   </head>
-  <body>
-    <div th:replace="~{fragments/navbar :: navbar}"></div>
+  <body class="profile-body">
+
+  <!-- Page transition overlay -->
+  <div id="page-transition"></div>
+
+  <!-- Shared fantasy navbar (same as profile) -->
+  <div th:replace="~{fragments/navbar :: navbar}"></div>
 
     <main class="container py-4">
       <h1>Create new story part</h1>

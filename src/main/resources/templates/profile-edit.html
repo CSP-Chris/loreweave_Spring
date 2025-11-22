@@ -34,28 +34,8 @@
 
 
     <!-- === NAVBAR === -->
-    <nav class="navbar fantasy-navbar">
-        <div class="navbar-left">
-            <a href="/" class="btn-fantasy">Loreweave</a>
-        </div>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-        <div class="navbar-center">
-            <a href="/profile"    class="btn-fantasy">User Profile</a>
-            <a href="/messages"   class="btn-fantasy">Messages</a>
-            <a href="/stories"    class="btn-fantasy">Stories</a>
-            <a href="/characters" class="btn-fantasy">Characters</a>
-        </div>
-
-
-
-        <div class="navbar-right">
-            <form th:action="@{/logout}" method="post" class="signout-form">
-                <button type="submit" class="btn-fantasy">
-                    <i class="bi bi-box-arrow-right me-2"></i>Sign Out
-                </button>
-            </form>
-        </div>
-    </nav>
 
     <!-- === MAIN === -->
 

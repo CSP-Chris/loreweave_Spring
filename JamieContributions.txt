@@ -147,3 +147,15 @@ feat(ui): Add fantasy-themed welcome, login, and register pages with unified sty
 📱 Result:
 Unified, immersive fantasy theme across landing, login, and registration pages.
 Consistent animation behavior, responsive layouts, and readable contrast on all screens.
+
+Milestone 3:
+
+feat(ui): update global navbar, improve messages layout, and refine fantasy styling
+
+- Rebuilt global navbar with consistent button sizing, hover highlights, and working route links
+- Added notification icon to navbar across all pages
+- Updated messages.html layout: aligned Conversations/Thread sections, reduced spacing, improved positioning
+- Adjusted CSS to match profile page styling (fonts, glow effects, spacing, alignment)
+- Fixed hover state colors for action buttons and normalized sizing across all nav items
+- Cleaned layout spacing by adding margin-top to message panels
+- Improved UI cohesion across pages using unified fantasy theme styling
