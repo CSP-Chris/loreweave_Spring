@@ -17,9 +17,6 @@
 
     Updated By:   Wyatt Bechtle
     Update Notes: Refactored logic and fell back a commit to fix message display issues.
-
-    Updated By:   Wyatt Bechtle
-    Update Notes: Refactored the message display to better utilize the conversation data provided by the controller.
 -->
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
@@ -28,13 +25,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>messages</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
-          rel="stylesheet" 
-          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" 
-          crossorigin="anonymous">
-    <!-- Bootstrap icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" 
-          rel="stylesheet">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+        crossorigin="anonymous">
+      <!-- Bootstrap icons -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+            rel="stylesheet">
+      <!-- Loreweave global styles -->
+      <link rel="stylesheet" th:href="@{/css/styles.css}">
 
     <!-- STOMP and SockJS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.js"></script>
@@ -116,148 +115,134 @@
       /*]]>*/
     </script>
   </head>
-    <body>
-    <!-- Page transition overlay -->
-    <div id="page-transition"></div>
+  <body class="profile-body">
 
-    <!-- === NAVBAR === -->
-    <nav class="navbar fantasy-navbar">
-        <div class="navbar-left">
-            <a href="/" class="btn-fantasy">Loreweave</a>
-        </div>
+  <!-- Page transition overlay -->
+  <div id="page-transition"></div>
 
-        <div class="navbar-center">
-            <a href="/profile"    class="btn-fantasy">User Profile</a>
-            <a href="/messages"   class="btn-fantasy">Messages</a>
-            <a href="/stories"    class="btn-fantasy">Stories</a>
-            <a href="/characters" class="btn-fantasy">Characters</a>
-        </div>
+  <!-- Shared fantasy navbar (same as profile) -->
+  <div th:replace="~{fragments/navbar :: navbar}"></div>
 
 
-
-        <div class="navbar-right">
-            <form th:action="@{/logout}" method="post" class="signout-form">
-                <button type="submit" class="btn-fantasy">
-                    <i class="bi bi-box-arrow-right me-2"></i>Sign Out
-                </button>
-            </form>
-        </div>
-    </nav>
-
-    <!-- === MAIN === -->
-    <div th:replace="~{fragments/navbar :: navbar}"></div>
-    <div class="container-fluid py-4">
+  <!-- MAIN -->
+  <main class="container-fluid py-4">
       <h1 class="h3 mb-3">
-        <i class="bi bi-chat-dots me-2"></i>Messages
+          <i class="bi bi-chat-dots me-2"></i>Messages
       </h1>
+
       <div class="row g-3">
-        <!-- Conversations List -->
-        <section class="col-12 col-lg-4">
+          <!-- Conversations List -->
+          <section class="col-12 col-lg-4 messages-conversations">
+
           <h2 class="h6 mb-2">Conversations</h2>
-          <ul class="list-group" 
-              th:if="${conversations}" 
-              th:each="c : ${conversations}">
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <a class="text-decoration-none" 
-                 th:href="@{/messages/{id}(id=${c.id})}">
-                <span th:text="${'Conversation with ' + c.otherPartyUsername}">Conversation with user</span>
-                <span th:if="${c.unreadCount != null and c.unreadCount > 0}" class="badge bg-danger ms-2" th:text="${c.unreadCount}">0</span>
-              </a>
-              <small class="text-muted" 
-                     th:text="${#temporals.format(c.lastMessageAt,'yyyy-MM-dd HH:mm')}">time
-              </small>
-            </li>
-          </ul>
-          <!-- No conversations notice -->
-          <p class="text-muted" 
-             th:if="${conversations == null or #lists.isEmpty(conversations)}">No conversations.
-          </p>
-        </section>
-        <!-- Active Conversation and Message Form -->
-        <section class="col-12 col-lg-8">
-          <h2 class="h6 mb-2" 
-              th:text="${activeConversation != null ? activeConversation.otherPartyUsername : 'Thread'}">Thread
-          </h2>
-          <!-- Messages Display -->
-          <div style="max-height:50vh;overflow:auto" 
-               class="bg-body-tertiary border rounded-3 p-3 mb-3"
-               id="message-display">
-            <div th:each="n : ${messages}">
-              <div class="mb-2">
-                <div>
-                  <span th:text="${n.message}">content</span>
-                  <span th:if="${!n.isRead and n.user != null and n.user.username == #authentication.principal.username }" class="badge bg-info text-dark ms-2">new</span>
-                </div>
-                <div class="small text-muted"
-                    th:text="${#temporals.format(n.createdAt,'yyyy-MM-dd HH:mm')}">time</div>
+              <ul class="list-group"
+                  th:if="${conversations}"
+                  th:each="c : ${conversations}">
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                      <a class="text-decoration-none"
+                         th:href="@{/messages/{id}(id=${c.id})}"
+                         th:text="${c.otherPartyUsername}">username
+                      </a>
+                      <small class="text-muted"
+                             th:text="${#temporals.format(c.lastMessageAt,'yyyy-MM-dd HH:mm')}">time
+                      </small>
+                  </li>
+              </ul>
+              <!-- No conversations notice -->
+              <p class="text-muted"
+                 th:if="${conversations == null or #lists.isEmpty(conversations)}">
+                  No conversations.
+              </p>
+          </section>
+
+          <!-- Active Conversation and Message Form -->
+          <section class="col-12 col-lg-8 messages-thread">
+
+          <h2 class="h6 mb-2"
+                  th:text="${activeConversation != null ? activeConversation.otherPartyUsername : 'Thread'}">
+                  Thread
+              </h2>
+
+              <!-- Messages Display -->
+              <div id="message-display"
+                   class="message-scroll mb-3">
+                  <div th:each="n : ${messages}">
+                      <div class="mb-2">
+                          <div th:text="${n.message}">content</div>
+                          <div class="small text-muted"
+                               th:text="${#temporals.format(n.createdAt,'yyyy-MM-dd HH:mm')}">time</div>
+                      </div>
+                  </div>
+                  <!-- No messages notice -->
+                  <p class="text-muted mb-0"
+                     th:if="${messages == null or #lists.isEmpty(messages)}">
+                      No messages.
+                  </p>
               </div>
-            </div>
-            <!-- No messages notice -->
-            <p class="text-muted mb-0"
-              th:if="${messages == null or #lists.isEmpty(messages)}">No messages.</p>
 
-          </div>
-          <!-- Message Form -->
-          <form
-                onsubmit="sendMessage(); return false;"
-                method="post" 
-                class="bg-body-tertiary border rounded-3 p-3">
-            <!-- CSRF Token -->
-            <input type="hidden" 
-                   th:if="${_csrf != null}" 
-                   th:name="${_csrf.parameterName}" 
-                   th:value="${_csrf.token}">
-            <!-- To and Content Fields -->
-            <label for="to" 
-                   class="form-label">To</label>
-       <input id="to" 
-         name="to" 
-         class="form-control mb-2" 
-         placeholder="username" 
-         th:value="${activeConversation != null ? activeConversation.otherPartyUsername : ''}" 
-         required>
-            <label for="content" 
-                   class="form-label">Message</label>
-            <textarea id="content" 
-                      name="content" 
-                      class="form-control mb-3" 
-                      rows="2" 
-                      placeholder="Type a message..." 
-                      required></textarea>
-            <!-- Submit Button -->
-            <button class="btn btn-primary" 
-                    type="submit">
-                <i class="bi bi-send me-2"></i>Send
-            </button>
-          </form>
-        </section>
+              <!-- Message Form -->
+              <form
+                      onsubmit="sendMessage(); return false;"
+                      method="post"
+                      class="form-fantasy">
+                  <!-- CSRF Token -->
+                  <input type="hidden"
+                         th:if="${_csrf != null}"
+                         th:name="${_csrf.parameterName}"
+                         th:value="${_csrf.token}"/>
+
+                  <!-- To and Content Fields -->
+                  <label for="to" class="form-label">To</label>
+                  <input id="to"
+                         name="to"
+                         class="form-control mb-2"
+                         placeholder="username"
+                         th:value="${activeConversation != null} ? activeConversation.otherPartyUsername : ''"
+                         required/>
+
+                  <label for="content" class="form-label">Message</label>
+                  <textarea id="content"
+                            name="content"
+                            class="form-control mb-3"
+                            rows="2"
+                            placeholder="Type a message..."
+                            required></textarea>
+
+                  <!-- Submit Button -->
+                  <button class="btn btn-primary" type="submit">
+                      <i class="bi bi-send me-2"></i>Send
+                  </button>
+              </form>
+          </section>
       </div>
-    </div>
-    <!-- FOOTER (same as profile.html) -->
-    <footer>
-        <p>&copy; 2025 Loreweave | A world where every player becomes an author.</p>
-    </footer>
+  </main>
 
-    <!-- Transition script (same used elsewhere) -->
-    <script>
-        document.body.classList.add('fade-in');
-        function startTransition(nextHref){
-          const o=document.getElementById('page-transition');
-          o&&o.classList.add('show');
-          setTimeout(()=>{window.location.href=nextHref;},600);
+  <!-- FOOTER (same as profile.html) -->
+  <footer>
+      <p>&copy; 2025 Loreweave | A world where every player becomes an author.</p>
+  </footer>
+
+  <!-- Transition script (same used elsewhere) -->
+  <script>
+      document.body.classList.add('fade-in');
+      function startTransition(nextHref){
+        const o = document.getElementById('page-transition');
+        o && o.classList.add('show');
+        setTimeout(() => { window.location.href = nextHref; }, 600);
+      }
+      document.addEventListener('click', (e) => {
+        const a = e.target.closest('a');
+        if (!a) return;
+        if (a.origin === location.origin && a.target !== '_blank') {
+          e.preventDefault();
+          startTransition(a.href);
         }
-        document.addEventListener('click',(e)=>{
-          const a=e.target.closest('a');
-          if(!a) return;
-          if(a.origin===location.origin && a.target!=='_blank'){
-            e.preventDefault(); startTransition(a.href);
-          }
-        });
-    </script>
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
-            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
-            crossorigin="anonymous">
-    </script>
+      });
+  </script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+          crossorigin="anonymous"></script>
   </body>
 </html>

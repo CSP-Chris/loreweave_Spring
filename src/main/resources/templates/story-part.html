@@ -59,8 +59,13 @@
       /*]]>*/
       </script>
   </head>
-  <body>
-    <div th:replace="~{fragments/navbar :: navbar}"></div>
+  <body class="profile-body">
+
+  <!-- Page transition overlay -->
+  <div id="page-transition"></div>
+
+  <!-- Shared fantasy navbar (same as profile) -->
+  <div th:replace="~{fragments/navbar :: navbar}"></div>
     <div class="container py-4">
       <div class="row justify-content-center">
         <!-- Adjust the widths here -->
