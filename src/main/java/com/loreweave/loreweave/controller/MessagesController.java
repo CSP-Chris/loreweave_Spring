@@ -10,6 +10,10 @@
 ///                   along with private messaging and notification persistence.
 ///       Updated By: Chris Ennis
 ///   Update Details: Corrected Notification object creation.
+/// 
+///       Updated By: Wyatt Bechtle
+///   Update Details: Added a link to messages in the notification so users can
+///                   open the messages UI from the notification.
 /// ==========================================
 
 package com.loreweave.loreweave.controller;
@@ -85,9 +89,10 @@ public class MessagesController {
         User recipient = userRepository.findByUsername(dto.to())
             .orElseThrow(() -> new IllegalArgumentException("Recipient not found: " + dto.to()));
 
-        // Create and save notification to DB
+        // Create and save notification to db, attach a link to `/messages` so the recipient can
+        // open the messages UI from the notification
         Notification saved = notificationService.createNotification(
-            new Notification(recipient, sender, dto.text())
+            new Notification(recipient, sender, dto.text(), "/messages")
         );
 
         // Send notification to recipient
