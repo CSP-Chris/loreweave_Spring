@@ -17,6 +17,9 @@ package com.loreweave.loreweave.service;
 /// Updated By:   Wyatt Bechtle
 /// Update Notes: Added notification logic to alert story creators when new parts are added to their stories.
 ///               Notifications are sent via WebSocket to the creator's personal queue.
+/// 
+/// Updated By:   Wyatt Bechtle
+/// Update Notes: Refactored notification creation logic to ensure notifications include a link to the story
 /// ==========================================
 
 
@@ -89,8 +92,11 @@ public class StoryPartService {
                     String fromUsername = character.getUser() != null ? character.getUser().getUsername() : "unknown";
                     String message = String.format("New contribution to %s from %s", storyTitle, fromUsername);
 
-                    // Create and save the notification
-                    Notification notif = new Notification(creatorUser, character.getUser(), message);
+                    // Create and save the notification with a link to the story so the creator can navigate to it
+                    String storyLink = "/story/" + saved.getStory().getId();
+                    Notification notif = new Notification(creatorUser, character.getUser(), message, storyLink);
+
+                    // Persist the notification to the db
                     Notification savedNotif = notificationService.createNotification(notif);
 
                     // Send via WebSocket to the creator's personal queue

@@ -18,6 +18,10 @@ package com.loreweave.loreweave.controller;
  ///              Also integrated CharacterRepository to adjust lore points directly.
  ///Updated By: Jamie Coker 10/17/2025
  Update Notes: Add lines to check if the user already voted on this story part
+
+/// Updated By: Wyatt Bechtle
+/// Update Notes: Added notification logic to inform the contributor when their story part receives a vote.
+/// 
  */
 
 
@@ -29,6 +33,10 @@ import com.loreweave.loreweave.repository.CharacterRepository;
 import com.loreweave.loreweave.repository.LoreVoteRepository;
 import com.loreweave.loreweave.repository.StoryPartRepository;
 import com.loreweave.loreweave.repository.UserRepository;
+import com.loreweave.loreweave.service.NotificationService;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import com.loreweave.loreweave.model.Notification;
+import com.loreweave.loreweave.dto.ws.NotificationView;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,15 +52,21 @@ public class VoteController {
     private final StoryPartRepository storyPartRepository;
     private final UserRepository userRepository;
     private final CharacterRepository characterRepository;
+    private final NotificationService notificationService;
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
     public VoteController(LoreVoteRepository loreVoteRepository,
                           StoryPartRepository storyPartRepository,
                           UserRepository userRepository,
-                          CharacterRepository characterRepository) {
+                          CharacterRepository characterRepository,
+                          NotificationService notificationService,
+                          SimpMessagingTemplate simpMessagingTemplate) {
         this.loreVoteRepository = loreVoteRepository;
         this.storyPartRepository = storyPartRepository;
         this.userRepository = userRepository;
         this.characterRepository = characterRepository;
+        this.notificationService = notificationService;
+        this.simpMessagingTemplate = simpMessagingTemplate;
     }
 
 
@@ -93,6 +107,29 @@ public class VoteController {
 
         // Adjust lore points
         characterRepository.incrementLorePoints(contributor.getId(), delta);
+
+        // Create a notification for the contributor so they are informed about the vote.
+        try {
+            if (contributor.getUser() != null) {
+                var recipientUser = contributor.getUser();
+                String msg = String.format("Your story part received a %s vote from %s", type == VoteType.POSITIVE ? "positive" : "negative", voter.getUsername());
+                String link = "/story-parts/" + storyPartId; // link directly to the story part page
+                Notification n = new Notification(recipientUser, voter, msg, link);
+                Notification saved = notificationService.createNotification(n);
+                // Send WebSocket notification to the recipient user (best-effort)
+                try {
+                    simpMessagingTemplate.convertAndSendToUser(
+                            recipientUser.getUsername(),
+                            "/queue/notifications",
+                            new NotificationView(saved.getMessage(), voter.getUsername(), saved.getCreatedAt().toString())
+                    );
+                } catch (Exception e) {
+                    // swallow websocket errors; notification remains persisted
+                }
+            }
+        } catch (Exception e) {
+            // Intentionally swallow notification-related errors to avoid affecting voting flow
+        }
 
         // Redirect back to where the user came from
         // REST based but could be simplified with MVC controller type

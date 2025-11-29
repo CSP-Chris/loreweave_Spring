@@ -15,6 +15,9 @@
 
     Updated By:   Wyatt Bechtle
     Update Notes: Implemented JS to handle vote notifications - Perserves to DB and broadcasts to WS.
+
+    Updated By: Wyatt Bechtle
+    Update Notes: Removed ws to consolidate notification generation for voting
 -->
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
@@ -35,29 +38,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
 
-    <!-- WebSocket Client Setup -->
-    <script th:inline="javascript">
-      /*<![CDATA[*/
-      // Declare client
-      let client;
-      const username = /*[[${#authentication.principal.username}]]*/ '';
-
-      // Connect to WebSocket
-      client = Stomp.over(new SockJS('/ws'));
-      client.connect({}, () => {});
-
-      // Send notification function
-      function sendNotification() {
-
-        // Get text and recipient values
-        const text = "New vote!";
-        const to = document.getElementById("contr").textContent;
-
-        // Send to server
-        client.send('/app/private', {}, JSON.stringify({ text, to }));
-      }
-      /*]]>*/
-      </script>
   </head>
   <body>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
@@ -93,7 +73,7 @@
             <!-- Upvote Form -->
             <form th:action="@{'/api/votes/' + ${part.id} + '?type=POSITIVE'}" 
                   method="post"
-                  onsubmit="sendNotification()">
+                  onsubmit="">
               <input type="hidden" 
                     name="type" 
                     value="POSITIVE">
@@ -109,7 +89,7 @@
             <!-- Downvote Form -->
             <form th:action="@{'/api/votes/' + ${part.id} + '?type=NEGATIVE'}"
                   method="post"
-                  onsubmit="sendNotification()">
+                  onsubmit="">
               <input type="hidden" 
                     name="type" 
                     value="NEGATIVE">
