@@ -159,3 +159,10 @@ feat(ui): update global navbar, improve messages layout, and refine fantasy styl
 - Fixed hover state colors for action buttons and normalized sizing across all nav items
 - Cleaned layout spacing by adding margin-top to message panels
 - Improved UI cohesion across pages using unified fantasy theme styling
+
+Improve Stories page visual clarity by brightening background video and adjusting container transparency
+
+- Increased brightness/contrast on flyingpages.mov background
+- Reduced darkness of global overlay for better visibility
+- Lightened list-group-item containers for improved readability
+- Updated styles.css to match updated fantasy theme across pages
