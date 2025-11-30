@@ -18,7 +18,19 @@ package com.loreweave.loreweave.controller;
  ///              Also integrated CharacterRepository to adjust lore points directly.
  ///Updated By: Jamie Coker 10/17/2025
  Update Notes: Add lines to check if the user already voted on this story part
+ /// Updated By: Jamie Coker on 2025-10-22
+/// Update Notes:
+/// - Added validation and error handling for Week 3 tasks.
+/// - Added LV001-LV005 error codes for structured backend errors.
+/// - Added self-vote prevention (LV003).
+/// - Added invalid vote type handling and fallback (LV004).
+/// - Added missing StoryPart handling with 404 redirect (LV002).
+/// - Added transaction failure safety wrapper (LV005).
+/// - Unified all redirects to append ?error=CODE for UI display.
+/// - Improved duplicate vote detection with explicit error code.
+
  */
+
 
 
 import com.loreweave.loreweave.model.LoreVote;
@@ -39,6 +51,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/votes")
 public class VoteController {
+    private static final String ERROR_DUPLICATE = "LV001";
+    private static final String ERROR_NOT_FOUND = "LV002";
+    private static final String ERROR_SELF_VOTE = "LV003";
+    private static final String ERROR_INVALID_TYPE = "LV004";
+    private static final String ERROR_TRANSACTION = "LV005";
+
 
     private final LoreVoteRepository loreVoteRepository;
     private final StoryPartRepository storyPartRepository;
@@ -62,43 +80,73 @@ public class VoteController {
      */
     @PostMapping("/{storyPartId}")
     @Transactional
-    public org.springframework.http.ResponseEntity<Void> castVote(@PathVariable Long storyPartId,
-                                                                 @RequestParam(defaultValue = "POSITIVE") LoreVote.VoteType type) {
-        // Who is voting
-        var auth = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
-        var voter = userRepository.findByUsername(auth.getName()).orElseThrow();
+    public org.springframework.http.ResponseEntity<Void> castVote(
+            @PathVariable Long storyPartId,
+            @RequestParam(defaultValue = "POSITIVE") LoreVote.VoteType type) {
 
-        // Target part and author character
-        var part = storyPartRepository.findById(storyPartId).orElseThrow();
+        // --- 1) Authentication ---
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        var voter = userRepository.findByUsername(auth.getName())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // --- 2) StoryPart Exists? (LV002) ---
+        var part = storyPartRepository.findById(storyPartId)
+                .orElse(null);
+
+        if (part == null) {
+            var location = java.net.URI.create("/stories?error=" + ERROR_NOT_FOUND);
+            return org.springframework.http.ResponseEntity.status(302).location(location).build();
+        }
+
+        // --- 3) Self-vote prevention (LV003) ---
         var contributor = part.getContributor();
-        if (contributor == null) throw new RuntimeException("Story part has no contributor");
-
-        // Check if the user already voted on this story part
-        var existingVote = loreVoteRepository.findByStoryPartAndVoter(part, voter);
-        if (existingVote.isPresent()) {
-            // Return 409 Conflict with redirect back to the story part
-            var location = java.net.URI.create("/story-parts/" + storyPartId);
+        if (contributor == null) {
+            var location = java.net.URI.create("/stories?error=" + ERROR_NOT_FOUND);
+            return org.springframework.http.ResponseEntity.status(302).location(location).build();
+        }
+        if (contributor.getUser().getId().equals(voter.getId())) {
+            var location = java.net.URI.create("/story-parts/" + storyPartId + "?error=" + ERROR_SELF_VOTE);
             return org.springframework.http.ResponseEntity.status(409).location(location).build();
         }
 
-        // delta: +1 for POSITIVE, -1 for NEGATIVE
+        // --- 4) Validate vote type (LV004) ---
+        if (type == null) {
+            var location = java.net.URI.create("/story-parts/" + storyPartId + "?error=" + ERROR_INVALID_TYPE);
+            return org.springframework.http.ResponseEntity.status(400).location(location).build();
+        }
+
+        // --- 5) Duplicate vote check (LV001) ---
+        var existingVote = loreVoteRepository.findByStoryPartAndVoter(part, voter);
+        if (existingVote.isPresent()) {
+            var location = java.net.URI.create("/story-parts/" + storyPartId + "?error=" + ERROR_DUPLICATE);
+            return org.springframework.http.ResponseEntity.status(409).location(location).build();
+        }
+
+        // --- 6) Value (+1 or -1) ---
         int delta = (type == LoreVote.VoteType.POSITIVE) ? +1 : -1;
 
-        // Record a vote 
-        var vote = new LoreVote(part, voter, type);
-        vote.setAmount(delta);                 // +1 or -1
-        vote.setReceiverId(contributor.getId());
-        vote.setStatus("COMPLETED");
-        loreVoteRepository.save(vote);
+        try {
+            // --- 7) Save transaction embedded in vote ---
+            var vote = new LoreVote(part, voter, type);
+            vote.setAmount(delta);
+            vote.setReceiverId(contributor.getId());
+            vote.setStatus("COMPLETED");
+            loreVoteRepository.save(vote);
 
-        // Adjust lore points
-        characterRepository.incrementLorePoints(contributor.getId(), delta);
+            // --- 8) Update contributor lore points ---
+            characterRepository.incrementLorePoints(contributor.getId(), delta);
 
-        // Redirect back to where the user came from
-        // REST based but could be simplified with MVC controller type
-        var location = java.net.URI.create("/story-parts/" + storyPartId);
+        } catch (Exception ex) {
+            // Transaction failure (LV005)
+            var location = java.net.URI.create("/story-parts/" + storyPartId + "?error=" + ERROR_TRANSACTION);
+            return org.springframework.http.ResponseEntity.status(500).location(location).build();
+        }
+
+        // --- 9) Success redirect ---
+        var location = java.net.URI.create("/story-parts/" + storyPartId + "?success=1");
         return org.springframework.http.ResponseEntity.status(303).location(location).build();
     }
+
     /**
      * Count positive votes for a story part.
      */

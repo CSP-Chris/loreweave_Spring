@@ -166,3 +166,4 @@ Improve Stories page visual clarity by brightening background video and adjustin
 - Reduced darkness of global overlay for better visibility
 - Lightened list-group-item containers for improved readability
 - Updated styles.css to match updated fantasy theme across pages
+

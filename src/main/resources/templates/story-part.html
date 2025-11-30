@@ -15,6 +15,17 @@
 
     Updated By:   Wyatt Bechtle
     Update Notes: Implemented JS to handle vote notifications - Perserves to DB and broadcasts to WS.
+    Updated By:   Jamie Coker
+Updated On:   2025-10-22
+Update Notes: Added full voting alert UI system for Milestone 2 Week 3.
+              Implemented LV001–LV005 error messages and success banner
+              using Thymeleaf param checks. Integrated Bootstrap alert
+              components with custom fantasy-themed styling, including
+              glow effects, fade-out animation, and icon indicators.
+              Alerts now appear after vote redirects to provide clear
+              feedback for duplicate votes, invalid actions, missing
+              story parts, transaction failures, and successful votes.
+
 -->
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
@@ -67,7 +78,14 @@
   <!-- Shared fantasy navbar (same as profile) -->
   <div th:replace="~{fragments/navbar :: navbar}"></div>
     <div class="container py-4">
-      <div class="row justify-content-center">
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+        <!-- Alerts go here -->
+        <div class="container mt-3"> … </div>
+
+        <div class="container py-4">
+
+        <div class="row justify-content-center">
         <!-- Adjust the widths here -->
         <div class="col-12 col-md-10 col-lg-8 col-xl-7">
           <!-- Back to Story Link -->
@@ -76,7 +94,56 @@
               th:href="@{/story/{id}(id=${part.story.id})}"><i class="bi bi-arrow-left me-1"></i>Back to story
             </a>
           </p>
-          <!-- Part Details -->
+            <!-- ========================= -->
+            <!-- ALERT MESSAGES FOR VOTING -->
+            <!-- ========================= -->
+            <div class="container mt-3">
+
+                <!-- SUCCESS -->
+                <div th:if="${param.success}"
+                     class="alert alert-success lore-alert shadow-sm">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    <strong>Vote recorded!</strong> Your lore points have been updated.
+                </div>
+
+                <!-- LV001 – Duplicate Vote -->
+                <div th:if="${param.error} == 'LV001'"
+                     class="alert alert-warning lore-alert shadow-sm">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <strong>You already voted on this part.</strong> Each user can only vote once.
+                </div>
+
+                <!-- LV002 – StoryPart Not Found -->
+                <div th:if="${param.error} == 'LV002'"
+                     class="alert alert-danger lore-alert shadow-sm">
+                    <i class="bi bi-x-circle-fill me-2"></i>
+                    <strong>Story part not found.</strong> The content you attempted to vote on is unavailable.
+                </div>
+
+                <!-- LV003 – Self Vote -->
+                <div th:if="${param.error} == 'LV003'"
+                     class="alert alert-warning lore-alert shadow-sm">
+                    <i class="bi bi-ban me-2"></i>
+                    <strong>Not allowed.</strong> You cannot vote on your own contribution.
+                </div>
+
+                <!-- LV004 – Invalid Vote Type -->
+                <div th:if="${param.error} == 'LV004'"
+                     class="alert alert-danger lore-alert shadow-sm">
+                    <i class="bi bi-x-octagon-fill me-2"></i>
+                    <strong>Invalid vote option.</strong> Please try again.
+                </div>
+
+                <!-- LV005 – Transaction Failure -->
+                <div th:if="${param.error} == 'LV005'"
+                     class="alert alert-danger lore-alert shadow-sm">
+                    <i class="bi bi-bug-fill me-2"></i>
+                    <strong>Voting failed.</strong> A server issue prevented your vote. Try again soon.
+                </div>
+
+            </div>
+
+            <!-- Part Details -->
           <h1 class="h4 mb-1">Part <span th:text="${part.partOrder}">1</span></h1>
           <p class="text-secondary small mb-3">
             By <span id="contr" th:text="${(part.contributor != null and part.contributor.user != null) ? part.contributor.user.username : 'unknown'}">contributor</span> · <span th:text="${part.createdAt != null ? #temporals.format(part.createdAt,'yyyy-MM-dd HH:mm') : '—'}">time</span>
@@ -148,6 +215,17 @@
             integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
             crossorigin="anonymous">
     </script>
+  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          const alerts = document.querySelectorAll(".alert");
+          alerts.forEach(alert => {
+              setTimeout(() => {
+                  alert.classList.add("fade");
+                  setTimeout(() => alert.remove(), 600);
+              }, 3500);
+          });
+      });
+  </script>
   </body>
 </html>
 
