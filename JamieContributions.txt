@@ -166,3 +166,41 @@ Improve Stories page visual clarity by brightening background video and adjustin
 - Reduced darkness of global overlay for better visibility
 - Lightened list-group-item containers for improved readability
 - Updated styles.css to match updated fantasy theme across pages
+
+___________________________________
+(Security & Transactions):
+
+• Added complete LV001–LV005 error handling flow in VoteController:
+  - Duplicate vote prevention
+  - Invalid story part handling
+  - Self-vote protection
+  - Invalid vote type handling
+  - Transaction failure fallback
+  - Redirects now include ?error=CODE or ?success=1
+
+• Integrated new fantasy-themed alert banners into story-part.html:
+  - Added success + error UI messages based on URL parameters
+  - Added fade-out animation and Bootstrap icon support
+
+• Updated LoreVote entity:
+  - Added @NotNull validation
+  - Enforced DB-level nullability constraints
+  - Ensured default status="COMPLETED"
+  - Verified unique constraint on (story_part_id, voter_id)
+
+• Added ErrorCode enum, LoreweaveException, ErrorResponse,
+  and GlobalExceptionHandler for centralized backend error handling.
+
+• Updated StoryPart entity mapping:
+  - Removed CascadeType.ALL and orphanRemoval on loreVotes to
+    prevent accidental deletion of transaction history.
+
+• Added TransactionService logging helpers (record + failure logs)
+  to support QA and debugging without reintroducing legacy logic.
+
+• Added recommended existsByStoryPartIdAndVoterId method to
+  LoreVoteRepository for efficient LV001 duplicate checks.
+
+• Updated CharacterRepository header notes (no logic changes needed).
+
+• Added Jakarta validation dependency to pom.xml.
