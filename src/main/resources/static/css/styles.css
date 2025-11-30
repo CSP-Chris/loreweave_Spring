@@ -3122,3 +3122,106 @@ footer,
 .messages-thread {
     margin-top: 30px;
 }
+/* ================================
+   STORIES PAGE BACKGROUND VIDEO
+================================ */
+.bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2; /* Behind everything */
+    filter: brightness(0.35) contrast(1.1);
+}
+
+/* Light fade overlay so text remains readable */
+.profile-body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 8, 20, 0.55);
+    z-index: -1;
+}
+
+/* ================================
+   STORIES PAGE CARD + LIST DESIGN
+================================ */
+.container h1 {
+    color: #f8e6c8;
+    text-shadow: 0 0 6px rgba(255, 224, 150, 0.8);
+}
+
+.list-group-item {
+    background: rgba(15, 12, 30, 0.65);
+    border: 1px solid rgba(255, 225, 170, 0.15);
+    backdrop-filter: blur(6px);
+    border-radius: 10px;
+    padding: 14px 18px;
+    transition: all 0.2s ease;
+}
+
+.list-group-item:hover {
+    background: rgba(25, 20, 45, 0.75);
+    border-color: rgba(255, 225, 170, 0.35);
+    transform: translateY(-2px);
+}
+
+.list-group-item a {
+    color: #f4d8af;
+    font-size: 1.05rem;
+    transition: color 0.2s ease;
+}
+
+.list-group-item a:hover {
+    color: #ffe9ba;
+    text-shadow: 0 0 5px rgba(255, 220, 174, 0.8);
+}
+
+.text-muted {
+    color: #d6cbe3 !important;
+}
+
+/* ================================
+   CREATE STORY BUTTON
+================================ */
+.btn-primary {
+    background: linear-gradient(135deg, #7c4dff, #b47cff);
+    border: none;
+    padding: 10px 16px;
+    font-weight: 600;
+    border-radius: 10px;
+    transition: all 0.25s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #a17dff, #d3a8ff);
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px rgba(180, 120, 255, 0.7);
+}
+
+/* Match spacing / layout of Profile + Messages */
+.container {
+    margin-top: 30px;
+}
+.bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+}
+.bg-video {
+    filter: brightness(0.55) contrast(1.1); /* was 0.35 */
+}
+
+/* Lighten the dark overlay */
+.profile-body::before {
+    background: rgba(10, 8, 20, 0.35); /* was 0.55 */
+}
