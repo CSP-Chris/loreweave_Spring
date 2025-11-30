@@ -8,6 +8,14 @@ package com.loreweave.loreweave.model;
 /// Updated By:   Jamie Coker on 2025-10-12
 ///Update Notes: Added author relationship (ManyToOne with User)
 ///            to enable point rewards via LoreVote transactions.
+/// Updated By: Jamie Coker
+/// Updated On: 2025-11-30
+/// Update Notes: Adjusted LoreVote mapping to remove CascadeType.ALL and
+///               orphanRemoval to prevent transactional vote records from
+///               being deleted if a StoryPart is removed. Ensured entity
+///               integrity for Milestone 2 Week 3 transaction QA. Author
+///               mapping verified as correct; no changes needed there.
+
 /// ==========================================
 
 
@@ -50,7 +58,7 @@ public class StoryPart {
     @JoinColumn(name = "author_id")
     private User author;
 
-    @OneToMany(mappedBy = "storyPart", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "storyPart", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JsonManagedReference
     private List<LoreVote> loreVotes;
 
