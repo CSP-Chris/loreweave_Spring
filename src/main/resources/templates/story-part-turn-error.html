@@ -1,0 +1,69 @@
+<!--
+    ==========================================
+    File Name:    story-part-turn-error.html
+    Created By:   Jamie Coker
+    Created On:   2025-11-30
+    Purpose:      Shown when a user attempts to add a new StoryPart
+                  but it is not their turn. Displays the story title,
+                  an explanation, and a link back to the story.
+    ==========================================
+-->
+
+<!doctype html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org/"
+      data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Not Your Turn • Loreweave</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Loreweave custom fantasy theme -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+</head>
+
+<body>
+
+<!-- Navbar fragment (if your app uses it) -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+
+            <div class="card glass-panel text-center p-4 shadow-lg">
+
+                <h1 class="mb-3">Not Your Turn Yet</h1>
+
+                <!-- Dynamic error message -->
+                <p class="lead mb-4" th:text="${errorMessage}">
+                    You must wait for another author to contribute a part before continuing this story.
+                </p>
+
+                <p class="text-muted">
+                    The story:
+                    <span class="fw-bold" th:text="${story.title}">Story Title</span><br>
+                    awaits the next writer before you may weave your next piece of lore.
+                </p>
+
+                <hr class="my-4">
+
+                <!-- Return to story button -->
+                <a th:href="@{/story/{id}(id=${story.id})}"
+                   class="btn btn-primary btn-fantasy mt-2">
+                    Return to Story
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
