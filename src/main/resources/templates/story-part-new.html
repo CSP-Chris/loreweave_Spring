@@ -36,31 +36,30 @@
   <h1>Create new story part</h1>
 
       <form th:action="@{/story-parts}" method="post">
-        <!-- For spring security - prevents CSRF-->
-        <input type="hidden"
-               th:name="${_csrf?.parameterName}"
-               th:value="${_csrf?.token}" />
+          <input type="hidden"
+                 th:name="${_csrf?.parameterName}"
+                 th:value="${_csrf?.token}" />
 
-        <!-- Hidden input to hold the story ID -->
-        <input type="hidden"
-               name="storyId"
-               th:value="${storyId}"/>
+          <input type="hidden"
+                 name="storyId"
+                 th:value="${storyId}"/>
 
-        <!-- Story Part Title -->
-        <div class="mb-3">
-          <label class="form-label">Content</label>
-          <textarea class="form-control"
-                    name="content"
-                    rows="8"
-                    required></textarea>
-        </div>
-        <!-- Submit and Cancel Buttons -->
-        <button type="submit"
-                class="btn btn-success">Save</button>
-        <a th:href="@{|/story/${storyId}|}"
-           class="btn btn-outline-secondary">Cancel</a>
+          <div class="mb-3">
+              <label class="form-label">Content</label>
+              <textarea class="form-control"
+                        name="content"
+                        rows="8"
+                        required></textarea>
+          </div>
+
+          <button type="submit"
+                  class="btn btn-success">Save</button>
+
+          <a th:href="@{|/story/${storyId}|}"
+             class="btn btn-outline-secondary">Cancel</a>
       </form>
-    </main>
+
+  </main>
   <footer>
       <p>&copy; 2025 Loreweave | A world where every player becomes an author.</p>
   </footer>
