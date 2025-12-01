@@ -167,3 +167,49 @@ Improve Stories page visual clarity by brightening background video and adjustin
 - Lightened list-group-item containers for improved readability
 - Updated styles.css to match updated fantasy theme across pages
 
+*******  11/30/2025 *******
+🎨 UI Overhaul: Unified Loreweave Fantasy Theme + Flying Pages Background
+
+Implemented a full UI/UX styling update across the Loreweave frontend to
+create a cohesive fantasy aesthetic and improve readability, consistency,
+and polish.
+
+✨ Global Enhancements
+- Added flyingpages.mov video background support across multiple pages.
+- Ensured proper layering via z-index fixes for video vs content.
+- Standardized fantasy-themed headers, borders, buttons, and card styles.
+- Applied consistent purple gradients, soft gold accents, and glow effects.
+
+📄 Page-Specific Updates
+
+• story-new.html
+  - Implemented video background behind content.
+  - Styled create-story form with fantasy card, CTA button, and typography.
+
+• story-part.html
+  - Converted story display into a contained scrollable chapter card.
+  - Re-themed Upvote/Downvote buttons to match purple+gold fantasy scheme.
+  - Improved spacing, readability, and hover effects.
+  - Enhanced lore alert UI with glowing fantasy banners.
+
+• story-part-new.html
+  - Styled new story part editor with a glowing fantasy card layout.
+  - Updated SAVE/CANCEL buttons with matching CTA purple + gold hover style.
+
+• stories.html
+  - Added full fantasy theme for story list page.
+  - Styled story cards, Create Story CTA, header, and footer.
+  - Applied consistent hover glows and content layout.
+
+• story.html
+  - Styled single story overview page with chapter list card styling.
+  - Added fantasy title, metadata styling, and Add Part CTA.
+  - Integrated background video + improved layout spacing.
+
+🧹 Cleanup
+- Removed redundant background pseudo-elements.
+- Consolidated component styles for consistency.
+- Improved responsive spacing and readability.
+
+Overall: This commit completes the full Loreweave UI theming pass and
+visually unifies all story/character pages with the project’s fantasy style.
