@@ -30,11 +30,13 @@
   <!-- Shared fantasy navbar (same as profile) -->
   <div th:replace="~{fragments/navbar :: navbar}"></div>
     <main class="container my-4">
+
       <!-- Back to Characters Link -->
-      <a class="btn btn-link p-0 mb-3" th:href="@{/characters}">
-        <i class="bi bi-arrow-left me-1"></i>Back to Characters
-      </a>
-      <!-- Character Details Section -->
+        <a class="btn btn-link p-0 mb-3 character-back-link" th:href="@{/characters}">
+            <i class="bi bi-arrow-left me-1"></i>Back to Characters
+        </a>
+
+        <!-- Character Details Section -->
       <section class="bg-body-tertiary border rounded-3 p-3 p-md-4 mb-4">
         <div class="d-flex align-items-start justify-content-between">
           <!-- Character Name -->

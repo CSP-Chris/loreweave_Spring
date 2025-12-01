@@ -4664,3 +4664,22 @@ footer,
     color: #f8e9c0 !important;
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
+
+ /* ============================================================
+    Character detail back button
+    ============================================================ */
+ .character-back-link {
+     font-size: 1.25rem;          /* Larger text */
+     padding: 8px 14px !important; /* Increase clickable area */
+     color: #d7c8ff !important;    /* Match fantasy colors */
+     text-decoration: none !important;
+     border-radius: 12px;
+     background: rgba(80, 0, 120, 0.35); /* Subtle fantasy glow panel */
+     transition: all 0.25s ease;
+ }
+
+ .character-back-link:hover {
+     background: rgba(130, 50, 200, 0.55);
+     color: #fff0d2 !important;
+     transform: translateY(-1px);
+ }
