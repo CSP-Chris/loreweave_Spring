@@ -212,3 +212,29 @@ and polish.
 
 Overall: This commit completes the full Loreweave UI theming pass and
 visually unifies all story/character pages with the project’s fantasy style.
+
+Implement turn-based story part restrictions, error page, and controller integration
+
+### Added
+- Introduced “no consecutive story parts” rule in StoryPartService using
+  findTopByStoryIdOrderByPartOrderDesc.
+- Added StoryPart turn validation with clear exception messages.
+- Created new error view: story-part-turn-error.html.
+- Implemented StoryService.getStoryById() to support error page rendering.
+
+### Updated
+- Updated StoryPartRepository with consistent method signatures and cleaned queries.
+- Enhanced StoryPartPageController to handle turn-rule violations:
+  - Wrapped POST /story-parts in try/catch
+  - Rendered custom error page when user contributes twice in a row.
+- Ensured StoryPartController no longer conflicts by removing duplicate POST mapping.
+
+### Fixed
+- Resolved ambiguous Spring controller mappings for POST /story-parts.
+- Fixed missing repository method errors due to mismatched signatures.
+- Addressed missing static resource error by correcting file path expectations.
+
+### Summary
+This commit completes the turn-based story contribution system, adds a user-friendly
+error page, fixes repository/service alignment, resolves controller conflicts, and
+stabilizes the application startup.
