@@ -238,3 +238,25 @@ Implement turn-based story part restrictions, error page, and controller integra
 This commit completes the turn-based story contribution system, adds a user-friendly
 error page, fixes repository/service alignment, resolves controller conflicts, and
 stabilizes the application startup.
+Enhanced voting UI, fixed background behavior, and updated SAVE/CANCEL buttons
+
+### Story Part Page (story-part.html)
+- Added `story-part-page` class to `<body>` to correctly enable FlyingPages background theme
+- Inserted global FlyingPages `<video id="flyingpages-bg">` element for full-page animated background
+- Added `vote-buttons` wrapper class to voting button container for targeted styling
+- Improved vote score and total votes markup with `.vote-score` and `.vote-total` classes
+
+### Story Part New Page (story-part-new.html)
+- Added `story-part-page` class to `<body>` so new part creation page uses correct background + theme
+- Updated SAVE and CANCEL buttons to use fantasy navbar-style CTA appearance
+- Ensured FlyingPages background video loads consistently on create-new page
+
+### Stylesheet (styles.css)
+- Implemented final override for SAVE/CANCEL button sizing and fantasy purple-gold gradient
+- Removed outer box styling around voting forms; voting buttons now match navbar button design
+- Added `.vote-buttons` styling block for clean fantasy-themed upvote/downvote UI
+- Updated voting button hover effects to use gold glow + purple fantasy gradient
+- Enlarged and enhanced vote score + total votes display with fantasy gold text + glow
+- Ensured FlyingPages background video applies consistently across story-part and story-part-new pages
+
+Overall: Standardized voting UI, corrected background video integration, and unified CTA button styles across Loreweave story-part pages.
