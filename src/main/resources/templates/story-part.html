@@ -32,7 +32,7 @@ Update Notes: Added full voting alert UI system for Milestone 2 Week 3.
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>story part</title>
+    <title>Story part</title>
       <!-- Bootstrap -->
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -70,7 +70,12 @@ Update Notes: Added full voting alert UI system for Milestone 2 Week 3.
       /*]]>*/
       </script>
   </head>
-  <body class="profile-body">
+  <body class="profile-body story-part-page">
+
+  <!-- Global Flying Pages Background -->
+  <video autoplay muted loop playsinline id="flyingpages-bg">
+      <source src="/images/flyingpages.mov" type="video/mp4">
+  </video>
 
   <!-- Page transition overlay -->
   <div id="page-transition"></div>
@@ -158,9 +163,10 @@ Update Notes: Added full voting alert UI system for Milestone 2 Week 3.
           <div class="d-flex align-items-center gap-2 mb-4">
 
               <!--  If user has NOT voted -->
-              <div th:if="${!userHasVoted}" class="d-flex gap-2">
+              <div th:if="${!userHasVoted}" class="d-flex gap-2 vote-buttons">
 
-            <!-- Upvote Form -->
+
+              <!-- Upvote Form -->
             <form th:action="@{'/api/votes/' + ${part.id} + '?type=POSITIVE'}" 
                   method="post"
                   onsubmit="sendNotification()">
@@ -202,8 +208,14 @@ Update Notes: Added full voting alert UI system for Milestone 2 Week 3.
 
 
                   <!-- Vote Score and Total Votes -->
-            <span class="ms-2">Score: <strong th:text="${voteScore}">0</strong></span>
-            <span class="text-muted small ms-2">Total votes: <span th:text="${totalVotes}">0</span></span>
+              <span class="vote-score ms-2">Score:
+    <strong th:text="${voteScore}">0</strong>
+</span>
+
+              <span class="vote-total ms-2">Total votes:
+    <span th:text="${totalVotes}">0</span>
+</span>
+
           </div>  
         </div>
       </div>
