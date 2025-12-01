@@ -33,11 +33,11 @@ Update Notes: Added full voting alert UI system for Milestone 2 Week 3.
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>story part</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
-          rel="stylesheet" 
-          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" 
-          crossorigin="anonymous">
+      <!-- Bootstrap -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+      <!-- Loreweave custom fantasy theme -->
+      <link rel="stylesheet" th:href="@{/css/styles.css}">
     <!-- Bootstrap icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" 
           rel="stylesheet">
@@ -77,8 +77,6 @@ Update Notes: Added full voting alert UI system for Milestone 2 Week 3.
 
   <!-- Shared fantasy navbar (same as profile) -->
   <div th:replace="~{fragments/navbar :: navbar}"></div>
-    <div class="container py-4">
-        <div th:replace="~{fragments/navbar :: navbar}"></div>
 
         <!-- Alerts go here -->
         <div class="container mt-3"> … </div>
@@ -210,6 +208,9 @@ Update Notes: Added full voting alert UI system for Milestone 2 Week 3.
         </div>
       </div>
     </div>
+        <footer>
+            <p>&copy; 2025 Loreweave | A world where every player becomes an author.</p>
+        </footer>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
             integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
