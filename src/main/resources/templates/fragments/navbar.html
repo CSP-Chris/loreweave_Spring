@@ -12,18 +12,25 @@
 ///
 ///  Updated By:    Wyatt Bechtle
 ///  Update Notes:  Notifications and messages badge live updates:
-///                   Made the notification bell and messages badges 
+///                   Made the notification bell and messages badges
 ///                     render consistently in the navbar.
-///                   Added a minimal STOMP/SockJS client in the navbar 
-///                     fragment that subscribes to '/user/queue/notifications` 
+///                   Added a minimal STOMP/SockJS client in the navbar
+///                     fragment that subscribes to '/user/queue/notifications'
 ///                     and increments both badges on incoming notifications.
-///                   Ensured badges are always present in the DOM (hidden when count is zero) 
+///                   Ensured badges are always present in the DOM (hidden when count is zero)
 ///                     so the client can update them without adding new server endpoints.
 ///
+///  Updated By:    Wyatt Bechtle
+///  Update Notes:  Shoe-horned notification dropdown into fantasy navbar:
+///                   Kept fantasy-navbar structure and btn-fantasy styling.
+///                   Added Bootstrap-friendly dropdown wrapper for the bell.
+///                   Dropdown fetches unread from /notifications/unread.
+///                   Added per-item Mark read and Mark all as read.
 /// ==========================================
+///>
 -->
 <!-- ==========================================
-     Fantasy Navbar Fragment (Unified Version)
+     Fantasy Navbar Fragment
      ========================================== -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
@@ -44,7 +51,7 @@
 
                 <a href="/messages" class="btn-fantasy">
                     Messages
-                    <!-- Unread messages badge -->
+                    <!-- Unread messages badge (always in DOM) -->
                     <span id="messagesBadge"
                           class="badge-pill"
                           th:classappend="${unreadCount == 0} ? ' hidden-badge' : ''"
@@ -55,15 +62,36 @@
                 <a href="/characters" class="btn-fantasy">Characters</a>
 
                 <!-- NOTIFICATION BELL -->
-                <a id="notifBell" class="btn-fantasy position-relative">
-                    <i class="bi bi-bell" style="font-size: 1.4rem;"></i>
+                <div class="dropdown d-inline-block">
+                    <a id="notifBell"
+                       href="#"
+                       class="btn-fantasy position-relative dropdown-toggle"
+                       role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        <i class="bi bi-bell" style="font-size: 1.4rem;"></i>
 
-                    <!-- Unread notifications badge -->
-                    <span id="notifBadge"
-                          class="badge-pill"
-                          th:classappend="${unreadCount == 0} ? ' hidden-badge' : ''"
-                          th:text="${unreadCount}">0</span>
-                </a>
+                        <!-- Unread notifications badge (always in DOM) -->
+                        <span id="notifBadge"
+                              class="badge-pill"
+                              th:classappend="${unreadCount == 0} ? ' hidden-badge' : ''"
+                              th:text="${unreadCount}">0</span>
+                    </a>
+
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu dropdown-menu-end p-2"
+                        aria-labelledby="notifBell"
+                        id="notifDropdown"
+                        style="min-width: 320px;">
+                        <li id="notifLoading" class="text-center p-2 text-muted">Loading...</li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li id="notifControls" class="text-center p-1">
+                            <button id="markAllReadBtn" class="btn btn-sm btn-outline-primary">
+                                Mark all as read
+                            </button>
+                        </li>
+                    </ul>
+                </div>
 
             </div>
 
@@ -95,6 +123,7 @@
             const messagesBadge = document.getElementById('messagesBadge');
 
             function bump(badge) {
+                if (!badge) return;
                 const current = parseInt(badge.textContent || '0') || 0;
                 badge.textContent = current + 1;
                 badge.classList.remove('hidden-badge');
@@ -110,12 +139,9 @@
                         client.subscribe('/user/queue/notifications', function (msg) {
                             try {
                                 JSON.parse(msg.body);
-                                if (notifBadge) bump(notifBadge);
-                                if (messagesBadge) bump(messagesBadge);
-                            } catch (e) {
-                                if (notifBadge) bump(notifBadge);
-                                if (messagesBadge) bump(messagesBadge);
-                            }
+                            } catch (e) {}
+                            bump(notifBadge);
+                            bump(messagesBadge);
                         });
 
                     });
@@ -133,16 +159,208 @@
             const needSock = typeof SockJS === 'undefined';
             const needStomp = typeof Stomp === 'undefined';
 
-            if (needSock) load('https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.js', function() {
-                if (needStomp) load('https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js', startClient);
-                else startClient();
-            });
-            else if (needStomp) load('https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js', startClient);
-            else startClient();
+            if (needSock) {
+                load('https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.js', function() {
+                    if (needStomp) load('https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js', startClient);
+                    else startClient();
+                });
+            } else if (needStomp) {
+                load('https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js', startClient);
+            } else {
+                startClient();
+            }
 
         })();
         /*]]>*/
     </script>
+
+    <!-- ==============================
+         Notification Dropdown Logic
+         ============================== -->
+    <script>
+        // Notification dropdown logic (concise comments)
+        (function(){
+
+            // DOM references
+            const notifBell = document.getElementById('notifBell');
+            const notifDropdown = document.getElementById('notifDropdown');
+            const notifBadge = document.getElementById('notifBadge');
+
+            if (!notifBell || !notifDropdown) return;
+
+            // Set badge value and show/hide class
+            function setBadge(n) {
+                if (!notifBadge) return;
+                const val = Number(n) || 0;
+                notifBadge.textContent = String(val);
+                notifBadge.classList.toggle('hidden-badge', val === 0);
+            }
+
+            // Decrement badge by delta (floor at 0)
+            function decrementBadge(delta) {
+                if (!notifBadge) return;
+                const cur = Number(notifBadge.textContent || 0) || 0;
+                setBadge(Math.max(0, cur - (Number(delta) || 0)));
+            }
+
+            // Try to read CSRF token from logout form
+            function getCsrf() {
+                try {
+                    const logoutForm = document.querySelector('form[action="/logout"]');
+                    if (!logoutForm) return null;
+                    const input = logoutForm.querySelector('input[type="hidden"][name]');
+                    if (!input) return null;
+                    return { name: input.name, token: input.value };
+                } catch (e) { return null; }
+            }
+
+            // Build a single notification <li>
+            function buildNotifItem(n) {
+                const li = document.createElement('li');
+                li.className = 'dropdown-item';
+                li.style.display = 'flex';
+                li.style.justifyContent = 'space-between';
+                li.style.alignItems = 'flex-start';
+                li.style.gap = '0.5rem';
+
+                const left = document.createElement('div');
+                left.style.flex = '1 1 auto';
+                const msg = document.createElement('div');
+                msg.className = 'small mb-1';
+                msg.textContent = n.message || '';
+                const meta = document.createElement('div');
+                meta.className = 'text-muted small';
+                const fromTxt = n.from ? ('From: ' + n.from) : '';
+                const timeTxt = n.createdAt ? (' • ' + new Date(n.createdAt).toLocaleString()) : '';
+                meta.textContent = fromTxt + timeTxt;
+                left.appendChild(msg);
+                left.appendChild(meta);
+
+                const right = document.createElement('div');
+                right.style.display = 'flex';
+                right.style.flexDirection = 'column';
+                right.style.gap = '0.25rem';
+
+                const view = document.createElement('a');
+                view.className = 'btn btn-sm btn-link p-0';
+                view.textContent = 'View';
+                view.href = '/notifications/' + (n.id || '') + '/view';
+
+                const mark = document.createElement('button');
+                mark.className = 'btn btn-sm btn-outline-secondary';
+                mark.type = 'button';
+                mark.textContent = 'Mark read';
+
+                mark.addEventListener('click', function(e){
+                    e.preventDefault();
+                    if (!n.id) return;
+                    fetch('/notifications/' + n.id + '/read', {
+                        method: 'GET',
+                        credentials: 'same-origin'
+                    }).then(r => {
+                        if (r.ok) {
+                            li.remove();
+                            decrementBadge(1);
+                        }
+                    });
+                });
+
+                right.appendChild(view);
+                right.appendChild(mark);
+                li.appendChild(left);
+                li.appendChild(right);
+                return li;
+            }
+
+            // Render list into dropdown and append controls
+            function renderNotifications(list) {
+                notifDropdown.innerHTML = '';
+
+                if (!list || list.length === 0) {
+                    const empty = document.createElement('li');
+                    empty.className = 'text-center p-2 text-muted';
+                    empty.textContent = 'No unread notifications';
+                    notifDropdown.appendChild(empty);
+                } else {
+                    list.forEach((n) => {
+                        notifDropdown.appendChild(buildNotifItem(n));
+                        const hrLi = document.createElement('li');
+                        hrLi.innerHTML = '<hr class="dropdown-divider">';
+                        notifDropdown.appendChild(hrLi);
+                    });
+                }
+
+                const ctrl = document.createElement('li');
+                ctrl.id = 'notifControls';
+                ctrl.className = 'text-center p-1';
+                const btn = document.createElement('button');
+                btn.id = 'markAllReadBtn';
+                btn.className = 'btn btn-sm btn-outline-primary';
+                btn.type = 'button';
+                btn.textContent = 'Mark all as read';
+
+                btn.addEventListener('click', function(e){
+                    e.preventDefault();
+                    const csrf = getCsrf();
+                    const headers = {};
+                    if (csrf && csrf.token) headers['X-CSRF-TOKEN'] = csrf.token;
+
+                    fetch('/notifications/mark-all-read', {
+                        method: 'POST',
+                        credentials: 'same-origin',
+                        headers
+                    }).then(r => {
+                        if (r.ok) {
+                            notifDropdown.innerHTML = '';
+                            const empty = document.createElement('li');
+                            empty.className = 'text-center p-2 text-muted';
+                            empty.textContent = 'No unread notifications';
+                            notifDropdown.appendChild(empty);
+                            setBadge(0);
+                        } else {
+                            console.error('Mark all as read failed', r.status);
+                        }
+                    }).catch(err => console.error('Mark all as read error', err));
+                });
+
+                ctrl.appendChild(btn);
+                notifDropdown.appendChild(ctrl);
+            }
+
+            // Fetch unread notifications and render them
+            function fetchUnread() {
+                notifDropdown.innerHTML = '<li id="notifLoading" class="text-center p-2 text-muted">Loading...</li>';
+
+                fetch('/notifications/unread', { credentials: 'same-origin' })
+                    .then(r => r.json())
+                    .then(list => renderNotifications(list))
+                    .catch(err => {
+                        notifDropdown.innerHTML = '<li class="text-center p-2 text-muted">Failed to load</li>';
+                        const viewAllLi = document.createElement('li');
+                        viewAllLi.innerHTML = '<a class="dropdown-item text-center small" href="/notifications">View all notifications</a>';
+                        notifDropdown.appendChild(viewAllLi);
+                        console.error('Failed to fetch unread notifications', err);
+                    });
+            }
+
+            // Fetch when dropdown opens
+            notifBell.addEventListener('shown.bs.dropdown', fetchUnread);
+
+            // Ensure a badge exists if one wasn't rendered
+            if (!notifBadge) {
+                const b = document.createElement('span');
+                b.id = 'notifBadge';
+                b.className = 'badge-pill hidden-badge';
+                b.textContent = '0';
+                notifBell.appendChild(b);
+            }
+
+        })();
+    </script>
+
 </th:block>
+
+
+
 
 </html>

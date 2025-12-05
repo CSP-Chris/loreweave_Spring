@@ -22,6 +22,9 @@ package com.loreweave.loreweave.service;
 /// Update Notes: Added enforcement that prevents users from contributing twice in a row
 ///               to the same story. This uses StoryPartRepository.findTopByStoryIdOrderByPartOrderDesc
 ///               to retrieve the last contributor before allowing a new StoryPart.
+/// 
+/// Updated By:   Wyatt Bechtle
+/// Update Notes: Refactored notification creation logic to ensure notifications include a link to the story
 /// ==========================================
 
 
@@ -103,7 +106,11 @@ public class StoryPartService {
                     String fromUsername = character.getUser() != null ? character.getUser().getUsername() : "unknown";
                     String message = String.format("New contribution to %s from %s", storyTitle, fromUsername);
 
-                    Notification notif = new Notification(creatorUser, character.getUser(), message);
+                    // Create and save the notification with a link to the story so the creator can navigate to it
+                    String storyLink = "/story/" + saved.getStory().getId();
+                    Notification notif = new Notification(creatorUser, character.getUser(), message, storyLink);
+
+                    // Persist the notification to the db
                     Notification savedNotif = notificationService.createNotification(notif);
 
                     try {
