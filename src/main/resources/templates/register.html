@@ -118,17 +118,16 @@
             <div class="form-text mb-3">3+ characters.</div>
 
             <!-- Email -->
-            <div class="mb-3">
-                <label for="email"
-                       class="form-label">Email</label>
-                <!--  Added th:field adding additional text for error resolution-->
+            <div class="form-group">
+                <label for="email">Email</label>
+
                 <input type="email"
-                       class="form-control"
                        id="email"
                        th:field="*{email}"
                        placeholder="name@example.com"
                        required>
             </div>
+
             <!-- Password -->
             <div class="mb-3">
                 <label for="password"
