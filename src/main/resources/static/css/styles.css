@@ -1389,38 +1389,29 @@ footer {
   .panel--soft { padding: 1rem; }
   .message-scroll { max-height: 42vh; }
 }
+
 /* ===========================================================
-   MESSAGES PAGE — Same Aurora theme as Profile
+   MESSAGES PAGE — Cleaned and Centered Layout
    =========================================================== */
 
-/* Share aurora background and flex layout with profile */
-.profile-body,
 .messages-body {
   background: url('/images/aurora.jpeg') no-repeat center center fixed;
   background-size: cover;
   font-family: 'Cormorant Garamond', serif;
   color: var(--text-color);
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
+  position: relative;
 }
 
-/* Reuse dark overlay so text stays readable */
-.profile-body::before,
+/* Dark overlay */
 .messages-body::before {
   content: "";
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: rgba(10, 5, 25, 0.7);
   z-index: 0;
 }
 
-/* Ensure nav, main, footer sit above overlay */
 main,
 footer,
 .navbar {
@@ -1428,89 +1419,211 @@ footer,
   z-index: 2;
 }
 
-/* Make the messages panels match your fantasy glass cards */
-.messages-body main {
-  padding-top: 2rem;
-  padding-bottom: 4.5rem; /* room for footer */
+/* ===========================
+   MAIN FLEX LAYOUT (IMPORTANT)
+   =========================== */
+
+/* Main flex layout */
+.messages-flex {
+    display: flex;
+    justify-content: center;     /* Keep centered horizontally */
+    align-items: flex-start;
+    gap: 3rem;                    /* Space between the two panels */
+    padding: 0 3rem;
+    margin-top: 2rem;
 }
+
+/* WIDER COLUMNS */
+.messages-conversations,
+.messages-thread {
+    flex: 0 0 48%;                /* increase width from 45% → 48% */
+    max-width: 48%;
+}
+/* ===========================
+   PANEL STYLING
+   =========================== */
 
 .messages-body .panel {
   background: rgba(30, 15, 60, 0.85);
   border: 1px solid rgba(165, 139, 255, 0.3);
   border-radius: 16px;
   box-shadow:
-    0 0 25px rgba(165, 139, 255, 0.3),
-    inset 0 0 15px rgba(0, 0, 0, 0.5);
+      0 0 25px rgba(165, 139, 255, 0.3),
+      inset 0 0 15px rgba(0,0,0,0.5);
   backdrop-filter: blur(6px);
   color: var(--text-color);
-  margin-bottom: 1.75rem;
   padding: 1.5rem;
+  width: 100%;                 /* ensures panel stays within column */
+}
+/* Panels inside remain full width of their column */
+.messages-conversations .panel,
+.messages-thread .panel {
+    width: 100%;
 }
 
-/* Scroll area for the thread */
-.messages-body .message-scroll {
+/* ===========================
+   HEADINGS SPACING
+   =========================== */
+
+/* Add some breathing room around headings */
+.messages-conversations h2,
+.messages-thread h2 {
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    padding-left: 0.75rem;
+}
+
+/* ===========================
+   CONVERSATION LIST ALIGNMENT
+   =========================== */
+
+.messages-conversations .list-group-item {
+  background: rgba(10, 5, 25, 0.65) !important;
+  border: 1px solid rgba(165,139,255,0.25) !important;
+  border-radius: 12px !important;
+
+  padding: 1rem 1.25rem !important;
+  margin-bottom: 0.85rem !important;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* centers username + timestamp */
+  box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+}
+
+.messages-conversations .list-group-item a {
+  color: #e6dafc !important;
+  font-size: 1.05rem;
+}
+
+.messages-conversations .list-group-item small {
+  color: #c9c3e7 !important;
+  font-size: 0.85rem;
+}
+
+/* ===========================
+   SCROLL AREA (Thread messages)
+   =========================== */
+
+.message-scroll {
   max-height: 50vh;
-  overflow: auto;
+  overflow-y: auto;
+  padding-right: 0.5rem;
   scrollbar-width: thin;
   scrollbar-color: rgba(165,139,255,.5) transparent;
 }
 
-.messages-body .message-scroll::-webkit-scrollbar {
+.message-scroll::-webkit-scrollbar {
   width: 8px;
 }
-.messages-body .message-scroll::-webkit-scrollbar-thumb {
+.message-scroll::-webkit-scrollbar-thumb {
   background: rgba(165,139,255,.5);
   border-radius: 8px;
 }
 
-/* Message bubbles (uses msg / msg--me / msg-time already from JS) */
-.messages-body .msg {
-  display: inline-block;
-  max-width: 85%;
-  padding: .6rem .9rem;
-  border-radius: 12px;
-  margin-bottom: .4rem;
-  background: rgba(32, 18, 60, .9);
-  border: 1px solid rgba(165,139,255,.35);
-  box-shadow: 0 6px 16px rgba(0,0,0,.35);
-}
+/* ===========================
+   FORM FANTASY STYLING
+   =========================== */
 
-.messages-body .msg--me {
-  background: linear-gradient(180deg, rgba(80,40,160,.9), rgba(40,20,100,.9));
-  border-color: rgba(255,203,107,.7);
-}
-
-.messages-body .msg-time {
-  font-size: .78rem;
-  color: #a7a0c8;
-  margin-top: .15rem;
-}
-
-/* Fantasy form look to match profile/edit forms */
-.messages-body .form-fantasy .form-label {
-  font-family: 'Cormorant Garamond', serif;
-  color: #e6dafc;
-}
-.messages-body .form-fantasy .form-control,
-.messages-body .form-fantasy textarea {
+.form-fantasy .form-control,
+.form-fantasy textarea {
   background: rgba(20, 10, 40, 0.85);
-  color: #fff;
-  border: 1px solid rgba(165, 139, 255, 0.35);
+  border: 1px solid rgba(165,139,255,0.35);
   border-radius: 10px;
+  color: #fff;
   box-shadow: inset 0 0 10px rgba(0,0,0,.35);
 }
-.messages-body .form-fantasy .form-control:focus,
-.messages-body .form-fantasy textarea:focus {
+
+.form-fantasy .form-control:focus,
+.form-fantasy textarea:focus {
   outline: none;
   border-color: var(--secondary-color);
   box-shadow:
-    0 0 10px rgba(255,203,107,0.6),
-    inset 0 0 6px rgba(255,203,107,0.4);
+      0 0 10px rgba(255,203,107,0.6),
+      inset 0 0 6px rgba(255,203,107,0.4);
 }
+
+/* ===========================
+   MOBILE HANDLING
+   =========================== */
+
+@media (max-width: 992px) {
+  .messages-flex {
+    flex-direction: column;
+    gap: 2rem;
+    padding: 0 1.5rem;
+  }
+
+  .messages-conversations,
+  .messages-thread {
+    flex: 1 0 100%;
+    max-width: 100%;
+  }
+}
+
+/* ===========================================================
+   FINAL CLEAN MESSAGE LAYOUT — EVEN SPACING + CENTERED
+   =========================================================== */
+
+.messages-flex {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 3.5rem;                 /* space BETWEEN conversations panel and thread panel */
+    padding: 0 4rem;             /* space from left/right page edges */
+    margin-top: 2rem;
+}
+
+/* Column widths (left + right) */
 .messages-conversations,
 .messages-thread {
-    margin-top: 30px;
+    flex: 0 0 42%;               /* equal width panels */
+    max-width: 42%;
 }
+
+/* Panel box inside each column */
+.messages-conversations .panel,
+.messages-thread .panel {
+    width: 100%;
+    padding: 2rem;               /* inner padding for prettier spacing */
+    border-radius: 18px;
+}
+
+/* Add spacing above headings (inside panels) */
+.messages-conversations h2,
+.messages-thread h2 {
+    margin-top: 0.35rem;
+    margin-bottom: 1.25rem;
+    padding-left: 0.25rem;
+}
+
+/* ===========================================
+   RESPONSIVE STACKING
+   =========================================== */
+@media (max-width: 992px) {
+    .messages-flex {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 0 1.5rem;
+    }
+
+    .messages-conversations,
+    .messages-thread {
+        flex: 1 0 100%;
+        max-width: 100%;
+    }
+}
+/* Add spacing inside the message thread area */
+.messages-thread #message-display {
+    padding: 1.5rem 2rem;      /* top/bottom 1.5rem, left/right 2rem */
+}
+
+/* Add extra spacing for each message bubble */
+.messages-thread #message-display > div {
+    margin-bottom: 1rem;
+}
+
+
 /* ================================
    STORIES PAGE BACKGROUND VIDEO
 ================================ */
@@ -1536,6 +1649,7 @@ footer,
     background: rgba(10, 8, 20, 0.55);
     z-index: -1;
 }
+
 
 /* ================================
    STORIES PAGE CARD + LIST DESIGN

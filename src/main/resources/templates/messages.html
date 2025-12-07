@@ -130,9 +130,11 @@
           <i class="bi bi-chat-dots me-2"></i>Messages
       </h1>
 
-      <div class="row g-3">
-          <!-- Conversations List -->
-          <section class="col-12 col-lg-4 messages-conversations">
+      <div class="messages-flex">
+
+      <!-- Conversations List -->
+          <section class="messages-conversations">
+
 
           <h2 class="h6 mb-2">Conversations</h2>
               <ul class="list-group"
@@ -156,7 +158,8 @@
           </section>
 
           <!-- Active Conversation and Message Form -->
-          <section class="col-12 col-lg-8 messages-thread">
+          <section class="messages-thread">
+
 
           <h2 class="h6 mb-2"
                   th:text="${activeConversation != null ? activeConversation.otherPartyUsername : 'Thread'}">

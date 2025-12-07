@@ -307,3 +307,20 @@ Add thread count display to Stories page and update StoryPageController logic
 Provides users with immediate visibility into story activity by showing how many
 story parts (threads) exist for each story, improving story browsing and engagement
 on the platform.
+
+
+feat(ui): refine login & registration input styling, spacing, and autofill handling
+
+Updated login and registration forms to use consistent .form-group layout
+
+Fixed input spacing and alignment across all fields
+
+Added fantasy-themed dark input styling with purple focus glow & gold filled glow
+
+Overrode browser autofill (Chrome/Safari) to prevent white/light-blue backgrounds
+
+Updated email field in register.html by removing Bootstrap classes (form-control, form-label)
+
+Ensured all inputs match fantasy theme (border radius, colors, shadows)
+
+Synced styling across login.html and register.html for full visual consistency
