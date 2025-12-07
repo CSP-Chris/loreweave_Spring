@@ -324,3 +324,48 @@ Updated email field in register.html by removing Bootstrap classes (form-control
 Ensured all inputs match fantasy theme (border radius, colors, shadows)
 
 Synced styling across login.html and register.html for full visual consistency
+
+style(messages): refine spacing, centering, and layout for conversations + thread panels
+Adjusted layout to ensure even horizontal spacing between Conversations panel and Thread panel
+
+Added internal padding inside thread panel so displayed messages no longer touch the panel edges
+
+Centered both panels horizontally using the .messages-flex container
+
+Increased panel widths slightly for better readability
+
+Applied consistent padding around <h2> headings and internal content blocks
+
+Improved alignment of conversation list items and timestamps
+
+Ensured responsive behavior for smaller screens (stacked layout + reduced padding)
+
+Cleaned redundant CSS rules and consolidated layout logic
+
+Updated messages.html structure to match new flex layout and ensure spacing rules apply correctly
+
+Signed-off-by: cokerj03 <cokerj03@gmail.com>
+
+
+
+Styling: Improve Back to Stories button spacing and padding for better readability
+
+Increased internal padding to give button text proper breathing room
+
+Adjusted font sizing, spacing, and gap for balanced visual hierarchy
+
+Refined hover effect and border radius to match fantasy UI theme
+
+Ensured button remains compact while improving usability and clarity
+
+UI: Refined navbar dropdown styling and fixed z-index layering issues
+
+Updated notification dropdown to correctly appear above story threads
+
+Applied fantasy-themed styling to VIEW, MARK READ, and MARK ALL AS READ buttons
+
+Standardized button font sizes, padding, and hover effects for visual consistency
+
+Corrected z-index hierarchy for navbar and dropdown elements
+
+Improved readability and alignment of notification actions

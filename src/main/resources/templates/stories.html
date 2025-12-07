@@ -53,9 +53,10 @@
             </h1>
 
             <!-- Create Story Button -->
-            <a class="btn btn-primary mb-3" th:href="@{/story/new}">
-                <i class="bi bi-plus-lg me-1"></i>Create story
-            </a>
+            <div class="create-story-wrapper">
+                <a href="/story/new" class="btn btn-primary">+ Create Story</a>
+            </div>
+
 
             <!-- Stories List -->
             <ul class="list-group mb-3" th:if="${stories}" th:each="s : ${stories}">
