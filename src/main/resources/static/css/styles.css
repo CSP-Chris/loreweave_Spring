@@ -1747,6 +1747,11 @@ footer,
     opacity: 0;
     transition: opacity 0.5s ease;
 }
+/* Add spacing under Create Story button */
+.create-story-wrapper {
+    margin-bottom: 25px;  /* adjust value up/down as you like */
+}
+
 /* ============================
    Characters Page Styling
    Matches profile/messages look
@@ -2201,21 +2206,34 @@ footer,
   z-index: 1;
 }
 
-/* Back link styling (same as character detail) */
+/* Back to Stories – padded fantasy button */
 .profile-body.story-new-page a.btn.btn-link.p-0 {
-  color: #f8e9c0;
-  font-size: 0.9rem;
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
+    color: #f8e9c0;
+    font-size: 0.9rem;
+
+    padding: 8px 18px;   /* ⬅️ Increased padding for better spacing */
+
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+
+    background: linear-gradient(135deg, #7c4dff, #b47cff);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.12);
+
+    transition: all 0.25s ease;
 }
 
+/* Hover */
 .profile-body.story-new-page a.btn.btn-link.p-0:hover {
-  color: #ffe9a0;
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+    background: linear-gradient(135deg, #a17dff, #d3a8ff);
+    transform: translateY(-1px);
+    box-shadow: 0 0 8px rgba(180,120,255,0.45);
+    color: #fff1d0;
 }
 
 /* Story creation card */
@@ -3064,7 +3082,7 @@ footer,
     letter-spacing: 0.09em !important;
 }
 /* ============================================================
-   FINAL OVERRIDE — Match Voting Buttons to Navbar Buttons
+   FINAL OVERRIDE — Match Voting Buttons
    ============================================================ */
 
 .profile-body.story-part-page .d-flex.gap-2 form .btn {
@@ -3491,6 +3509,95 @@ footer,
 .login-form input::placeholder {
     color: #cbb8ff;
     opacity: 0.8;
+}
+
+
+
+/* ========================
+   Navbar Dropdown menu
+   ======================== */
+
+/* Ensure notification dropdown appears above all content */
+
+.fantasy-navbar .dropdown-menu {
+    z-index: 5000 !important;   /* higher than story cards, modals, etc. */
+    position: absolute !important;
+}
+
+/* Fantasy-styled buttons in notification dropdown */
+.notif-btn {
+    background: linear-gradient(135deg, #7c4dff, #b47cff);
+    color: #f8e9c0 !important;
+    border: none;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: 0.2s ease-in-out;
+}
+
+.notif-btn:hover {
+    background: linear-gradient(135deg, #a17dff, #d3a8ff);
+    box-shadow: 0 0 8px rgba(180, 120, 255, 0.5);
+    transform: translateY(-1px);
+}
+
+/* Slightly larger button for Mark All */
+.notif-btn-wide {
+    padding: 6px 14px;
+    width: 90%;
+    margin: 0 auto;
+    display: block;
+}
+
+.dropdown-item {
+    padding: 10px 6px !important;
+}
+
+/* Ensure navbar always sits above page content */
+.fantasy-navbar {
+    position: relative;
+    z-index: 5000 !important;
+}
+
+/* FORCE NAVBAR ABOVE ALL PAGE CONTENT */
+header,
+.fantasy-navbar,
+.fantasy-navbar * {
+    position: relative !important;
+    z-index: 99999 !important;
+}
+
+/* FORCE DROPDOWN ABOVE NAVBAR */
+.fantasy-navbar .dropdown-menu {
+    position: absolute !important;
+    z-index: 100000 !important;
+}
+/* Ensure VIEW matches MARK READ button styling */
+.notif-btn,
+.notif-btn:link,
+.notif-btn:visited {
+    background: linear-gradient(135deg, #7c4dff, #b47cff);
+    color: #f8e9c0 !important;
+    border: none;
+    padding: 6px 14px;
+    font-size: 0.78rem;            /* Matching MARK READ */
+    font-weight: 600;              /* Same weight */
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: center;
+    display: inline-block;
+    transition: 0.2s ease-in-out;
+}
+
+/* Hover */
+.notif-btn:hover {
+    background: linear-gradient(135deg, #a17dff, #d3a8ff);
+    box-shadow: 0 0 8px rgba(180,120,255,0.45);
+    color: #fff1d0 !important;
+    transform: translateY(-1px);
 }
 
 

@@ -242,12 +242,14 @@
                 right.style.gap = '0.25rem';
 
                 const view = document.createElement('a');
-                view.className = 'btn btn-sm btn-link p-0';
+                view.className = 'notif-btn';   // fantasy styled button
+
                 view.textContent = 'View';
                 view.href = '/notifications/' + (n.id || '') + '/view';
 
                 const mark = document.createElement('button');
-                mark.className = 'btn btn-sm btn-outline-secondary';
+                mark.className = 'notif-btn';   // fantasy styled button
+
                 mark.type = 'button';
                 mark.textContent = 'Mark read';
 
@@ -295,7 +297,8 @@
                 ctrl.className = 'text-center p-1';
                 const btn = document.createElement('button');
                 btn.id = 'markAllReadBtn';
-                btn.className = 'btn btn-sm btn-outline-primary';
+                btn.className = 'notif-btn notif-btn-wide';   // wide fantasy button
+
                 btn.type = 'button';
                 btn.textContent = 'Mark all as read';
 
