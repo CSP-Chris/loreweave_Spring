@@ -5,7 +5,10 @@ package com.loreweave.loreweave.model;
 /// Created By:   Chris Ennis
 /// Created On:   2025-09-15
 /// Purpose:      JPA file that creates the Story entity
-/// Update History:
+/// Update History: Jamie Coker on 2025-12-07
+/// /// Update Notes:   Added dynamic storyPart count for each story displayed on the /stories page.
+/// ///                 Added @Transient partCount mapping and controller logic to populate story thread counts.
+///
 /// ==========================================
 
 
@@ -52,4 +55,10 @@ public class Story {
         storyParts.add(storyPart);
         storyPart.setStory(this);
     }
+    @Transient
+    private int partCount;
+
+    public int getPartCount() { return partCount; }
+    public void setPartCount(int partCount) { this.partCount = partCount; }
+
 }
