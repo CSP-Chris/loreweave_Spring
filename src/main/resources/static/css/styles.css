@@ -294,8 +294,7 @@ footer a:hover {
    .hero-subtitle { font-size: 1rem; }
    .hero-textbox { padding: .75rem 1.25rem; }
    .hero-container { padding-top: 10vh; }
-   .login-box { width: 90%; padding: 2rem; }
-   .register-body .login-box { padding: 2.5rem 2rem; }
+    
  }
 
 @keyframes weaveGlow {
@@ -493,446 +492,8 @@ table tr:hover {
     text-shadow: 0 0 18px rgba(165, 139, 255, 0.9);
 }
 
-/* ===========================================================
-   LOGIN PAGE — FINAL CENTERED FIX
-   =========================================================== */
-
-.login-body {
-    background: url('/images/hero-bg.jpeg') no-repeat center center fixed;
-    background-size: cover;
-    font-family: 'Cormorant Garamond', serif;
-    color: var(--text-color);
-    margin: 0;
-    min-height: 100vh;
-
-    /* Center everything perfectly */
-    display: flex;
-    justify-content: center;   /* centers vertically */
-    align-items: center;       /* centers horizontally */
-    flex-direction: column;
-}
 
 
-/* === HEADER (Loreweave) === */
-.login-header {
-    background: none;
-    text-align: center;
-    margin-top: 2rem;
-    margin-bottom: 1.5rem; /* reduce spacing under the Loreweave title */
-}
-
-.login-title {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 4rem;
-    color: #c4a0ff;
-    text-shadow:
-        0 0 25px rgba(165, 139, 255, 0.9),
-        0 0 50px rgba(165, 139, 255, 0.5);
-    letter-spacing: 3px;
-    margin: 0;
-    font-weight: 600;
-}
-
-/* === LOGIN WRAPPER: Centers inner box perfectly === */
-.login-wrapper {
-    background: none !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-    border: none !important;
-    padding: 0;
-    margin: 0;
-}
-/* Force-remove the large background panel */
-.login-body::before,
-.login-body::after,
-.login-wrapper::before,
-.login-wrapper::after,
-.login-wrapper {
-    content: none !important;
-    background: none !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-    border: none !important;
-    outline: none !important;
-    position: static !important;
-}
-
-
-/* === OUTER BOX (glass effect) === */
-.login-box {
-    background: rgba(20, 10, 40, 0.85);
-    border: 1px solid rgba(165, 139, 255, 0.5);
-    border-radius: 18px;
-    padding: 2.5rem 3rem;
-    width: 480px;
-    max-width: 90%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: stretch;
-    box-shadow:
-        0 0 30px rgba(165, 139, 255, 0.4),
-        0 0 60px rgba(255, 203, 107, 0.25),
-        inset 0 0 12px rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(10px);
-    z-index: 10;
-    position: relative;
-}
-.login-body, .login-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    flex-direction: column;
-}
-
-/* Add soft glow animation */
-.login-box:hover {
-    box-shadow:
-        0 0 35px rgba(165, 139, 255, 0.7),
-        0 0 70px rgba(255, 203, 107, 0.4),
-        inset 0 0 18px rgba(0, 0, 0, 0.6);
-    transform: scale(1.02);
-}
-
-
-
-/* === SIGN-IN TITLE === */
-.login-heading {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 2.4rem;
-    color: var(--accent-color);
-    text-shadow: 0 0 20px rgba(165, 139, 255, 0.9);
-    text-align: center;
-    margin-bottom: 1.5rem;
-}
-
-/* === FORM === */
-.login-form label {
-  font-family: 'Cinzel Decorative', serif;     /* fantasy title font */
-  font-size: 1rem;
-  letter-spacing: 1px;
-  color: var(--secondary-color);               /* warm gold tone */
-  text-transform: uppercase;
-  margin-bottom: 0.35rem;
-}
-
-
-/* === LABELS === */
-.login-form label {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 1rem;
-    color: var(--secondary-color);
-    text-align: left;
-    margin-bottom: 0.25rem;
-}
-
-/* === INPUTS === */
-.login-form input[type="text"],
-.login-form input[type="password"] {
-  width: 100%;
-  padding: 0.85rem 1rem;
-  border: 1px solid rgba(165,139,255,0.4);          /* lavender border */
-  border-radius: 10px;
-  background: rgba(25,15,45,0.9);                   /* deep-purple backdrop */
-  color: #f8f6ff;                                   /* soft parchment white */
-  font-family: 'Cormorant Garamond', serif;         /* readable fantasy body font */
-  font-size: 1.05rem;
-  box-shadow:
-      inset 0 0 6px rgba(165,139,255,0.25),
-      0 0 10px rgba(80,40,160,0.3);
-  transition: all 0.3s ease;
-}
-
-.login-form input[type="text"]:focus,
-.login-form input[type="password"]:focus {
-  outline: none;
-  border-color: var(--secondary-color);             /* golden glow focus */
-  box-shadow:
-      0 0 10px rgba(255,203,107,0.6),
-      inset 0 0 6px rgba(255,203,107,0.4);
-  background: rgba(30,20,60,0.95);
-}
-.login-form input::placeholder {
-  color: rgba(220,210,255,0.5);
-  font-style: italic;
-  letter-spacing: 0.5px;
-}
-
-
-/* === CHECKBOX AREA (inline + no wrap) === */
-.form-options {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 0.5rem;
-    gap: 1rem;
-    flex-wrap: nowrap; /* prevent wrapping */
-}
-
-.form-options label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    white-space: nowrap; /* keep text on one line */
-    font-family: 'Cormorant Garamond', serif;
-    color: #ddd;
-    font-size: 1rem;
-    cursor: pointer;
-}
-
-
-/* === BUTTON === */
-.btn-login {
-    width: 100%;
-    background: linear-gradient(
-        to bottom,
-        rgba(80, 40, 160, 0.95),
-        rgba(40, 20, 100, 0.95)
-    );
-    color: #fff;
-    font-family: 'Cinzel Decorative', serif;
-    border: 1px solid rgba(165, 139, 255, 0.5);
-    border-radius: 10px;
-    padding: 1rem;
-    font-size: 1.1rem;
-    cursor: pointer;
-    text-transform: uppercase;
-    box-shadow: 0 0 20px rgba(165, 139, 255, 0.3);
-    letter-spacing: 0.5px;
-    transition: all 0.3s ease;
-    margin-top: 1.2rem;
-}
-
-.btn-login:hover {
-    background: linear-gradient(
-        to bottom,
-        rgba(120, 70, 200, 0.95),
-        rgba(60, 30, 140, 0.95)
-    );
-    color: var(--secondary-color);
-    box-shadow: 0 0 35px rgba(255, 203, 107, 0.7);
-    transform: translateY(-2px);
-}
-/* === REGISTER PAGE SPECIFIC ADJUSTMENTS === */
-.register-body .login-box {
-    margin-top: 4rem; /* pushes box slightly lower under Loreweave title */
-    padding: 3.5rem 3.5rem 3rem 3.5rem;
-}
-
-.register-body .login-form {
-    gap: 1rem;
-}
-
-.register-body .btn-login {
-    margin-top: 1rem;
-}
-
-
-/* === SIGN-UP TEXT (centered and balanced) === */
-.signup-text {
-    margin-top: 1.2rem;
-    font-size: 1rem;
-    text-align: center;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    white-space: nowrap; /* prevents “Create an account” from breaking */
-}
-
-.signup-text a {
-    color: var(--accent-color);
-    text-decoration: none;
-    margin-left: 0.3rem;
-    transition: color 0.3s ease;
-}
-
-.signup-text a:hover {
-    color: var(--secondary-color);
-}
-
-
-/* === RESPONSIVENESS === */
-@media (max-width: 992px) {
-    .login-title { font-size: 3.5rem; }
-    .login-box { width: 85%; padding: 2.5rem; }
-}
-
-@media (max-width: 768px) {
-    .login-title { font-size: 2.8rem; }
-    .login-box { width: 90%; padding: 2rem; }
-    .login-heading { font-size: 2rem; }
-    .form-options { flex-direction: column; align-items: flex-start; }
-}
-
-@media (max-width: 480px) {
-    .login-title { font-size: 2rem; }
-    .login-box { width: 95%; padding: 1.5rem; }
-    .login-heading { font-size: 1.8rem; }
-}
-/* ===========================================================
-   LOGIN BOX — PULSING GLOW ANIMATION
-   =========================================================== */
-
-/* Animation keyframes */
-@keyframes boxGlow {
-    0%, 100% {
-        box-shadow:
-            0 0 25px rgba(165, 139, 255, 0.35),
-            0 0 60px rgba(80, 40, 160, 0.3),
-            inset 0 0 10px rgba(0, 0, 0, 0.5);
-        border-color: rgba(165, 139, 255, 0.5);
-    }
-    50% {
-        box-shadow:
-            0 0 45px rgba(255, 203, 107, 0.6),
-            0 0 85px rgba(165, 139, 255, 0.5),
-            inset 0 0 15px rgba(0, 0, 0, 0.4);
-        border-color: rgba(255, 203, 107, 0.7);
-    }
-}
-/* Apply animation to the login box */
-.login-box {
-    animation: boxGlow 4s ease-in-out infinite;
-}
-/* ===========================================================
-   THEMED CHECKBOXES (Lavender Border + Gold Glow on Check)
-   =========================================================== */
-
-/* Reset default browser styling */
-.form-options input[type="checkbox"] {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    width: 18px;
-    height: 18px;
-    border: 2px solid rgba(165, 139, 255, 0.7); /* lavender border */
-    border-radius: 4px;
-    background-color: rgba(20, 10, 40, 0.8);
-    cursor: pointer;
-    position: relative;
-    box-shadow: 0 0 6px rgba(165, 139, 255, 0.4);
-    transition: all 0.3s ease;
-}
-
-/* Hover shimmer */
-.form-options input[type="checkbox"]:hover {
-    box-shadow: 0 0 10px rgba(165, 139, 255, 0.6);
-    transform: scale(1.05);
-}
-
-/* Checked state — glowing gold pulse */
-.form-options input[type="checkbox"]:checked {
-    background-color: rgba(255, 203, 107, 0.85);
-    border-color: rgba(255, 203, 107, 0.9);
-    box-shadow:
-        0 0 12px rgba(255, 203, 107, 0.8),
-        0 0 20px rgba(165, 139, 255, 0.6);
-    animation: checkboxPulse 1.5s ease-in-out infinite;
-}
-
-/* Little golden check mark */
-.form-options input[type="checkbox"]:checked::after {
-    content: "";
-    position: absolute;
-    left: 4px;
-    top: 0px;
-    width: 5px;
-    height: 10px;
-    border: solid #fff7d1;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-}
-
-/* Pulse animation */
-@keyframes checkboxPulse {
-    0%, 100% {
-        box-shadow:
-            0 0 8px rgba(255, 203, 107, 0.6),
-            0 0 15px rgba(165, 139, 255, 0.5);
-    }
-    50% {
-        box-shadow:
-            0 0 15px rgba(255, 203, 107, 0.8),
-            0 0 25px rgba(165, 139, 255, 0.6);
-    }
-}
-/* ===========================================================
-   START WEAVING BUTTON — GOLD LAVENDER PULSE ON HOVER
-   =========================================================== */
-
-/* Keyframes for gold-lavender glow */
-@keyframes weavePulse {
-    0%, 100% {
-        box-shadow:
-            0 0 15px rgba(165, 139, 255, 0.4),
-            0 0 30px rgba(165, 139, 255, 0.25),
-            inset 0 0 8px rgba(80, 40, 160, 0.3);
-        border-color: rgba(165, 139, 255, 0.6);
-    }
-    50% {
-        box-shadow:
-            0 0 25px rgba(255, 203, 107, 0.8),
-            0 0 45px rgba(165, 139, 255, 0.6),
-            inset 0 0 10px rgba(255, 203, 107, 0.6);
-        border-color: rgba(255, 203, 107, 0.9);
-    }
-}
-
-/* Apply pulse on hover */
-.btn-login:hover {
-    animation: weavePulse 2s ease-in-out infinite;
-    background: linear-gradient(
-        to bottom,
-        rgba(120, 70, 200, 0.95),
-        rgba(60, 30, 140, 0.95)
-    );
-    color: var(--secondary-color);
-    transform: translateY(-2px);
-}
-/* ===========================================================
-   REGISTER FORM — MAGICAL FIELD APPEAR-IN
-   =========================================================== */
-
-/* Base fade-in keyframes */
-@keyframes fieldAppear {
-    0% {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Animate the inputs and labels in order */
-.register-body .login-form label,
-.register-body .login-form input,
-.register-body .login-form .form-text,
-.register-body .login-form .form-check,
-.register-body .login-form button,
-.register-body .login-form .signup-text {
-    opacity: 0;
-    animation: fieldAppear 0.6s ease forwards;
-}
-
-/* Stagger the animation for each element */
-.register-body .login-form label:nth-of-type(1),
-.register-body .login-form input:nth-of-type(1) { animation-delay: 0.2s; }
-.register-body .login-form label:nth-of-type(2),
-.register-body .login-form input:nth-of-type(2) { animation-delay: 0.4s; }
-.register-body .login-form label:nth-of-type(3),
-.register-body .login-form input:nth-of-type(3) { animation-delay: 0.6s; }
-.register-body .login-form label:nth-of-type(4),
-.register-body .login-form input:nth-of-type(4) { animation-delay: 0.8s; }
-.register-body .login-form label:nth-of-type(5),
-.register-body .login-form input:nth-of-type(5) { animation-delay: 1s; }
-.register-body .login-form .form-check { animation-delay: 1.2s; }
-.register-body .login-form button { animation-delay: 1.4s; }
-.register-body .login-form .signup-text { animation-delay: 1.6s; }
 /* ===========================================================
    CREATE ACCOUNT BUTTON — GOLDEN SEAL PULSE
    =========================================================== */
@@ -969,782 +530,8 @@ table tr:hover {
     }
 }
 
-/* Apply pulse after form fields animate */
-.register-body .btn-login:hover {
-    animation: goldenSeal 2s ease-in-out;
-}
-/* ===========================================================
-   CREATE ACCOUNT BUTTON — GOLD SPARKLE CHIME EFFECT
-   =========================================================== */
-
-.register-body .btn-login {
-    position: relative;
-    overflow: hidden; /* keeps sparkles inside button */
-}
-
-/* Sparkle container inside the button */
-.register-body .btn-login::before,
-.register-body .btn-login::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 6px;
-    height: 6px;
-    background: radial-gradient(circle, rgba(255, 203, 107, 1) 0%, rgba(255, 203, 107, 0) 70%);
-    border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    opacity: 0;
-    pointer-events: none;
-}
-
-/* Chime burst (main sparkles) */
-.register-body .btn-login::before {
-    animation: sparkleChime 2s ease-out 2.2s 1; /* syncs with goldenSeal timing */
-}
-
-/* Secondary faint sparkle burst */
-.register-body .btn-login::after {
-    animation: sparkleChime 2s ease-out 2.4s 1;
-    opacity: 0.6;
-    transform: translate(-50%, -50%) scale(0);
-}
-
-/* Sparkle burst keyframes */
-@keyframes sparkleChime {
-    0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0);
-    }
-    30% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-        box-shadow:
-            0 -30px 0 0 rgba(255, 203, 107, 0.9),
-            20px -10px 0 0 rgba(255, 203, 107, 0.8),
-            25px 20px 0 0 rgba(255, 203, 107, 0.6),
-            -25px 20px 0 0 rgba(255, 203, 107, 0.6),
-            -15px -20px 0 0 rgba(255, 203, 107, 0.5);
-    }
-    100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(1.4);
-        box-shadow: none;
-    }
-}
-/* ===========================================================
-   REGISTER PAGE — Matching login fantasy theme
-   =========================================================== */
-
-/* === Checkbox styling (lavender border + gold glow when checked) === */
-.register-form input[type="checkbox"],
-.login-form input[type="checkbox"] {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 18px;
-    height: 18px;
-    border: 2px solid rgba(165, 139, 255, 0.7);
-    border-radius: 4px;
-    background: rgba(30, 15, 60, 0.8);
-    cursor: pointer;
-    position: relative;
-    box-shadow: 0 0 8px rgba(165, 139, 255, 0.4);
-    transition: all 0.25s ease;
-}
-.register-form input[type="checkbox"]:hover,
-.login-form input[type="checkbox"]:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 12px rgba(165, 139, 255, 0.6);
-}
-.register-form input[type="checkbox"]:checked,
-.login-form input[type="checkbox"]:checked {
-    background: radial-gradient(circle, rgba(255,203,107,1) 0%, rgba(165,139,255,0.6) 70%);
-    border-color: rgba(255,203,107,0.9);
-    box-shadow: 0 0 15px rgba(255,203,107,0.7), 0 0 25px rgba(165,139,255,0.5);
-}
-.register-form input[type="checkbox"]:checked::after,
-.login-form input[type="checkbox"]:checked::after {
-    content: "";
-    position: absolute;
-    left: 5px;
-    top: 1px;
-    width: 5px;
-    height: 9px;
-    border: solid #fff8d6;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-}
-
-/* Sparkle animation */
-@keyframes sparkleFloat {
-    0% { opacity: 0; transform: translateY(0) scale(0.5); }
-    30% { opacity: 1; transform: translateY(-4px) scale(1.2); }
-    100% { opacity: 0; transform: translateY(-10px) scale(0.6); }
-}
-
-/* === "Create Account" button — golden pulse with sparkles === */
-.btn-register {
-    background: linear-gradient(to bottom, rgba(80,40,160,0.95), rgba(40,20,100,0.95));
-    color: #fff;
-    font-family: 'Cinzel Decorative', serif;
-    border: 1px solid rgba(165,139,255,0.5);
-    border-radius: 10px;
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 1rem;
-    box-shadow: 0 0 20px rgba(165,139,255,0.3);
-    transition: all 0.4s ease;
-    position: relative;
-    overflow: visible; /* fix: allow sparkles to render properly */
-    z-index: 2;
-}
-.btn-register:hover {
-    color: var(--secondary-color);
-    transform: translateY(-2px);
-    box-shadow: 0 0 35px rgba(255,203,107,0.7);
-    animation: goldPulse 2s ease-in-out infinite;
-}
-.btn-login:hover,
-.btn-register:hover {
-    animation: weavePulse 2s ease-in-out infinite;
-}
-
-.btn-register:active::after {
-    animation: sparkleBurst 1s ease-out forwards;
-}
-
-
-/* Gold pulse on hover */
-.btn-register:hover {
-    animation: goldPulse 1.5s ease-in-out infinite;
-    color: var(--secondary-color);
-    transform: translateY(-2px);
-    box-shadow: 0 0 35px rgba(255, 203, 107, 0.7);
-}
-
-/* Gold pulse animation */
-@keyframes goldPulse {
-    0%, 100% {
-        box-shadow: 0 0 20px rgba(255, 203, 107, 0.4),
-                    inset 0 0 10px rgba(165, 139, 255, 0.5);
-    }
-    50% {
-        box-shadow: 0 0 35px rgba(255, 203, 107, 0.9),
-                    inset 0 0 20px rgba(255, 203, 107, 0.6);
-    }
-}
-
-/* Sparkle particles emitted on click */
-.btn-register::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 10px;
-    height: 10px;
-    background: radial-gradient(circle, rgba(255, 203, 107, 0.9), transparent 70%);
-    border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    opacity: 0;
-}
-
-.btn-register:active::after {
-    animation: sparkleBurst 1s ease-out forwards;
-}
-
-/* Sparkle expansion animation */
-@keyframes sparkleBurst {
-    0% {
-        transform: translate(-50%, -50%) scale(0);
-        opacity: 1;
-        box-shadow: 0 0 10px rgba(255, 203, 107, 0.8);
-    }
-    60% {
-        transform: translate(-50%, -50%) scale(10);
-        opacity: 0.6;
-        box-shadow: 0 0 20px rgba(255, 203, 107, 0.6);
-    }
-    100% {
-        transform: translate(-50%, -50%) scale(15);
-        opacity: 0;
-    }
-}
-
-/* ===== LOGIN INPUT + LABEL THEME (force override Bootstrap) ===== */
-
-/* Labels above inputs */
-.login-box label {
-  font-family: 'Cinzel Decorative', serif !important;
-  font-size: 1rem !important;
-  letter-spacing: 1px !important;
-  color: var(--secondary-color) !important; /* gold */
-  text-transform: uppercase !important;
-  margin-bottom: 0.35rem !important;
-}
-
-/* Target all text-like inputs inside the login box */
-.login-box input[type="text"],
-.login-box input[type="password"],
-.login-box input.form-control,
-.login-box .form-control[type="text"],
-.login-box .form-control[type="password"] {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100% !important;
-  padding: 0.85rem 1rem !important;
-
-  /* Fantasy surface */
-  background: rgba(25, 15, 45, 0.9) !important;
-  color: #f8f6ff !important;
-  border: 1px solid rgba(165, 139, 255, 0.45) !important;
-  border-radius: 10px !important;
-
-  font-family: 'Cormorant Garamond', serif !important;
-  font-size: 1.05rem !important;
-
-  box-shadow:
-    inset 0 0 6px rgba(165,139,255,0.25),
-    0 0 10px rgba(80,40,160,0.30) !important;
-
-  transition: border-color .25s ease, box-shadow .25s ease, background .25s ease !important;
-}
-
-/* Focus glow */
-.login-box input[type="text"]:focus,
-.login-box input[type="password"]:focus,
-.login-box .form-control:focus {
-  outline: none !important;
-  background: rgba(30, 20, 60, 0.95) !important;
-  border-color: var(--secondary-color) !important;          /* gold */
-  box-shadow:
-    0 0 10px rgba(255,203,107,0.60),
-    inset 0 0 6px rgba(255,203,107,0.40) !important;
-}
-
-/* Placeholder tone */
-.login-box input::placeholder,
-.login-box .form-control::placeholder {
-  color: rgba(220,210,255,0.55) !important;
-  font-style: italic !important;
-  letter-spacing: .5px !important;
-}
-
-/* Chrome/Safari autofill – kill white fill */
-.login-box input:-webkit-autofill,
-.login-box input:-webkit-autofill:hover,
-.login-box input:-webkit-autofill:focus {
-  -webkit-text-fill-color: #f8f6ff !important;
-  transition: background-color 9999s ease-in-out 0s !important;
-  box-shadow: 0 0 0px 1000px rgba(25,15,45,0.9) inset !important;
-  border: 1px solid rgba(165,139,255,0.45) !important;
-}
-
-/* Optional: spacing between fields if tight */
-.login-box .form-group { margin-bottom: 1.2rem !important; }
 
 /* ===========================================================
-   REGISTER PAGE — Extend Login Layout and Effects
-   =========================================================== */
-
-/* Make register and login share the same layout styles */
-/* Shared fantasy background, no overlay box */
-.login-body.register-body {
-    background: url('/images/hero-bg.jpeg') no-repeat center center fixed;
-    background-size: cover;
-    background-color: transparent !important;
-    font-family: 'Cormorant Garamond', serif;
-    color: var(--text-color);
-    margin: 0;
-    min-height: 100vh;
-
-    /* Center small glowing box vertically/horizontally */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
-/* Remove any leftover translucent background on wrappers */
-.login-body.register-body .login-wrapper {
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-    backdrop-filter: none !important;
-}
-
-
-/* Apply login-box glow and centering to register page */
-.login-body.register-body .login-box {
-    background: rgba(25, 15, 45, 0.9);
-    border: 1px solid rgba(165, 139, 255, 0.4);
-    border-radius: 16px;
-    box-shadow:
-        0 0 35px rgba(165, 139, 255, 0.3),
-        inset 0 0 15px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
-    width: 480px;
-    max-width: 90%;
-    padding: 3rem 3.5rem 2.5rem 3.5rem;
-    text-align: center;
-    position: relative;
-    z-index: 10;
-}
-.register-body::before,
-.register-body::after,
-.login-wrapper::before,
-.login-wrapper::after {
-    content: none !important;
-    background: none !important;
-    box-shadow: none !important;
-}
-
-/* Adjust title */
-.login-body.register-body h1.login-title {
-    font-size: 3.5rem;
-    color: #c4a0ff;
-    text-shadow:
-        0 0 25px rgba(165, 139, 255, 0.9),
-        0 0 50px rgba(165, 139, 255, 0.5);
-    margin-bottom: 2rem;
-}
-
-/* Ensure input fields and labels keep the fantasy theme */
-.login-body.register-body .login-form label {
-    font-family: 'Cinzel Decorative', serif;
-    color: var(--secondary-color);
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
-    display: block;
-    margin-bottom: 0.4rem;
-}
-
-.login-body.register-body .login-form input[type="text"],
-.login-body.register-body .login-form input[type="email"],
-.login-body.register-body .login-form input[type="password"] {
-    width: 100%;
-    padding: 0.8rem 1rem;
-    border: 1px solid rgba(165, 139, 255, 0.4);
-    border-radius: 10px;
-    background: rgba(20, 10, 40, 0.9);
-    color: #fff;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    box-shadow:
-        inset 0 0 6px rgba(165,139,255,0.25),
-        0 0 10px rgba(80,40,160,0.3);
-}
-
-/* On focus: golden glow */
-.login-body.register-body .login-form input:focus {
-    outline: none;
-    border-color: var(--secondary-color);
-    box-shadow:
-        0 0 10px rgba(255,203,107,0.6),
-        inset 0 0 6px rgba(255,203,107,0.4);
-    background: rgba(30,20,60,0.95);
-}
-
-/* Button hover matches login */
-.login-body.register-body .btn-login:hover {
-    color: var(--secondary-color);
-    transform: translateY(-2px);
-    animation: goldPulse 1.8s ease-in-out infinite;
-}
-/* ===========================================================
-   REGISTER PAGE FINAL FIX — Remove Background Overlay Box
-   =========================================================== */
-
-/* Kill any Bootstrap "body" or wrapper backgrounds */
-.register-body,
-.register-body .login-wrapper,
-.register-body .login-form {
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-    backdrop-filter: none !important;
-}
-
-/* Remove Bootstrap form container shading */
-.register-body .login-form.bg-body-tertiary,
-.register-body .login-form.bg-body-secondary,
-.register-body .login-form.bg-light {
-    background: transparent !important;
-}
-
-/* Ensure input fields sit on clear background */
-.register-body .login-form .form-control {
-    background: rgba(20, 10, 40, 0.9) !important;
-    border: 1px solid rgba(165, 139, 255, 0.4) !important;
-    box-shadow: 0 0 10px rgba(80, 40, 160, 0.25) !important;
-}
-
-/* Apply glow only to the small form container */
-.register-body .login-box {
-    background: rgba(20, 10, 40, 0.85);
-    border: 1px solid rgba(165, 139, 255, 0.6);
-    border-radius: 16px;
-    padding: 3rem 3.5rem;
-    width: 480px;
-    max-width: 90%;
-    box-shadow:
-        0 0 25px rgba(165, 139, 255, 0.4),
-        0 0 60px rgba(80, 40, 160, 0.3),
-        inset 0 0 12px rgba(255, 203, 107, 0.25);
-    backdrop-filter: blur(10px);
-    text-align: center;
-    z-index: 10;
-    position: relative;
-}
-/* ===========================================================
-   REGISTER PAGE — Restore Background Image, Keep Transparent Overlay
-   =========================================================== */
-
-.register-body {
-    background: url('/images/hero-bg.jpeg') no-repeat center center fixed !important;
-    background-size: cover !important;
-    background-color: transparent !important;
-    font-family: 'Cormorant Garamond', serif;
-    color: var(--text-color);
-    margin: 0;
-    min-height: 100vh;
-
-    /* centers everything nicely */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Prevent wrapper from layering any color over it */
-.register-body .login-wrapper {
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-    backdrop-filter: none !important;
-}
-
-/* Keep the glowing register box on top of the hero background */
-.register-body .login-box {
-    background: rgba(20, 10, 40, 0.88);
-    border: 1px solid rgba(165, 139, 255, 0.6);
-    border-radius: 16px;
-    padding: 3rem 3.5rem;
-    width: 480px;
-    max-width: 90%;
-    box-shadow:
-        0 0 25px rgba(165, 139, 255, 0.4),
-        0 0 60px rgba(80, 40, 160, 0.3),
-        inset 0 0 12px rgba(255, 203, 107, 0.25);
-    backdrop-filter: blur(10px);
-    text-align: center;
-    position: relative;
-    z-index: 10;
-}
-
-/* Subtle glow animation when hovered */
-.register-body .login-box:hover {
-    animation: registerGlow 3s ease-in-out infinite;
-}
-
-@keyframes registerGlow {
-    0%, 100% {
-        box-shadow:
-            0 0 25px rgba(165, 139, 255, 0.5),
-            0 0 60px rgba(80, 40, 160, 0.4),
-            inset 0 0 12px rgba(255, 203, 107, 0.25);
-    }
-    50% {
-        box-shadow:
-            0 0 45px rgba(255, 203, 107, 0.5),
-            0 0 80px rgba(165, 139, 255, 0.5),
-            inset 0 0 18px rgba(255, 203, 107, 0.3);
-    }
-}
-/* ===========================================================
-   FINAL STABILITY FIX — Checkbox & Create Account Button
-   =========================================================== */
-
-/* --- CHECKBOX --- */
-.register-body input[type="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 18px;
-  height: 18px;
-  border: 2px solid rgba(165, 139, 255, 0.8);
-  border-radius: 4px;
-  background-color: rgba(30, 15, 60, 0.9);
-  cursor: pointer;
-  position: relative;
-  transition: all 0.25s ease;
-  margin-right: 0.4rem;
-  vertical-align: middle;
-  z-index: 2;
-}
-
-.register-body input[type="checkbox"]:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 10px rgba(165, 139, 255, 0.6);
-}
-
-.register-body input[type="checkbox"]:checked {
-  background-color: rgba(255, 203, 107, 0.95);
-  border-color: rgba(255, 203, 107, 1);
-  box-shadow:
-    0 0 12px rgba(255, 203, 107, 0.8),
-    0 0 25px rgba(165, 139, 255, 0.4);
-}
-
-.register-body input[type="checkbox"]:checked::after {
-  content: "";
-  position: absolute;
-  left: 5px;
-  top: 1px;
-  width: 5px;
-  height: 9px;
-  border: solid #fff;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-  opacity: 1; /* Always visible */
-}
-
-/* --- CREATE ACCOUNT BUTTON --- */
-.register-body .btn-login {
-  position: relative;
-  background: linear-gradient(to bottom,
-    rgba(80, 40, 160, 0.95),
-    rgba(40, 20, 100, 0.95));
-  color: #fff;
-  font-family: 'Cinzel Decorative', serif;
-  border: 1px solid rgba(165, 139, 255, 0.6);
-  border-radius: 10px;
-  padding: 0.9rem 2rem;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 100%;
-  margin-top: 1.2rem;
-  box-shadow:
-    0 0 18px rgba(165, 139, 255, 0.4),
-    0 0 30px rgba(80, 40, 160, 0.3);
-  overflow: hidden;
-  z-index: 3;
-}
-
-.register-body .btn-login:hover {
-  color: var(--secondary-color);
-  transform: translateY(-2px);
-  box-shadow:
-    0 0 25px rgba(255, 203, 107, 0.7),
-    inset 0 0 15px rgba(255, 203, 107, 0.3);
-  animation: buttonPulse 2s ease-in-out infinite;
-}
-
-/* Simplified pulse (no opacity fade) */
-@keyframes buttonPulse {
-  0%, 100% {
-    box-shadow:
-      0 0 18px rgba(255, 203, 107, 0.5),
-      inset 0 0 8px rgba(165, 139, 255, 0.4);
-  }
-  50% {
-    box-shadow:
-      0 0 35px rgba(255, 203, 107, 0.8),
-      inset 0 0 20px rgba(255, 203, 107, 0.5);
-  }
-}
-
-/* Soft sparkle burst (keeps button visible) */
-.register-body .btn-login::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 12px;
-  height: 12px;
-  background: radial-gradient(circle,
-    rgba(255, 203, 107, 0.7) 0%,
-    rgba(255, 203, 107, 0) 70%);
-  border-radius: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  pointer-events: none;
-  opacity: 0.8;
-}
-
-.register-body .btn-login:active::after {
-  animation: sparklePop 0.6s ease-out forwards;
-}
-
-@keyframes sparklePop {
-  0% {
-    transform: translate(-50%, -50%) scale(0.5);
-    opacity: 0.8;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(4);
-    opacity: 0.6;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(7);
-    opacity: 0;
-  }
-}
-/* ===========================================================
-   HARD LOCK: Keep Register Button + Checkbox Always Visible
-   =========================================================== */
-
-/* --- Checkboxes -------------------------------------------------- */
-.register-body input[type="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 18px;
-  height: 18px;
-  margin-right: .4rem;
-  vertical-align: middle;
-  cursor: pointer;
-
-  border: 2px solid rgba(165,139,255,0.8);
-  border-radius: 4px;
-  background-color: rgba(30,15,60,0.9);
-  box-shadow: 0 0 6px rgba(165,139,255,0.5);
-  transition: box-shadow .25s ease, transform .25s ease;
-  opacity: 1 !important;
-  transform: none !important;
-  z-index: 3;
-}
-
-.register-body input[type="checkbox"]:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 10px rgba(165,139,255,0.7);
-}
-
-.register-body input[type="checkbox"]:checked {
-  background-color: rgba(255,203,107,0.95);
-  border-color: rgba(255,203,107,1);
-  box-shadow: 0 0 12px rgba(255,203,107,0.9),
-               0 0 25px rgba(165,139,255,0.6);
-}
-
-.register-body input[type="checkbox"]:checked::after {
-  content: "";
-  position: absolute;
-  left: 5px;
-  top: 1px;
-  width: 5px;
-  height: 9px;
-  border: solid #fff;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-  opacity: 1 !important;
-}
-
-/* --- Create Account Button --------------------------------------- */
-.register-body .btn-login {
-  position: relative;
-  background: linear-gradient(to bottom,
-              rgba(80,40,160,0.95),
-              rgba(40,20,100,0.95));
-  color: #fff !important;
-  font-family: 'Cinzel Decorative', serif;
-  border: 1px solid rgba(165,139,255,0.6);
-  border-radius: 10px;
-  padding: .9rem 2rem;
-  font-size: 1.1rem;
-  width: 100%;
-  margin-top: 1.2rem;
-  cursor: pointer;
-  z-index: 5;
-
-  box-shadow: 0 0 20px rgba(165,139,255,0.4);
-  transition: box-shadow .3s ease, transform .3s ease;
-  opacity: 1 !important;
-}
-
-.register-body .btn-login:hover {
-  color: var(--secondary-color) !important;
-  transform: translateY(-2px);
-  box-shadow:
-     0 0 25px rgba(255,203,107,0.7),
-     inset 0 0 15px rgba(255,203,107,0.3);
-}
-
-.register-body .btn-login:active {
-  transform: scale(0.97);
-  box-shadow:
-     0 0 30px rgba(255,203,107,0.8),
-     inset 0 0 20px rgba(255,203,107,0.5);
-}
-
-/* disable any animations that fade out */
-.register-body .btn-login::before,
-.register-body .btn-login::after {
-  content: none !important;
-  animation: none !important;
-  opacity: 1 !important;
-  transform: none !important;
-}
-/* ===========================================================
-   FINAL TOUCH — Keep Checkbox Glowing Yellow When Checked
-   =========================================================== */
-
-.register-body input[type="checkbox"]:checked {
-  background-color: rgba(255, 203, 107, 1) !important; /* solid golden glow */
-  border-color: rgba(255, 203, 107, 1) !important;
-  box-shadow:
-    0 0 18px rgba(255, 203, 107, 0.9) !important,
-    0 0 35px rgba(255, 203, 107, 0.8) !important,
-    0 0 55px rgba(165, 139, 255, 0.3) !important;
-  transform: scale(1.05);
-  transition: all 0.3s ease;
-}
-
-/* Keeps checkmark bright and visible */
-.register-body input[type="checkbox"]:checked::after {
-  border-color: #fff8d6 !important; /* bright ivory checkmark */
-  opacity: 1 !important;
-}
-/* ===========================================================
-   REGISTER FORM — Reduce Inner Spacing & Compact Layout
-   =========================================================== */
-
-.register-body .login-box {
-  padding: 2rem 2.5rem !important;  /* reduce side + top padding */
-  max-width: 420px;                 /* slightly narrower for balance */
-  margin-top: 4rem;                 /* lower just a touch */
-  border-radius: 14px;
-  box-shadow:
-      0 0 30px rgba(165, 139, 255, 0.3),
-      0 0 45px rgba(255, 203, 107, 0.2);
-}
-
-.register-body .login-form {
-  padding: 0 !important;            /* eliminate default Bootstrap padding */
-  margin: 0;
-}
-
-/* reduce spacing between inputs */
-.register-body .login-form input {
-  margin-bottom: 0.6rem !important;
-}
-
-/* tighten heading space */
-.register-body .login-form h1 {
-  margin-top: 0.5rem !important;
-  margin-bottom: 1.2rem !important;
-}
-
-/* reduce space above checkbox & button */
-.register-body .form-options {
-  margin-top: 0.4rem !important;
-  margin-bottom: 0.8rem !important;
-}
-
-.register-body .btn-login {
-  margin-top: 0.8rem !important;
-}
 
 /* ===========================================================
    FIX: Make Welcome Page Header Scroll Naturally
@@ -2471,420 +1258,10 @@ footer {
 /* Optional: tighten spacing between brand and buttons */
 .fantasy-navbar { gap: .75rem 1rem; }
 
-/* ===========================================================
-   LOGIN — Fixed, centered box (scroll-safe), fantasy theme
-   =========================================================== */
 
-/* Background stays scrollable; content can be taller than 100vh */
-.login-body {
-  background: url('/images/hero-bg.jpeg') no-repeat center center fixed;
-  background-size: cover;
-  min-height: 100vh;
-  margin: 0;
-  color: var(--text-color);
-  font-family: 'Cormorant Garamond', serif;
-  /* allow normal page scroll; the box itself is fixed */
-  overflow-y: auto;
-}
 
-/* Keep the “Loreweave” header simple above the fixed box */
-.login-header {
-  background: none !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  width: 100%;
-  margin: 2rem 0 1rem 0;
-  text-align: center;
-  position: relative;
-  z-index: 2;
-}
 
-.login-title {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: clamp(2.6rem, 5vw, 4rem);
-  color: #c4a0ff;
-  text-shadow: 0 0 25px rgba(165,139,255,.9), 0 0 50px rgba(165,139,255,.5);
-  margin: 0;
-}
 
-/* Remove any wrappers’ backgrounds so only the box glows */
-.login-wrapper,
-.login-body::before,
-.login-body::after {
-  background: transparent !important;
-  box-shadow: none !important;
-  border: 0 !important;
-  backdrop-filter: none !important;
-}
-
-/* >>> The fixed, centered login box <<< */
-.login-body .login-box {
-  position: fixed;                  /* fixed in viewport */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 5;
-
-  width: min(480px, 92vw);
-  max-height: min(88vh, 680px);     /* stays on screen on small devices */
-  overflow: auto;                   /* internal scroll if content overflows */
-
-  background: rgba(20, 10, 40, 0.88);
-  border: 1px solid rgba(165,139,255,.55);
-  border-radius: 16px;
-  padding: clamp(1.5rem, 3vw, 2.5rem);
-  box-shadow:
-    0 0 35px rgba(165,139,255,.45),
-    0 0 70px rgba(255,203,107,.25),
-    inset 0 0 14px rgba(0,0,0,.55);
-  backdrop-filter: blur(10px);
-  animation: none;                  /* stop any previous pulsing if undesired */
-}
-
-/* Inputs, labels, and button—the same fantasy look, tightened a hair */
-.login-box label {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: .95rem;
-  letter-spacing: 1px;
-  color: var(--secondary-color);
-  text-transform: uppercase;
-  margin-bottom: .35rem;
-}
-
-.login-box input[type="text"],
-.login-box input[type="password"] {
-  width: 50%;
-  padding: .85rem 1rem;
-  border: 1px solid rgba(165,139,255,.45);
-  border-radius: 10px;
-  background: rgba(25,15,45,.92);
-  color: #f8f6ff;
-  font-size: 1.05rem;
-  box-shadow: inset 0 0 6px rgba(165,139,255,.25), 0 0 10px rgba(80,40,160,.30);
-  transition: border-color .25s ease, box-shadow .25s ease, background .25s ease;
-}
-.login-box input[type="text"]:focus,
-.login-box input[type="password"]:focus {
-  outline: none;
-  border-color: var(--secondary-color);
-  background: rgba(30,20,60,.96);
-  box-shadow: 0 0 10px rgba(255,203,107,.6), inset 0 0 6px rgba(255,203,107,.4);
-}
-
-.form-options {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: .75rem;
-  margin-top: .5rem;
-  flex-wrap: nowrap;
-}
-
-.btn-login {
-  width: 100%;
-  margin-top: 1rem;
-  padding: 1rem;
-  font-family: 'Cinzel Decorative', serif;
-  text-transform: uppercase;
-  letter-spacing: .5px;
-  border-radius: 10px;
-  border: 1px solid rgba(165,139,255,.55);
-  color: #fff;
-  background: linear-gradient(to bottom, rgba(80,40,160,.95), rgba(40,20,100,.95));
-  box-shadow: 0 0 20px rgba(165,139,255,.3);
-  transition: transform .25s ease, box-shadow .25s ease, color .25s ease, background .25s ease;
-}
-.btn-login:hover {
-  background: linear-gradient(to bottom, rgba(120,70,200,.95), rgba(60,30,140,.95));
-  color: var(--secondary-color);
-  box-shadow: 0 0 35px rgba(255,203,107,.7);
-  transform: translateY(-2px);
-}
-
-/* Footer should NOT be fixed on login page to avoid overlap */
-.login-body footer {
-  position: static !important;
-  background: transparent;
-  border: 0;
-  box-shadow: none;
-  color: #cfc6ff;
-  text-shadow: 0 0 10px rgba(165,139,255,.35);
-  margin: 2rem 0 1rem;
-  z-index: 1;
-  text-align: center;
-}
-
-/* Small screens: relax padding & ensure inner scroll feels good */
-@media (max-width: 576px) {
-  .login-body .login-box {
-    padding: 1.25rem;
-    max-height: 86vh;
-  }
-  .form-options { flex-direction: column; align-items: flex-start; }
-}
-/* ===========================================================
-   LOGIN BOX — Refined center layout, no scrollbars
-   =========================================================== */
-
-/* Fix box position, disable scrollbars */
-.login-body .login-box {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 5;
-  width: min(440px, 92vw);          /* slightly narrower for symmetry */
-  max-height: none;                 /* remove restriction */
-  overflow: visible;                /* disable scrollbar entirely */
-  background: rgba(20, 10, 40, 0.88);
-  border: 1px solid rgba(165,139,255,.55);
-  border-radius: 16px;
-  padding: clamp(1.75rem, 3vw, 2.25rem);
-  box-shadow:
-    0 0 35px rgba(165,139,255,.45),
-    0 0 70px rgba(255,203,107,.25),
-    inset 0 0 14px rgba(0,0,0,.55);
-  backdrop-filter: blur(10px);
-}
-
-/* Center heading nicely */
-.login-box h2.login-heading {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-/* Shorten and center input fields */
-.login-box input[type="text"],
-.login-box input[type="password"] {
-  width: 50%;                       /* reduced width */
-  margin: 0.4rem auto 1rem;         /* centers input fields */
-  display: block;
-  padding: 0.7rem 1rem;
-  border: 1px solid rgba(165,139,255,.45);
-  border-radius: 10px;
-  background: rgba(25,15,45,.92);
-  color: #f8f6ff;
-  font-size: 1rem;
-  text-align: left;
-  box-shadow: inset 0 0 6px rgba(165,139,255,.25), 0 0 10px rgba(80,40,160,.3);
-  transition: all 0.3s ease;
-}
-.login-box input[type="text"]:focus,
-.login-box input[type="password"]:focus {
-  border-color: var(--secondary-color);
-  box-shadow: 0 0 10px rgba(255,203,107,.6), inset 0 0 6px rgba(255,203,107,.4);
-  background: rgba(30,20,60,.96);
-  outline: none;
-}
-
-/* Adjust labels above input for better alignment */
-.login-box label {
-  width: 85%;
-  margin: 0.5rem auto 0.25rem;
-  display: block;
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 0.9rem;
-  color: var(--secondary-color);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-/* Form options — center beneath inputs */
-.form-options {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 85%;
-  margin: 1rem auto;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-/* Button width matches the new centered layout */
-.btn-login {
-  display: block;
-  width: 85%;
-  margin: 1.2rem auto 0;
-  padding: 0.9rem;
-  font-size: 1.1rem;
-  border-radius: 10px;
-  font-family: 'Cinzel Decorative', serif;
-  text-transform: uppercase;
-  border: 1px solid rgba(165,139,255,.55);
-  background: linear-gradient(to bottom, rgba(80,40,160,.95), rgba(40,20,100,.95));
-  color: #fff;
-  box-shadow: 0 0 20px rgba(165,139,255,.3);
-  transition: all 0.3s ease;
-}
-.btn-login:hover {
-  background: linear-gradient(to bottom, rgba(120,70,200,.95), rgba(60,30,140,.95));
-  color: var(--secondary-color);
-  box-shadow: 0 0 35px rgba(255,203,107,.7);
-  transform: translateY(-2px);
-}
-
-/* Keep footer low without affecting fixed box */
-.login-body footer {
-  position: absolute;
-  bottom: 1rem;
-  width: 100%;
-  text-align: center;
-  color: #cfc6ff;
-  text-shadow: 0 0 10px rgba(165,139,255,.35);
-  font-size: 0.9rem;
-}
-
-/* Small screens: ensure box still fits cleanly */
-@media (max-height: 700px) {
-  .login-body .login-box {
-    top: 48%;
-    transform: translate(-50%, -48%);
-    padding: 1.25rem;
-  }
-  .login-box input {
-    width: 90%;
-  }
-}
-/* ===========================================================
-   REGISTER PAGE LAYOUT OVERRIDES (keeps form centered & scrollable)
-   =========================================================== */
-
-/* Make the wrapper center the long form and allow page to scroll */
-.register-body .login-wrapper {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(80px, 10vh, 120px) 16px 32px; /* room for header + breathing room */
-}
-
-/* Undo the fixed positioning we applied for the login dialog */
-.register-body .login-box {
-  position: relative;     /* not fixed */
-  top: auto;
-  left: auto;
-  transform: none;
-  margin: 0 auto;
-  width: min(640px, 92vw); /* wider than login to fit all fields nicely */
-  max-height: none;
-  overflow: visible;
-}
-
-/* Header on register should not be fixed; let it scroll naturally */
-.register-body .login-header {
-  position: static;
-  margin: 1.5rem 0 0.5rem;
-}
-
-/* Inputs and labels align nicely in the wider register box */
-.register-body .login-form label,
-.register-body .login-form input:not([type="checkbox"]) {
-  width: 92%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.register-body .btn-login {
-  width: 92%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Keep the footer at the bottom without overlapping the form */
-.register-body footer {
-  position: static;
-  margin-top: 2rem;
-}
-/* ------------------------------
-   REGISTER: inputs & checkbox fix
-   ------------------------------ */
-
-/* Only widen text-like inputs (not checkboxes) */
-.register-body .login-form input:not([type="checkbox"]) {
-  width: 92%;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-}
-
-/* Layout for the "Show password" row */
-.register-body .login-form .form-options {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  justify-content: flex-start;
-  margin: 12px 4% 0; /* lines up with 92% inputs */
-}
-
-/* Label next to checkbox */
-.register-body .login-form .form-options label {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  white-space: nowrap;
-  margin: 0;
-}
-
-/* Fantasy checkbox */
-.register-body .login-form input[type="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 20px;
-  height: 20px;
-  border: 2px solid rgba(165,139,255,0.7);
-  border-radius: 4px;
-  background: rgba(30,15,60,0.85);
-  box-shadow: 0 0 8px rgba(165,139,255,0.35);
-  transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
-  position: relative;
-  cursor: pointer;
-}
-
-.register-body .login-form input[type="checkbox"]:hover {
-  transform: scale(1.06);
-  box-shadow: 0 0 12px rgba(165,139,255,0.55);
-}
-
-/* Stays gold when checked */
-.register-body .login-form input[type="checkbox"]:checked {
-  border-color: rgba(255,203,107,0.95);
-  background: radial-gradient(circle at 50% 50%, rgba(255,203,107,0.95) 0%, rgba(165,139,255,0.55) 70%);
-  box-shadow: 0 0 16px rgba(255,203,107,0.70), 0 0 24px rgba(165,139,255,0.45);
-}
-
-/* Checkmark */
-.register-body .login-form input[type="checkbox"]:checked::after {
-  content: "";
-  position: absolute;
-  left: 6px;
-  top: 1px;
-  width: 6px;
-  height: 12px;
-  border: solid #fff8d6;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-}
-
-/* ------------------------------
-   Focus glow rules
-   ------------------------------ */
-
-/* Gold glow for ALL fields … */
-.register-body .login-form input:not([type="checkbox"]):focus {
-  outline: none;
-  border-color: rgba(255,203,107,0.9);
-  box-shadow:
-    0 0 0 1px rgba(255,203,107,0.55) inset,
-    0 0 14px rgba(255,203,107,0.75);
-}
-
-/* … EXCEPT the email field (keep it lavender/arcane) */
-.register-body .login-form input[type="email"]:focus {
-  border-color: rgba(165,139,255,0.9);
-  box-shadow:
-    0 0 0 1px rgba(165,139,255,0.6) inset,
-    0 0 14px rgba(165,139,255,0.75);
-}
 /* ===========================================================
    MESSAGES — Match Profile / Profile-Edit look
    =========================================================== */
@@ -4700,3 +3077,306 @@ footer,
      font-size: 0.75rem;
      box-shadow: 0 0 8px rgba(138, 79, 255, 0.5);
  }
+
+/* ===========================================
+   Login Page styling
+
+    Login PAGE BACKGROUND (BRIGHTER)
+   =========================================== */
+
+.login-body {
+    min-height: 100vh;
+    background: url('/images/hero-bg.jpeg') center/cover no-repeat fixed;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Brighten image overlay */
+.login-body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.12); /* brightness layer */
+    mix-blend-mode: screen;
+    pointer-events: none;
+}
+
+/* ===========================================
+   LOREWEAVE TITLE (MATCH WELCOME PAGE)
+   =========================================== */
+
+.login-header {
+    text-align: left;
+    padding: 2rem 3rem;
+}
+
+.login-title .header-link {
+    font-size: 5rem;
+    font-weight: 700;
+    color: #c59aff; /* Smooth purple */
+    text-shadow:
+        0 0 25px #8f4cff,
+        0 0 40px #b78aff,
+        0 0 65px #d4b6ff;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.login-title .header-link:hover {
+    color: #e6d4ff;
+    text-shadow:
+        0 0 35px #c59aff,
+        0 0 60px #e6d4ff;
+}
+
+/* ===========================================
+   WRAPPER & SPACING FIX
+   =========================================== */
+
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    padding-bottom: 3rem;
+}
+
+.login-box {
+    background: rgba(18, 18, 28, 0.78);
+    padding: 3rem 2.3rem;
+    width: 100%;
+    max-width: 480px;
+    border-radius: 18px;
+    border: 1px solid rgba(160, 120, 255, 0.55);
+    box-shadow: 0 0 45px rgba(150, 110, 255, 0.35);
+}
+
+/* ===========================================
+   SIGN IN HEADER (PURPLE FANTASY)
+   =========================================== */
+
+.login-heading {
+    text-align: center;
+    color: #c7a4ff;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 15px #b78aff;
+}
+
+/* ===========================================
+   INPUT LABELS + FIELDS ALIGNMENT FIX
+   =========================================== */
+
+.login-form .form-group {
+    margin-bottom: 1.6rem; /* slightly increased spacing */
+}
+
+/* LABELS */
+.login-form label {
+    display: block;
+    margin-bottom: 0.45rem;
+    font-size: 1rem;
+    color: #ffdf82;
+}
+
+/* OVERRIDE BOOTSTRAP COMPLETELY */
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    all: unset; /* removes bootstrap styling */
+    box-sizing: border-box;
+
+    width: 100%;
+    padding: 0.85rem 1rem;
+
+     background: rgba(30, 20, 50, 0.55) !important;
+    color: #fff !important;
+    border: 2px solid #8d73d9;         /* fantasy purple border */
+
+    color: #fff;
+    font-size: 1.1rem;
+    border-radius: 12px;
+
+    transition: 0.35s ease;
+}
+
+/* INPUT FOCUS (typing glow) */
+.login-form input:focus {
+    border-color: #c9a6ff;
+    box-shadow: 0 0 10px rgba(201, 166, 255, 0.6);
+    background: rgba(90, 60, 150, 0.45);
+}
+
+/* INPUT HAS TEXT (filled) */
+.login-form input:not(:placeholder-shown) {
+    background: rgba(120, 80, 200, 0.32);
+    border-color: #d9c2ff;
+    box-shadow: 0 0 8px rgba(180, 150, 255, 0.35);
+}
+
+/* ✨ Purple glow on focus */
+.login-form input:focus {
+    border-color: #c9a6ff;
+    box-shadow: 0 0 14px rgba(201, 166, 255, 0.7);
+    background: rgba(40, 25, 70, 0.65);
+}
+
+/* ✨ Gold glow when text is entered */
+.login-form input:not(:placeholder-shown) {
+    background: rgba(35, 20, 55, 0.65); /* still dark */
+    border-color: #ffd98a;              /* gold border */
+    box-shadow: 0 0 14px rgba(255, 217, 138, 0.55); /* soft gold glow */
+}
+
+/* Placeholder color */
+.login-form input::placeholder {
+    color: #cbb8ff;
+    opacity: 0.8;
+}
+/* ===========================================
+   FIX CHROME/SAFARI AUTOFILL WHITE BACKGROUND
+   =========================================== */
+
+.login-form input:-webkit-autofill,
+.login-form input:-webkit-autofill:hover,
+.login-form input:-webkit-autofill:focus,
+.login-form input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px rgba(30, 20, 50, 0.55) inset !important;
+    -webkit-text-fill-color: #ffffff !important;
+    caret-color: #ffffff !important;
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+
+/* ===========================================
+   CHECKBOXES — PURPLE → GOLD CHECKED
+   =========================================== */
+
+.form-options {
+    display: flex;
+    justify-content: space-around;
+    margin: 1.5rem 0 1.5rem;
+}
+
+.form-options label {
+    font-size: 1rem;
+    color: #ffdf9e;
+}
+
+/* Hide default checkbox */
+.form-options input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #c7a4ff;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+}
+
+/* Purple fill */
+.form-options input[type="checkbox"]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #c7a4ff;
+    opacity: 0;
+    transition: 0.2s ease;
+}
+
+/* Gold state */
+.form-options input[type="checkbox"]:checked::before {
+    opacity: 1;
+    background: #ffdf8a;
+    box-shadow: 0 0 10px #ffdf8a;
+}
+
+/* ===========================================
+   START WEAVING BUTTON (PURPLE → GOLD PULSE)
+   =========================================== */
+
+.btn-login {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.4rem;
+    border: none;
+    border-radius: 12px;
+    background: #8b4dff; /* vivid purple */
+    color: white;
+    font-weight: 700;
+    text-align: center;
+    transition: 0.35s ease-in-out;
+}
+
+.btn-login:hover {
+    background: #ffdf8a;
+    color: #231a0b;
+    box-shadow: 0 0 20px #ffdf8a;
+    animation: pulse 1.1s infinite alternate ease-in-out;
+}
+
+@keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
+}
+
+/* ===========================================
+   SIGNUP TEXT
+   =========================================== */
+
+.signup-text {
+    margin-top: 1rem;
+    text-align: center;
+    color: #ffdf8a;
+}
+
+.signup-text a {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/* ============================================
+   EMAIL INPUT BOX - REGISTER PAGE
+   ============================================ */
+/* Fantasy input styling applied to ALL input types */
+.login-form input[type="text"],
+.login-form input[type="password"],
+.login-form input[type="email"],     /* <-- ADD THIS */
+.login-form input {
+    all: unset;
+    box-sizing: border-box;
+
+    width: 100%;
+    padding: 0.85rem 1rem;
+
+    background: rgba(30, 20, 50, 0.55);
+    border: 2px solid #8d73d9;
+    border-radius: 12px;
+
+    color: #fff;
+    font-size: 1.1rem;
+
+    transition: 0.3s ease;
+}
+
+/* Gold glow when filled */
+.login-form input:not(:placeholder-shown) {
+    background: rgba(35, 20, 55, 0.65);
+    border-color: #ffd98a;
+    box-shadow: 0 0 14px rgba(255, 217, 138, 0.55);
+}
+
+/* Purple glow on focus */
+.login-form input:focus {
+    border-color: #c9a6ff;
+    box-shadow: 0 0 14px rgba(201, 166, 255, 0.7);
+}
+
+/* Placeholder color */
+.login-form input::placeholder {
+    color: #cbb8ff;
+    opacity: 0.8;
+}
+
+
