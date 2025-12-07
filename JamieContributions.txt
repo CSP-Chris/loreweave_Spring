@@ -260,3 +260,31 @@ Enhanced voting UI, fixed background behavior, and updated SAVE/CANCEL buttons
 - Ensured FlyingPages background video applies consistently across story-part and story-part-new pages
 
 Overall: Standardized voting UI, corrected background video integration, and unified CTA button styles across Loreweave story-part pages.
+
+
+
+Enforce turn order on story page and block access to part creation form
+
+### Added
+- Turn-order validation to GET /story-parts/new in StoryPartPageController.
+  When a user clicks “Add Part,” the controller now checks the latest story
+  contributor and immediately renders story-part-turn-error.html if the user
+  wrote the last part.
+
+### Updated
+- Injected StoryService and User resolution into GET handler to support
+  pre-validation before loading the part creation form.
+- Improved user experience by preventing users from reaching the new part
+  form when it is not their turn, aligning behavior with the turn-based
+  storytelling rules implemented in StoryPartService.
+
+### Behavior Change
+- Turn-order errors now trigger earlier (on navigation from story.html),
+  instead of waiting until after the form is submitted.
+- Ensures consistent enforcement of "no two consecutive contributions"
+  across both GET and POST flows.
+
+### Summary
+This update finalizes a smoother and more intuitive turn-based workflow,
+preventing improper story contributions before users reach the form and
+delivering clearer error messaging within the same storytelling context.
