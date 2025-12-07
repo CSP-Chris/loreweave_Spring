@@ -4683,3 +4683,20 @@ footer,
      color: #fff0d2 !important;
      transform: translateY(-1px);
  }
+
+.heading-gold {
+    color: #f5d98f !important;       /* your fantasy gold */
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+ /******* Added styling to stories page for threads ******/
+ .thread-badge {
+     background: rgba(138, 79, 255, 0.25);
+     border: 1px solid #c8a8ff;
+     color: #e6d7ff;
+     padding: 5px 10px;
+     border-radius: 12px;
+     font-size: 0.75rem;
+     box-shadow: 0 0 8px rgba(138, 79, 255, 0.5);
+ }

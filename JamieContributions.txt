@@ -288,3 +288,22 @@ Enforce turn order on story page and block access to part creation form
 This update finalizes a smoother and more intuitive turn-based workflow,
 preventing improper story contributions before users reach the form and
 delivering clearer error messaging within the same storytelling context.
+
+
+Add thread count display to Stories page and update StoryPageController logic
+
+### Added
+- Introduced dynamic story part count (`partCount`) using @Transient field in Story model.
+- Added controller logic in StoryPageController to calculate storyPart count for each story
+  using StoryPartRepository before rendering the /stories page.
+- Displayed thread count on stories.html as a styled badge (“X Threads”) for each story.
+
+### Updated
+- Enhanced stories.html list-group layout to include metadata + thread count in a
+  right-aligned column.
+- Improved UI consistency by adding a custom .thread-badge fantasy-themed style.
+
+### Purpose
+Provides users with immediate visibility into story activity by showing how many
+story parts (threads) exist for each story, improving story browsing and engagement
+on the platform.

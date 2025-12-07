@@ -7,75 +7,101 @@
     Updated By:   Wyatt Bechtle
     Update Notes: Added create story button. Enhanced UI for better readability and usability.
 
+    Updated By:   Jamie Coker on 2025-12-05
+    Update Notes:
+        • Added visual thread count (“X Threads”) to each story item.
+        • Updated list-group item layout to support additional badge.
+        • Requires controller to populate s.partCount via @Transient field.
 -->
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/" data-bs-theme="dark">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Stories</title>
-      <!-- Bootstrap -->
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 
-      <!-- Loreweave custom fantasy theme -->
-      <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Loreweave custom fantasy theme -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
           rel="stylesheet">
+</head>
 
-      <!-- Loreweave global styles -->
-      <link rel="stylesheet" th:href="@{/css/styles.css}">
-  </head>
-  <body class="profile-body stories-page">
+<body class="profile-body stories-page">
 
-  <video id="flyingpages-bg" autoplay muted loop playsinline> <source src="/images/flyingpages.mov" type="video/mp4"> </video>
+<!-- Background Video -->
+<video id="flyingpages-bg" autoplay muted loop playsinline>
+    <source src="/images/flyingpages.mov" type="video/mp4">
+</video>
 
+<!-- Page transition overlay -->
+<div id="page-transition"></div>
 
+<!-- Navbar -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
-  <!-- Page transition overlay -->
-  <div id="page-transition"></div>
-
-  <!-- Shared fantasy navbar (same as profile) -->
-  <div th:replace="~{fragments/navbar :: navbar}"></div>
-
-    <div class="container py-4">
-      <div class="row justify-content-center">
-        <!-- Adjust the widths here -->
+<div class="container py-4">
+    <div class="row justify-content-center">
         <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-          <h1 class="h3 mb-3">
-            <i class="bi bi-journal-text me-2"></i>Stories
-          </h1>
-          <!-- Create Story Button -->
-          <a class="btn btn-primary mb-3" th:href="@{/story/new}">
-            <i class="bi bi-plus-lg me-1"></i>Create story
-          </a>
-          <!-- Stories List -->
-          <ul class="list-group mb-3" th:if="${stories}" th:each="s : ${stories}">
-            <!-- Story -->
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <a class="text-decoration-none" th:href="@{/story/{id}(id=${s.id})}">
-                <span class="fw-semibold" th:text="${s.title}">Story title</span>
-              </a>
-              <!-- Creator and Last Updated -->
-              <small class="text-muted">
-                <span th:text="${(s.creator != null and s.creator.user != null) ? s.creator.user.username : 'unknown'}">creator</span>
-                &nbsp;·&nbsp;
-                <span th:text="${(s.lastUpdatedAt != null) ? #temporals.format(s.lastUpdatedAt,'yyyy-MM-dd HH:mm') : '—'}">updated</span>
-              </small>
-            </li>
-          </ul>
-          <!-- No Stories Message -->
-          <p class="text-muted" th:if="${stories == null or #lists.isEmpty(stories)}">No stories yet.</p>
+
+            <h1 class="h3 mb-3">
+                <i class="bi bi-journal-text me-2"></i>Stories
+            </h1>
+
+            <!-- Create Story Button -->
+            <a class="btn btn-primary mb-3" th:href="@{/story/new}">
+                <i class="bi bi-plus-lg me-1"></i>Create story
+            </a>
+
+            <!-- Stories List -->
+            <ul class="list-group mb-3" th:if="${stories}" th:each="s : ${stories}">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                    <!-- LEFT SIDE: Title -->
+                    <a class="text-decoration-none" th:href="@{/story/{id}(id=${s.id})}">
+                        <span class="fw-semibold" th:text="${s.title}">Story title</span>
+                    </a>
+
+                    <!-- RIGHT SIDE: Metadata + Thread Count -->
+                    <div class="d-flex flex-column align-items-end">
+
+                        <!-- Creator + Timestamp -->
+                        <small class="text-muted mb-1">
+                            <span th:text="${(s.creator != null and s.creator.user != null) ? s.creator.user.username : 'unknown'}">creator</span>
+                            &nbsp;·&nbsp;
+                            <span th:text="${(s.lastUpdatedAt != null) ? #temporals.format(s.lastUpdatedAt,'yyyy-MM-dd HH:mm') : '—'}">updated</span>
+                        </small>
+
+                        <!-- THREAD COUNT BADGE -->
+                        <span class="badge thread-badge"
+                              th:text="${s.partCount + ' Threads'}">
+                            0 Threads
+                        </span>
+
+                    </div>
+                </li>
+            </ul>
+
+            <!-- No Stories Message -->
+            <p class="text-muted" th:if="${stories == null or #lists.isEmpty(stories)}">
+                No stories yet.
+            </p>
+
         </div>
-      </div>
     </div>
-  <footer>
-      <p>&copy; 2025 Loreweave | A world where every player becomes an author.</p>
-  </footer>
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-            crossorigin="anonymous"></script>
-  </body>
+</div>
+
+<footer>
+    <p>&copy; 2025 Loreweave | A world where every player becomes an author.</p>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+
+</body>
 </html>

@@ -11,7 +11,9 @@
 /// Update Notes:   Added create story button functionality and validation to ensure user has a character before
 ///                 creating a story. Redirects to character creation if none exists.  
 ///                 Implemented Get and Post mappings for /story/new.
-///  
+///  /// Updated By:     Jamie Coker on 2025-12-07
+/// /// Update Notes:   Added dynamic storyPart count for each story displayed on the /stories page.
+/// ///                 Added @Transient partCount mapping and controller logic to populate story thread counts.
 /// ==========================================
 package com.loreweave.loreweave.controller;
 
@@ -54,64 +56,74 @@ public class StoryPageController {
         this.userRepository = userRepository;
         this.characterRepository = characterRepository;
     }
-    // Route to display all stories
+
+    // ==========================================
+    // Stories listing page — now with part count
+    // ==========================================
     @GetMapping("/stories")
     public String stories(Model model) {
 
-        // Fetch all stories with their creators and users, ordered by last updated date
+        // Fetch all stories with creator + user
         List<Story> stories = storyRepository.findAllWithCreatorAndUserOrderByLastUpdatedAtDesc();
+
+        // Add story part counts to each story
+        for (Story story : stories) {
+            int partCount = storyPartRepository.findByStoryIdOrderByPartOrderAsc(story.getId()).size();
+            story.setPartCount(partCount);   // Story has transient field
+        }
+
         model.addAttribute("stories", stories);
-        return "stories"; 
+        return "stories";
     }
-    // Route to display a specific story by ID
+
+    // View a single story
     @GetMapping("/story/{id:\\d+}")
     public String story(@PathVariable("id") Long id, Model model) {
 
-        // Fetch the story with its creator and users
         Story story = storyRepository.findByIdWithCreatorAndUser(id).orElseThrow();
 
-        // Fetch all parts of the story ordered by part order
         List<StoryPart> parts = storyPartRepository.fetchByStoryIdOrderByPartOrderAsc(id);
-        
+
         model.addAttribute("story", story);
         model.addAttribute("parts", parts);
-        return "story"; // renders templates/story.html
+        return "story";
     }
-    // Route to display the new story creation form
+
+    // New Story Form
     @GetMapping("/story/new")
     public String newStory(Authentication auth, RedirectAttributes ra) {
 
-        // Get user from authentication
         String username = ((UserDetails) auth.getPrincipal()).getUsername();
         User owner = userRepository.findByUsername(username).orElse(null);
 
-        // Check if user has a character
         boolean hasCharacter = characterRepository.findByUser(owner).isPresent();
         if (!hasCharacter) {
             ra.addFlashAttribute("warning", "Create your character first.");
             return "redirect:/characters/new";
         }
+
         return "story-new";
     }
-    // Route to handle new story creation
-    @PostMapping("/story/new")
-    public String createStory(Authentication auth, @RequestParam("title") String title, RedirectAttributes ra) {
 
-        // Get user from authentication
+    // Create Story Post Handler
+    @PostMapping("/story/new")
+    public String createStory(Authentication auth,
+                              @RequestParam("title") String title,
+                              RedirectAttributes ra) {
+
         String username = ((UserDetails) auth.getPrincipal()).getUsername();
         User owner = userRepository.findByUsername(username).orElse(null);
 
-        // Get user's character
         Character creator = characterRepository.findByUser(owner).orElse(null);
 
-        // Validate character existence
         if (creator == null) {
             ra.addFlashAttribute("warning", "Create your character first.");
             return "redirect:/characters/new";
         }
-        // Trim title and create story
+
         String t = title.trim();
         Story saved = storyService.createStory(new Story(t, creator));
+
         return "redirect:/story/" + saved.getId();
     }
 }
