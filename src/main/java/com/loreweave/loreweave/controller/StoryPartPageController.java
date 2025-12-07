@@ -17,6 +17,9 @@
 ///                user attempts to add two consecutive parts to the same story.
 ///                On that error, return story-part-turn-error.html with the story
 ///                and a friendly error message instead of redirecting.
+/// Updated By:   Jamie Coker on 2025-12-07
+/// /// Update Notes: Added turn-order validation to GET /story-parts/new so users
+/// ///               cannot access the creation form if they wrote the last part.
 /// ==========================================
 package com.loreweave.loreweave.controller;
 
@@ -93,11 +96,40 @@ public class StoryPartPageController {
         }
     }
 
-    // Show form to create a new story part
+    // Show form to create a new story part — BUT first check turn order
     @GetMapping("/story-parts/new")
-    public String newPartForm(@RequestParam("storyId") Long storyId, Model model) {
+    public String newPartForm(@RequestParam("storyId") Long storyId,
+                              Authentication auth,
+                              Model model) {
 
-        // Add storyId to the model for the form
+        // Resolve current user
+        String username = ((UserDetails) auth.getPrincipal()).getUsername();
+        User user = userRepository.findByUsername(username).orElse(null);
+
+        // Load the story
+        var story = storyService.getStoryById(storyId);
+
+        // Load the last part of the story
+        var lastPartOpt = storyPartRepository.findTopByStoryIdOrderByPartOrderDesc(storyId);
+
+        if (lastPartOpt.isPresent()) {
+            var lastPart = lastPartOpt.get();
+
+            // If the logged-in user wrote the last part → NOT THEIR TURN
+            if (lastPart.getAuthor() != null &&
+                    lastPart.getAuthor().getId().equals(user.getId())) {
+
+                model.addAttribute("story", story);
+                model.addAttribute(
+                        "errorMessage",
+                        "You wrote the last part of this story. Another author must contribute before you can add a new part."
+                );
+
+                return "story-part-turn-error";
+            }
+        }
+
+        // Otherwise allow the form to load
         model.addAttribute("storyId", storyId);
         return "story-part-new";
     }

@@ -161,7 +161,7 @@ body.fade-out #page-transition {
     content: "";
     position: absolute;
     inset: 0;
-    background: url('/images/gold-sparkles.png') repeat;
+
     background-size: 250px 250px;
     mix-blend-mode: screen;
     opacity: 0.1;
