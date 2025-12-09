@@ -1,52 +1,188 @@
-# Loreweave
+Loreweave
 
-Welcome to Loreweave, the community story weaver! Where every player is an author, and every story is a legend woven together.
+A Collaborative Fantasy Storytelling Platform
 
-Loreweave is a unique collaborative storytelling platform designed as a turn-based RPG. It's a place where imagination meets cooperation. Users create unique characters and contribute to ongoing narratives, with each "turn" representing a new narrative contribution. It's a game where the story is the ultimate reward.
+Where every player is an author, every choice shapes the world, and every story becomes legend.
 
-## Features
+Loreweave is a turn-based multiplayer storytelling platform built with Spring Boot and Thymeleaf. Players create unique characters, write story parts, vote on narrative outcomes, earn Lore Points, and receive real-time updates as stories unfold.
+✨ Features
+📝 Collaborative Storytelling
 
-*   **Collaborative Storytelling:** Create stories with other users, taking turns to build a narrative.
-*   **Character Creation:** Create your own character with a unique name and biography.
-*   **Lore Points:** Earn Lore Points for your contributions and use them to unlock new possibilities.
+Create or join shared stories.
 
-## Getting Started
+Players take turns writing new chapters (“story parts”).
 
-### Prerequisites
+Voting determines which contribution becomes canon.
 
-*   Java `21`
-*   Maven
+🧙 Character Creation
 
-### Installation
+Fully custom character profiles with names and biographies.
 
-1.  Clone the repository:
-    ```bash
-    git clone https://github.com/CSP-Chris/loreweave_Spring.git
-    cd loreweave_Spring
-    ```
-2.  The project uses Maven, which will automatically download and manage dependencies.
+Characters are required before creating or joining stories.
 
-### Running the Application
+💰 Lore Points & Transactions
 
-To start the application, run the following command:
+Earn lore points for contributions and votes.
 
-```bash
-.\mvnw spring-boot:run  
-```
+Integrated transaction system using LoreVote.
 
-Then, open your browser and navigate to `http://localhost:8080`.
+Backend validation & reward logic included.
 
-## Usage
+🔔 Real-Time Notifications
 
-1.  **Sign up** for a new account.
-2.  **Create a character.**
-3.  **Start a new story** or **join an existing one.**
-4.  **Take turns** with other users to write the story.
+Powered by Spring WebSockets (STOMP)
 
-## Contributors
+Story updates
 
-Jamie Coker, Wyatt Bechtle & Chris Ennis
+Message notifications
 
-## License
+Vote results
 
-This project is licensed under the MIT License.
+Read/unread badge updates without refreshing
+
+💬 Messaging System
+
+1-on-1 direct messaging
+
+Live updates for conversations
+
+User-friendly thread layout
+
+🛡️ Authentication & Security
+
+Session-based login
+
+Email OTP verification
+
+BCrypt password hashing
+
+Page access restrictions
+
+Logout & session handling
+
+🎨 Modern Fantasy UI
+
+Fully themed dark-fantasy styling
+
+Video backgrounds (e.g., flyingpages.mov)
+
+Hover glowing effects
+
+Polished Bootstrap + custom CSS
+
+🛠️ Tech Stack
+Backend
+
+Java 21
+
+Spring Boot 3
+
+Spring Security
+
+Spring Data JPA
+
+Spring WebSocket
+
+Spring Mail
+
+Frontend
+
+Thymeleaf
+
+Bootstrap 5
+
+Custom CSS
+
+GSAP animations
+
+STOMP WebSocket client
+
+Database
+
+MariaDB
+
+Spring Data Repositories
+
+Build
+
+Maven
+
+Spring Boot Maven Plugin
+
+📦 Installation
+Prerequisites
+
+Java 21+
+
+Maven or included ./mvnw wrapper
+
+MariaDB server
+
+🧭 How to Use Loreweave
+
+Register for an account.
+
+Verify your email using the OTP code.
+
+Create a character—required before writing.
+
+Start or join a story with other players.
+
+Take turns writing story parts.
+
+Vote for your favorite continuation.
+
+Earn Lore Points while contributing.
+
+Receive live notifications in real time.
+
+📂 Project Structure
+src/main/java/com/loreweave/loreweave/
+│
+├── config/            # Security, WebSocket
+├── controller/        # MVC controllers
+├── model/             # Entities (Story, User, LoreVote, Character…)
+├── repository/        # JPA repositories
+├── service/           # Business logic, OTP, transactions, notifications
+└── websocket/         # STOMP messaging channels
+
+Milestone Summary
+Milestone 1 — Security & Core Features
+
+User authentication (session-based)
+
+Email OTP verification
+
+Character creation
+
+Story + story part structure
+
+Milestone 2 — Voting, Transactions, Notifications
+
+LoreVote system
+
+Lore Points rewards
+
+Notification service
+
+WebSocket integration
+
+Milestone 3 — UI/UX & Real-Time Polish
+
+Full fantasy-themed styling
+
+Navbar redesign + dropdown menus
+
+Video backgrounds
+
+Responsiveness improvements
+
+Messaging UI completion
+
+Contributors
+| Name              | Role                                           | Contributions                                                                                                  |
+| ----------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| **Jamie Coker**   | Security, Transactions, UI Styling, Deployment | OTP verification, security config, transaction architecture, navbar/notifications styling, site-wide UI polish |
+| **Chris Ennis**   | Backend, WebSockets, Database                  | Story/StoryPart backend, WebSocket messaging, DB design, entity relationships                                  |
+| **Wyatt Bechtle** | Frontend UI, Templates, UX                     | Story pages, notifications menu, general UI improvements, responsive layouts                                   |
+

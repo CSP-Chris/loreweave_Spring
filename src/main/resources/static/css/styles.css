@@ -3601,3 +3601,64 @@ header,
 }
 
 
+/* ================================
+   Voting Error Page Styling
+   Matches fantasy theme styling
+   ================================ */
+
+.error-page {
+    background-color: #0d0b12; /* matches your dark fantasy background */
+    min-height: 100vh;
+    padding-top: 100px;
+    color: #e6d6ff;
+    font-family: 'Cinzel', serif;
+}
+
+.error-box {
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.55);
+    border-radius: 16px;
+    border: 1px solid #5e3ea1;
+    box-shadow: 0 0 25px rgba(123, 97, 255, 0.4);
+    text-align: center;
+}
+
+.error-title {
+    font-size: 2.6rem;
+    color: #f5e4c3;
+    text-shadow: 0 0 12px rgba(255, 240, 200, 0.7);
+    margin-bottom: 20px;
+    font-family: 'Cinzel', serif;
+}
+.footer-spacing {
+    margin-top: 60px; /* adjust higher if needed */
+}
+
+
+.error-text {
+    font-size: 1.2rem;
+    color: #d8caff;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.error-return-btn {
+    background-color: #a16eff;
+    color: white;
+    font-size: 1.1rem;
+    padding: 12px 32px;
+    border-radius: 10px;
+    border: none;
+    width: 60%;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.error-return-btn:hover {
+    background-color: #c68cff;
+    box-shadow: 0 0 12px rgba(198, 140, 255, 0.8);
+}
+
+
