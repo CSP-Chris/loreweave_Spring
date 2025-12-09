@@ -119,8 +119,9 @@ public class VoteController {
             return org.springframework.http.ResponseEntity.status(302).location(location).build();
         }
         if (contributor.getUser().getId().equals(voter.getId())) {
-            var location = java.net.URI.create("/story-parts/" + storyPartId + "?error=" + ERROR_SELF_VOTE);
-            return org.springframework.http.ResponseEntity.status(409).location(location).build();
+            var location = java.net.URI.create("/errors/cannot-vote-own");
+            return org.springframework.http.ResponseEntity.status(302).location(location).build();
+
         }
 
         // --- 4) Validate vote type (LV004) ---
